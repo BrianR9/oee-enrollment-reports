@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Postgraduate Certificate Programs – Enrollment Data | Harvard Medical School</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* Basic reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+        Arial, sans-serif;
+      color: #272727;
+      background: #f5f5f7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: #a51c30; /* Harvard crimson */
+      text-decoration: none;
+    }
+    a:hover,
+    a:focus {
+      text-decoration: underline;
+    }
+
+    /* Top bar / header */
+    .site-header {
+      background: #ffffff;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .site-header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .site-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .site-brand-main {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #555;
+    }
+    .site-brand-sub {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 600;
+      color: #a51c30;
+    }
+
+    .site-header-tagline {
+      font-size: 0.85rem;
+      color: #666;
+      text-align: right;
+    }
+
+    /* Hero / title block */
+    .hero {
+      background: linear-gradient(135deg, #a51c30 0%, #6b0f1d 40%, #111827 100%);
+      color: #fff;
+      padding: 2.5rem 1.25rem 2.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255,255,255,0.14) 0, transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(255,255,255,0.08) 0, transparent 60%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      max-width: 1120px;
+      margin: 0 auto;
+      z-index: 1;
+    }
+    .hero-kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      font-size: 0.75rem;
+      font-weight: 600;
+      opacity: 0.9;
+      margin-bottom: 0.75rem;
+    }
+    .hero-title {
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      margin: 0 0 0.5rem;
+      line-height: 1.2;
+      font-weight: 600;
+    }
+    .hero-subtitle {
+      max-width: 40rem;
+      font-size: 0.98rem;
+      line-height: 1.5;
+      opacity: 0.92;
+    }
+
+    /* Main content shell */
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 2.25rem 1.25rem 3rem;
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 0;
+      color: #202020;
+    }
+    .section-description {
+      max-width: 32rem;
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    /* Simple "All Programs" chip (no extra non-working links) */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.75rem;
+    }
+    .filter-pill {
+      border-radius: 999px;
+      padding: 0.4rem 0.85rem;
+      border: 1px solid #ddd;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #555;
+      background: #fff;
+    }
+    .filter-pill--highlighted {
+      border-color: #a51c30;
+      color: #a51c30;
+      background: #fdf6f7;
+    }
+
+    /* Program cards */
+    .program-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .program-card {
+      background: #ffffff;
+      border-radius: 0.5rem;
+      border: 1px solid #e4e4e7;
+      padding: 1.1rem 1.15rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease,
+        background 150ms ease;
+    }
+    .program-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(165,28,48,0.08), transparent 60%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 150ms ease;
+    }
+    .program-card:hover,
+    .program-card:focus-within {
+      transform: translateY(-3px);
+      box-shadow:
+        0 12px 24px rgba(15, 23, 42, 0.12),
+        0 2px 6px rgba(15, 23, 42, 0.08);
+      border-color: rgba(165, 28, 48, 0.5);
+      background: #ffffff;
+    }
+    .program-card:hover::before,
+    .program-card:focus-within::before {
+      opacity: 1;
+    }
+
+    .program-labels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+    .program-label {
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid #e4e4e7;
+      color: #555;
+      background: #fafafb;
+    }
+    .program-label--type {
+      border-color: #a51c30;
+      color: #a51c30;
+      background: #fdf3f5;
+    }
+
+    .program-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0;
+      color: #111827;
+    }
+
+    .program-meta {
+      font-size: 0.8rem;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    .program-links {
+      margin-top: 0.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.86rem;
+    }
+
+    .program-link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.38rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid #a51c30;
+      background: #fdf3f5;
+      color: #a51c30;
+      text-decoration: none;
+      font-weight: 500;
+      transition: border-color 120ms ease, background 120ms ease, color 120ms ease;
+    }
+    .program-link-pill span.icon {
+      font-size: 0.9rem;
+      line-height: 1;
+      color: #a51c30;
+    }
+    .program-link-pill:hover,
+    .program-link-pill:focus-visible {
+      border-color: #7f1224;
+      background: #fef2f2;
+      color: #7f1224;
+      text-decoration: none;
+    }
+
+    .program-notes {
+      margin-top: 0.25rem;
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+
+    /* Footer-ish note */
+    .page-footer-note {
+      margin-top: 2.25rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid #e4e4e7;
+      font-size: 0.8rem;
+      color: #6b7280;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 600px) {
+      .site-header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .site-header-tagline {
+        text-align: left;
+      }
+      .hero {
+        padding-top: 2rem;
+        padding-bottom: 2.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top header / brand -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="site-brand">
+        <div class="site-brand-main">Harvard Medical School</div>
+        <div class="site-brand-sub">
+          Professional, Corporate, and Continuing Education
+        </div>
+      </div>
+      <div class="site-header-tagline">
+        Postgraduate Certificate Programs<br />
+        Enrollment Data &amp; Reporting
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="page-title">
+    <div class="hero-inner">
+      <div class="hero-kicker">Postgraduate Certificate</div>
+      <h1 id="page-title" class="hero-title">
+        Program Enrollment Data
+      </h1>
+      <p class="hero-subtitle">
+        Central access point for dashboards that show marketing funnel performance and weekly
+        enrollment patterns across Harvard Medical School’s postgraduate certificate programs,
+        benchmarked against historical averages and enrollment targets.
+      </p>
+    </div>
+  </section>
+
+  <main class="page" aria-label="Enrollment reports by program">
+
+    <header class="section-header">
+      <div>
+        <h2 class="section-title">Programs &amp; Dashboards</h2>
+      </div>
+      <p class="section-description">
+        The following Marketing Analytics team dashboards provide weekly views of applications and enrollments by weeks out from
+        course start, with comparisons to historical averages and enrollment targets to support
+        real-time decision making.
+      </p>
+    </header>
+
+    <!-- Program cards for Postgraduate Certificate Programs -->
+    <section class="program-grid">
+
+      <!-- Foundations of Clinical Research -->
+      <article class="program-card">
+        <div class="program-labels">
+          <span class="program-label program-label--type">Postgraduate Certificate</span>
+          <span class="program-label">Live Online</span>
+          <span class="program-label">Clinical Research</span>
+        </div>
+        <h3 class="program-title">Foundations of Clinical Research (FCR)</h3>
+        <div class="program-meta">
+          Enrollment dashboard &nbsp;•&nbsp; Weekly funnel vs historical &amp; target
+        </div>
+        <div class="program-links">
+          <!-- Replace # with the actual dashboard URL -->
+          <a class="program-link-pill" href="#" target="_blank" rel="noopener"
+             aria-label="Open Foundations of Clinical Research enrollment dashboard">
+            <span class="icon">📊</span>
+            Open Enrollment Dashboard
+          </a>
+        </div>
+      </article>
+
+      <!-- Global Clinical Scholars Research Training -->
+      <article class="program-card">
+        <div class="program-labels">
+          <span class="program-label program-label--type">Postgraduate Certificate</span>
+          <span class="program-label">Blended</span>
+          <span class="program-label">Clinical Research</span>
+        </div>
+        <h3 class="program-title">
+          Global Clinical Scholars Research Training (GCSRT)
+        </h3>
+        <div class="program-meta">
+          Enrollment dashboard &nbsp;•&nbsp; Weekly funnel vs historical &amp; target
+        </div>
+        <div class="program-links">
+          <a class="program-link-pill" href="#" target="_blank" rel="noopener"
+             aria-label="Open Global Clinical Scholars Research Training enrollment dashboard">
+            <span class="icon">📊</span>
+            Open Enrollment Dashboard
+          </a>
+        </div>
+      </article>
+
+      <!-- Safety, Quality, Informatics, and Leadership -->
+      <article class="program-card">
+        <div class="program-labels">
+          <span class="program-label program-label--type">Postgraduate Certificate</span>
+          <span class="program-label">Blended</span>
+          <span class="program-label">Safety &amp; Quality</span>
+        </div>
+        <h3 class="program-title">
+          Safety, Quality, Informatics, and Leadership (SQIL)
+        </h3>
+        <div class="program-meta">
+          Enrollment dashboard &nbsp;•&nbsp; Weekly funnel vs historical &amp; target
+        </div>
+        <div class="program-links">
+          <a class="program-link-pill" href="https://brianr9.github.io/oee-enrollment-reports/sqil-enrollment_report.html" target="_blank" rel="noopener"
+             aria-label="Open Safety, Quality, Informatics, and Leadership enrollment dashboard">
+            <span class="icon">📊</span>
+            Open Enrollment Dashboard
+          </a>
+        </div>
+      </article>
+
+      <!-- Surgical Leadership -->
+      <article class="program-card">
+        <div class="program-labels">
+          <span class="program-label program-label--type">Postgraduate Certificate</span>
+          <span class="program-label">Blended</span>
+          <span class="program-label">Leadership</span>
+        </div>
+        <h3 class="program-title">Surgical Leadership</h3>
+        <div class="program-meta">
+          Enrollment dashboard &nbsp;•&nbsp; Weekly funnel vs historical &amp; target
+        </div>
+        <div class="program-links">
+          <a class="program-link-pill" href="https://brianr9.github.io/oee-enrollment-reports/slp-enrollment_report.html" target="_blank" rel="noopener"
+             aria-label="Open Surgical Leadership enrollment dashboard">
+            <span class="icon">📊</span>
+            Open Enrollment Dashboard
+          </a>
+        </div>
+      </article>
+
+      <!-- Leadership in Medicine: Asia Pacific at Sunway University -->
+      <article class="program-card">
+        <div class="program-labels">
+          <span class="program-label program-label--type">Postgraduate Certificate</span>
+          <span class="program-label">Blended</span>
+          <span class="program-label">Leadership</span>
+        </div>
+        <h3 class="program-title">
+          Leadership in Medicine: Asia Pacific at Sunway University
+        </h3>
+        <div class="program-meta">
+          Enrollment dashboard &nbsp;•&nbsp; Weekly funnel vs historical &amp; target
+        </div>
+        <div class="program-links">
+          <a class="program-link-pill" href="#" target="_blank" rel="noopener"
+             aria-label="Open Leadership in Medicine: Asia Pacific at Sunway University enrollment dashboard">
+            <span class="icon">📊</span>
+            Open Enrollment Dashboard
+          </a>
+        </div>
+      </article>
+
+      <!-- Training to Teach in Medicine -->
+      <article class="program-card">
+        <div class="program-labels">
+          <span class="program-label program-label--type">Postgraduate Certificate</span>
+          <span class="program-label">Live Online</span>
+          <span class="program-label">Teaching &amp; Education</span>
+        </div>
+        <h3 class="program-title">Training to Teach in Medicine (TTM)</h3>
+        <div class="program-meta">
+          Enrollment dashboard &nbsp;•&nbsp; Weekly funnel vs historical &amp; target
+        </div>
+        <div class="program-links">
+          <a class="program-link-pill" href="https://brianr9.github.io/oee-enrollment-reports/t2t-enrollment_report.html" target="_blank" rel="noopener"
+             aria-label="Open Training to Teach in Medicine enrollment dashboard">
+            <span class="icon">📊</span>
+            Open Enrollment Dashboard
+          </a>
+        </div>
+      </article>
+
+      <!-- Leading AI Innovation in Health Care -->
+      <article class="program-card">
+        <div class="program-labels">
+          <span class="program-label program-label--type">Postgraduate Certificate</span>
+          <span class="program-label">Blended</span>
+          <span class="program-label">AI &amp; Informatics</span>
+        </div>
+        <h3 class="program-title">
+          Leading AI Innovation in Health Care
+        </h3>
+        <div class="program-links">
+          <a class="program-link-pill" href="https://brianr9.github.io/oee-enrollment-reports/lai-enrollment_report.html" target="_blank" rel="noopener"
+             aria-label="Open Leading AI Innovation in Health Care enrollment dashboard">
+            <span class="icon">📊</span>
+            Open Enrollment Dashboard
+          </a>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Corporate Learning Programs Section -->
+    <header class="section-header" style="margin-top: 3.5rem;">
+      <div>
+        <h2 class="section-title">Corporate Learning Programs</h2>
+      </div>
+      <p class="section-description">
+        Dashboards and enrollment reporting for Harvard Medical School’s Corporate Learning Programs.
+      </p>
+    </header>
+
+    <section class="program-grid">
+      <!-- HMX Corporate Learning Program -->
+      <article class="program-card">
+        <div class="program-labels">
+          <span class="program-label program-label--type">Corporate Learning</span>
+          <span class="program-label">Online</span>
+        </div>
+        <h3 class="program-title">HMX</h3>
+        <div class="program-meta">
+          Enrollment dashboard &nbsp;•&nbsp; Weekly funnel vs historical &amp; target
+        </div>
+        <div class="program-links">
+          <!-- Replace # with the actual dashboard URL -->
+          <a class="program-link-pill" href="#" target="_blank" rel="noopener"
+             aria-label="Open HMX enrollment dashboard">
+            <span class="icon">📊</span>
+            Open Enrollment Dashboard
+          </a>
+        </div>
+      </article>
+    </section>
+
+    <!-- Footnote / metadata -->
+    <section class="page-footer-note" aria-label="Report notes">
+      <div>
+        <strong>Data content:</strong> Reports are refreshed on a regular cadence. For questions about methodology, field definitions, or custom requests, please contact the Brian Rabuffeti and Office foe External Education Marketing Analytics team.
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
