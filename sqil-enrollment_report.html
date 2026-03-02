@@ -3,57 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enrollment Funnel Analysis - Week 23</title>
+    <title>SQIL Enrollment Funnel Analysis - Week 22</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             line-height: 1.6;
             color: #333;
             background-color: #f8f9fa;
         }
-        
+
         .header {
             background-color: #A51C30;
             color: white;
             padding: 2rem 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        
+
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
         }
-        
+
         .header h1 {
             font-size: 2rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
             letter-spacing: -0.5px;
         }
-        
+
         .header .subtitle {
             font-size: 1.1rem;
             font-weight: 300;
             opacity: 0.95;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
-        
+
         .section {
             background: white;
             border-radius: 8px;
@@ -61,7 +61,7 @@
             margin-bottom: 2rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        
+
         .section-title {
             font-size: 1.5rem;
             font-weight: 600;
@@ -70,7 +70,7 @@
             padding-bottom: 0.75rem;
             border-bottom: 3px solid #A51C30;
         }
-        
+
         .comparison-intro {
             background: #f8f9fa;
             border-left: 4px solid #A51C30;
@@ -78,25 +78,25 @@
             margin-bottom: 1.5rem;
             border-radius: 4px;
         }
-        
+
         .comparison-intro p {
             margin: 0;
             font-size: 1rem;
             color: #555;
         }
-        
+
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
             margin: 1.5rem 0;
             font-size: 0.95rem;
         }
-        
+
         .comparison-table thead {
             background-color: #2c3e50;
             color: white;
         }
-        
+
         .comparison-table th {
             padding: 1rem;
             text-align: left;
@@ -105,17 +105,17 @@
             font-size: 0.85rem;
             letter-spacing: 0.5px;
         }
-        
+
         .comparison-table td {
             padding: 0.875rem 1rem;
             border-bottom: 1px solid #e9ecef;
         }
-        
+
         .comparison-table tbody tr:hover {
             background-color: #f8f9fa;
             transition: background-color 0.2s ease;
         }
-        
+
         .status-badge {
             display: inline-block;
             padding: 0.375rem 0.75rem;
@@ -125,27 +125,27 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .status-green {
             background-color: #d4edda;
             color: #155724;
         }
-        
+
         .status-yellow {
             background-color: #fff3cd;
             color: #856404;
         }
-        
+
         .status-orange {
             background-color: #ffe5cc;
             color: #8b4513;
         }
-        
+
         .status-red {
             background-color: #f8d7da;
             color: #721c24;
         }
-        
+
         .metric-box {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -154,7 +154,7 @@
             text-align: center;
             margin: 1.5rem 0;
         }
-        
+
         .metric-box .label {
             font-size: 0.9rem;
             font-weight: 400;
@@ -162,13 +162,13 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        
+
         .metric-box .value {
             font-size: 2.5rem;
             font-weight: 700;
             margin-top: 0.5rem;
         }
-        
+
         .chart-container {
             background: white;
             border-radius: 8px;
@@ -176,14 +176,14 @@
             margin-bottom: 2rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        
+
         .chart-title {
             font-size: 1.25rem;
             font-weight: 600;
             color: #2c3e50;
             margin-bottom: 1rem;
         }
-        
+
         .footer {
             background-color: #2c3e50;
             color: white;
@@ -191,51 +191,51 @@
             margin-top: 3rem;
             text-align: center;
         }
-        
+
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
         }
-        
+
         .footer p {
             margin: 0.5rem 0;
             opacity: 0.8;
         }
-        
+
         .footer a {
             color: #A51C30;
             text-decoration: none;
             font-weight: 600;
         }
-        
+
         .footer a:hover {
             text-decoration: underline;
         }
-        
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.5rem;
             }
-            
+
             .container {
                 padding: 1rem;
             }
-            
+
             .section {
                 padding: 1.5rem;
             }
-            
+
             .comparison-table {
                 font-size: 0.85rem;
             }
-            
+
             .comparison-table th,
             .comparison-table td {
                 padding: 0.5rem;
             }
         }
-        
+
         /* Performance indicators */
         .perf-indicator {
             display: inline-block;
@@ -244,18 +244,18 @@
             border-radius: 50%;
             margin-right: 8px;
         }
-        
+
         .perf-green { background-color: #28a745; }
         .perf-yellow { background-color: #ffc107; }
         .perf-orange { background-color: #ff8c00; }
         .perf-red { background-color: #dc3545; }
-        
+
         /* Number formatting */
         .number {
             font-variant-numeric: tabular-nums;
             font-weight: 600;
         }
-        
+
         .percentage {
             font-weight: 700;
         }
@@ -265,18 +265,18 @@
     <div class="header">
         <div class="header-content">
             <h1>Enrollment Funnel Analysis</h1>
-            <p class="subtitle">Performance Analysis: 2023–2027 | Report Date: February 24, 2026</p>
+            <p class="subtitle">Performance Analysis: 2023–2027 | Report Date: March 02, 2026</p>
         </div>
     </div>
-    
+
     <div class="container">
         <div class="section">
-            <h2 class="section-title">Performance Summary: Week 23</h2>
-            
+            <h2 class="section-title">Performance Summary: Week 22</h2>
+
             <div class="comparison-intro">
-                <p><strong>2027 Performance at 23 Weeks Out</strong> compared to historical average (2023–2026)</p>
+                <p><strong>2027 Performance at 22 Weeks Out</strong> compared to historical average (2023–2026)</p>
             </div>
-            
+
             <table class="comparison-table">
                 <thead>
                     <tr>
@@ -291,82 +291,82 @@
 
                     <tr>
                         <td><span class="perf-indicator perf-red"></span><strong>Interests</strong></td>
-                        <td style="text-align: center;"><span class="number">1,672</span></td>
-                        <td style="text-align: center;"><span class="number">3,941.5</span></td>
-                        <td style="text-align: center;"><span class="percentage">42.4%</span></td>
+                        <td style="text-align: center;"><span class="number">1,715</span></td>
+                        <td style="text-align: center;"><span class="number">4,207.4</span></td>
+                        <td style="text-align: center;"><span class="percentage">40.8%</span></span></td>
                         <td style="text-align: center;"><span class="status-badge status-red">Red</span></td>
                     </tr>
 
                     <tr>
                         <td><span class="perf-indicator perf-red"></span><strong>Abandons</strong></td>
-                        <td style="text-align: center;"><span class="number">137</span></td>
-                        <td style="text-align: center;"><span class="number">563.2</span></td>
-                        <td style="text-align: center;"><span class="percentage">24.3%</span></td>
+                        <td style="text-align: center;"><span class="number">142</span></td>
+                        <td style="text-align: center;"><span class="number">953.0</span></td>
+                        <td style="text-align: center;"><span class="percentage">14.9%</span></span></td>
                         <td style="text-align: center;"><span class="status-badge status-red">Red</span></td>
                     </tr>
 
                     <tr>
                         <td><span class="perf-indicator perf-red"></span><strong>Submits</strong></td>
                         <td style="text-align: center;"><span class="number">45</span></td>
-                        <td style="text-align: center;"><span class="number">83.5</span></td>
-                        <td style="text-align: center;"><span class="percentage">53.9%</span></td>
+                        <td style="text-align: center;"><span class="number">94.5</span></td>
+                        <td style="text-align: center;"><span class="percentage">47.6%</span></span></td>
                         <td style="text-align: center;"><span class="status-badge status-red">Red</span></td>
                     </tr>
 
                     <tr>
-                        <td><span class="perf-indicator perf-green"></span><strong>Admits</strong></td>
+                        <td><span class="perf-indicator perf-orange"></span><strong>Admits</strong></td>
                         <td style="text-align: center;"><span class="number">18</span></td>
-                        <td style="text-align: center;"><span class="number">18.2</span></td>
-                        <td style="text-align: center;"><span class="percentage">98.6%</span></td>
-                        <td style="text-align: center;"><span class="status-badge status-green">Green</span></td>
+                        <td style="text-align: center;"><span class="number">27.9</span></td>
+                        <td style="text-align: center;"><span class="percentage">64.6%</span></span></td>
+                        <td style="text-align: center;"><span class="status-badge status-orange">Orange</span></td>
                     </tr>
 
                     <tr>
-                        <td><span class="perf-indicator perf-green"></span><strong>Expect</strong></td>
-                        <td style="text-align: center;"><span class="number">5</span></td>
-                        <td style="text-align: center;"><span class="number">5.5</span></td>
-                        <td style="text-align: center;"><span class="percentage">90.9%</span></td>
-                        <td style="text-align: center;"><span class="status-badge status-green">Green</span></td>
+                        <td><span class="perf-indicator perf-orange"></span><strong>Expect</strong></td>
+                        <td style="text-align: center;"><span class="number">6</span></td>
+                        <td style="text-align: center;"><span class="number">10.4</span></td>
+                        <td style="text-align: center;"><span class="percentage">57.8%</span></span></td>
+                        <td style="text-align: center;"><span class="status-badge status-orange">Orange</span></td>
                     </tr>
 
                 </tbody>
             </table>
-            
+
             <div class="metric-box">
                 <div class="label">Historical Average Final Expected Enrollment</div>
                 <div class="value">112</div>
             </div>
         </div>
-        
+
         <div class="chart-container">
             <h3 class="chart-title">Submits, Admits & Expected Enrollment Trends</h3>
             <div id="chart1" style="height:600px; width:100%;"></div>
         </div>
-        
+
         <div class="chart-container">
             <h3 class="chart-title">Interests & Abandons Trends</h3>
             <div id="chart2" style="height:600px; width:100%;"></div>
         </div>
     </div>
-    
+
     <div class="footer">
         <div class="footer-content">
             <p><strong>Enrollment Funnel Analysis Report</strong></p>
-            <p>Generated on February 24, 2026 at 07:02 PM</p>
+            <p>Generated on March 02, 2026 at 09:07 PM</p>
         </div>
     </div>
-    
+
     <script src="https://cdn.plot.ly/plotly-2.4.1.min.js"></script>
     <script>
-        Plotly.newPlot("chart1", [{"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 18, 17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 11, 11, 10, 10, 9, 9, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1], "y": [1, 3, 12, 21, 29, 29, 49, 57, 62, 78, 86, 93, 122, 130, 143, 143, 143, 155, 106, 109, 116, 168, 179, 116, 126, 188, 198, 132, 130, 146, 227, 154, 243, 253, 159, 174, 299, 216, 225, 334, 371, 232, 237, 371, 406, 289, 289, 406, 406, 289], "mode": "lines+markers+text", "name": "Submits 2023", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2023 Submits"], "textposition": "top right", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [55, 61, 66, 72, 80, 80, 90, 99, 105, 124, 130, 136, 153, 160, 172, 172, 172, 179, 201, 229, 242, 254, 255, 258, 262, 266, 278, 286, 301, 301, 321, 321, 321], "mode": "lines+markers+text", "name": "Submits 2024", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2024 Submits"], "textposition": "bottom right", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [5, 7, 7, 8, 10, 10, 13, 14, 15, 22, 22, 23, 28, 32, 36, 36, 36, 40, 49, 61, 70, 74, 78, 78, 84, 85, 95, 108, 130, 156, 172, 172, 172], "mode": "lines+markers+text", "name": "Submits 2025", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2025 Submits"], "textposition": "middle right", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [5, 8, 9, 11, 12, 14, 14, 17, 17, 21, 24, 26, 31, 37, 46, 40, 50, 53, 64, 87, 88, 93, 97, 100, 102, 103, 116, 133, 148, 162, 162, 162, 162], "mode": "lines+markers+text", "name": "Submits 2026", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2026 Submits"], "textposition": "top center", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23], "y": [0, 0, 0, 0, 0, 0, 0, 0, 24, 33, 34, 38, 45], "mode": "lines+markers+text", "name": "Submits 2027", "line": {"color": "#0074D9", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "2027 Submits"], "textposition": "bottom center", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 18, 17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 11, 11, 10, 10, 9, 9, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1], "y": [0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 14, 32, 34, 34, 34, 34, 34, 51, 51, 51, 48, 48, 51, 60, 59, 69, 64, 60, 65, 72, 65, 72, 73, 65, 77, 101, 89, 114, 101, 128, 114, 114, 128, 159, 132, 169, 192, 196, 170], "mode": "lines+markers+text", "name": "Admits 2023", "line": {"color": "#2ECC40", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2023 Admits"], "textposition": "top right", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [1, 1, 1, 8, 8, 8, 8, 11, 11, 11, 11, 11, 18, 38, 55, 55, 62, 62, 70, 78, 86, 105, 129, 129, 153, 153, 155, 156, 158, 158, 175, 195, 200], "mode": "lines+markers+text", "name": "Admits 2024", "line": {"color": "#2ECC40", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2024 Admits"], "textposition": "bottom right", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 9, 12, 12, 12, 33, 33, 42, 46, 51, 65, 65, 68, 74, 74, 77, 90, 120, 122, 161, 169, 169], "mode": "lines+markers+text", "name": "Admits 2025", "line": {"color": "#2ECC40", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2025 Admits"], "textposition": "middle right", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [2, 2, 2, 2, 2, 2, 3, 3, 9, 9, 9, 9, 14, 19, 19, 19, 30, 30, 33, 42, 58, 58, 72, 72, 72, 74, 88, 104, 105, 119, 125, 137, 137], "mode": "lines+markers+text", "name": "Admits 2026", "line": {"color": "#2ECC40", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2026 Admits"], "textposition": "top center", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23], "y": [0, 0, 0, 0, 0, 0, 0, 0, 5, 14, 14, 14, 18], "mode": "lines+markers+text", "name": "Admits 2027", "line": {"color": "#2ECC40", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "2027 Admits"], "textposition": "bottom center", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 18, 17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 11, 11, 10, 10, 9, 9, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1], "y": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 9, 9, 11, 11, 11, 11, 30, 31, 34, 13, 13, 34, 35, 18, 23, 39, 23, 43, 28, 43, 28, 29, 44, 52, 38, 55, 68, 48, 50, 81, 85, 50, 71, 97, 117, 94, 115, 127], "mode": "lines+markers+text", "name": "Expect 2023", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2023 Expect"], "textposition": "top right", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 10, 20, 20, 25, 25, 35, 37, 42, 45, 58, 64, 71, 78, 83, 91, 96, 96, 103, 109, 123], "mode": "lines+markers+text", "name": "Expect 2024", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2024 Expect"], "textposition": "bottom right", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 6, 7, 8, 8, 9, 9, 14, 21, 31, 34, 38, 39, 41, 43, 46, 50, 58, 64, 84, 100, 106], "mode": "lines+markers+text", "name": "Expect 2025", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2025 Expect"], "textposition": "middle right", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 9, 9, 9, 11, 17, 19, 21, 32, 39, 43, 48, 51, 52, 58, 66, 70, 70, 79, 89, 93], "mode": "lines+markers+text", "name": "Expect 2026", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2026 Expect"], "textposition": "top center", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23], "y": [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 3, 3, 5], "mode": "lines+markers+text", "name": "Expect 2027", "line": {"color": "#FF851B", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "2027 Expect"], "textposition": "bottom center", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}], {
+        Plotly.newPlot("chart1", [{"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 18, 17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 11, 11, 10, 10, 9, 9, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1], "y": [1, 3, 12, 21, 29, 29, 49, 57, 62, 78, 86, 93, 122, 130, 143, 143, 143, 155, 106, 109, 116, 168, 179, 116, 126, 188, 198, 132, 130, 146, 227, 154, 243, 253, 159, 174, 299, 216, 225, 334, 371, 232, 237, 371, 406, 289, 289, 406, 406, 289], "mode": "lines+markers+text", "name": "Submits 2023", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2023 Submits"], "textposition": "top right", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [55, 61, 66, 72, 80, 80, 90, 99, 105, 124, 130, 136, 153, 160, 172, 172, 172, 179, 201, 229, 242, 254, 255, 258, 262, 266, 278, 286, 301, 301, 321, 321, 321], "mode": "lines+markers+text", "name": "Submits 2024", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2024 Submits"], "textposition": "bottom right", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [5, 7, 7, 8, 10, 10, 13, 14, 15, 22, 22, 23, 28, 32, 36, 36, 36, 40, 49, 61, 70, 74, 78, 78, 84, 85, 95, 108, 130, 156, 172, 172, 172], "mode": "lines+markers+text", "name": "Submits 2025", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2025 Submits"], "textposition": "middle right", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [5, 8, 9, 11, 12, 14, 14, 17, 17, 21, 24, 26, 31, 37, 46, 40, 50, 53, 64, 87, 88, 93, 97, 100, 102, 103, 116, 133, 148, 162, 162, 162, 162], "mode": "lines+markers+text", "name": "Submits 2026", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2026 Submits"], "textposition": "top center", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [32, 29, 28, 27, 23, 22], "y": [24, 33, 34, 38, 45, 45], "mode": "lines+markers+text", "name": "Submits 2027", "line": {"color": "#0074D9", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "2027 Submits"], "textposition": "bottom center", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 18, 17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 11, 11, 10, 10, 9, 9, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1], "y": [0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 14, 32, 34, 34, 34, 34, 34, 51, 51, 51, 48, 48, 51, 60, 59, 69, 64, 60, 65, 72, 65, 72, 73, 65, 77, 101, 89, 114, 101, 128, 114, 114, 128, 159, 132, 169, 192, 196, 170], "mode": "lines+markers+text", "name": "Admits 2023", "line": {"color": "#2ECC40", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2023 Admits"], "textposition": "top right", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [1, 1, 1, 8, 8, 8, 8, 11, 11, 11, 11, 11, 18, 38, 55, 55, 62, 62, 70, 78, 86, 105, 129, 129, 153, 153, 155, 156, 158, 158, 175, 195, 200], "mode": "lines+markers+text", "name": "Admits 2024", "line": {"color": "#2ECC40", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2024 Admits"], "textposition": "bottom right", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 9, 12, 12, 12, 33, 33, 42, 46, 51, 65, 65, 68, 74, 74, 77, 90, 120, 122, 161, 169, 169], "mode": "lines+markers+text", "name": "Admits 2025", "line": {"color": "#2ECC40", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2025 Admits"], "textposition": "middle right", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [2, 2, 2, 2, 2, 2, 3, 3, 9, 9, 9, 9, 14, 19, 19, 19, 30, 30, 33, 42, 58, 58, 72, 72, 72, 74, 88, 104, 105, 119, 125, 137, 137], "mode": "lines+markers+text", "name": "Admits 2026", "line": {"color": "#2ECC40", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2026 Admits"], "textposition": "top center", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [32, 29, 28, 27, 23, 22], "y": [5, 14, 14, 14, 18, 18], "mode": "lines+markers+text", "name": "Admits 2027", "line": {"color": "#2ECC40", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "2027 Admits"], "textposition": "bottom center", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 18, 17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 11, 11, 10, 10, 9, 9, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1], "y": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 9, 9, 11, 11, 11, 11, 30, 31, 34, 13, 13, 34, 35, 18, 23, 39, 23, 43, 28, 43, 28, 29, 44, 52, 38, 55, 68, 48, 50, 81, 85, 50, 71, 97, 117, 94, 115, 127], "mode": "lines+markers+text", "name": "Expect 2023", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2023 Expect"], "textposition": "top right", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 10, 20, 20, 25, 25, 35, 37, 42, 45, 58, 64, 71, 78, 83, 91, 96, 96, 103, 109, 123], "mode": "lines+markers+text", "name": "Expect 2024", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2024 Expect"], "textposition": "bottom right", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 6, 7, 8, 8, 9, 9, 14, 21, 31, 34, 38, 39, 41, 43, 46, 50, 58, 64, 84, 100, 106], "mode": "lines+markers+text", "name": "Expect 2025", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2025 Expect"], "textposition": "middle right", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 9, 9, 9, 11, 17, 19, 21, 32, 39, 43, 48, 51, 52, 58, 66, 70, 70, 79, 89, 93], "mode": "lines+markers+text", "name": "Expect 2026", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2026 Expect"], "textposition": "top center", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [32, 29, 28, 27, 23, 22], "y": [1, 1, 3, 3, 5, 6], "mode": "lines+markers+text", "name": "Expect 2027", "line": {"color": "#FF851B", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "2027 Expect"], "textposition": "bottom center", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}], {
             "title": {"text": ""},
             "xaxis": {
-                "autorange": "reversed", 
+                "autorange": "reversed",
                 "title": {"text": "Weeks Out (Countdown to 1)", "font": {"size": 14}},
                 "gridcolor": "#e9ecef"
             },
             "yaxis": {
-                "gridcolor": "#e9ecef", 
+                "gridcolor": "#e9ecef",
                 "title": {"text": "Count", "font": {"size": 14}}
             },
             "hovermode": "x unified",
@@ -377,37 +377,37 @@
                 "font": {"size": 11}
             },
             "shapes": [{
-                "line": {"color": "#A51C30", "dash": "dash", "width": 2}, 
-                "type": "line", 
-                "x0": 23, 
-                "x1": 23, 
-                "xref": "x", 
-                "y0": 0, 
-                "y1": 1, 
+                "line": {"color": "#A51C30", "dash": "dash", "width": 2},
+                "type": "line",
+                "x0": 22,
+                "x1": 22,
+                "xref": "x",
+                "y0": 0,
+                "y1": 1,
                 "yref": "y domain"
             }],
             "annotations": [{
-                "showarrow": false, 
-                "text": "23 Weeks Out", 
-                "x": 23, 
-                "xanchor": "right", 
-                "xref": "x", 
-                "y": 1, 
-                "yanchor": "top", 
+                "showarrow": false,
+                "text": "22 Weeks Out",
+                "x": 22,
+                "xanchor": "right",
+                "xref": "x",
+                "y": 1,
+                "yanchor": "top",
                 "yref": "y domain",
                 "font": {"color": "#A51C30", "size": 12, "weight": "bold"}
             }]
         }, {"responsive": true});
-        
-        Plotly.newPlot("chart2", [{"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 18, 17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 11, 11, 10, 10, 9, 9, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1], "y": [283, 293, 355, 451, 499, 499, 668, 1540, 1750, 2780, 3130, 3497, 4773, 4773, 5491, 5491, 5888, 5912, 4248, 4477, 4670, 6323, 6598, 4670, 4990, 6942, 6942, 5188, 6942, 5676, 8121, 5941, 8121, 8793, 6244, 6489, 9719, 6717, 6933, 10291, 10985, 6933, 7252, 10985, 10917, 7252, 7327, 10917, 10917, 7349], "mode": "lines+markers+text", "name": "Interests 2023", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2023 Interests"], "textposition": "top right", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [3240, 3240, 3240, 4383, 4383, 4383, 5966, 5966, 5966, 5966, 5966, 5966, 7591, 7591, 8084, 8084, 8330, 8344, 8570, 8733, 8796, 8796, 8796, 9027, 9027, 9079, 9131, 9176, 9185, 9185, 9206, 9206, 9206], "mode": "lines+markers+text", "name": "Interests 2024", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2024 Interests"], "textposition": "bottom right", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [404, 465, 487, 574, 719, 719, 880, 933, 977, 1196, 1265, 1305, 1655, 1655, 2033, 2033, 2236, 2257, 2500, 2643, 2756, 2756, 2756, 3243, 3243, 3567, 4010, 4119, 4305, 4305, 4354, 4354, 4354], "mode": "lines+markers+text", "name": "Interests 2025", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2025 Interests"], "textposition": "middle right", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [590, 695, 743, 801, 913, 957, 1113, 1153, 1230, 1352, 1426, 1527, 1747, 1931, 2101, 2019, 2158, 2251, 2353, 2426, 2583, 2720, 2886, 2993, 3048, 3125, 3445, 3473, 3487, 3487, 3487, 3487, 3487], "mode": "lines+markers+text", "name": "Interests 2026", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2026 Interests"], "textposition": "top center", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23], "y": [0, 0, 0, 0, 0, 0, 0, 0, 996, 0, 0, 0, 1672], "mode": "lines+markers+text", "name": "Interests 2027", "line": {"color": "#8e44ad", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "2027 Interests"], "textposition": "bottom center", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 18, 17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 11, 11, 10, 10, 9, 9, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1], "y": [1, 9, 198, 347, 404, 404, 629, 702, 777, 988, 1085, 1153, 53, 1442, 1547, 1442, 1593, 1650, 633, 662, 693, 1766, 1830, 693, 745, 1908, 1989, 777, 2099, 851, 2209, 898, 2314, 2397, 960, 1028, 2397, 1111, 1153, 2397, 3330, 1231, 1335, 3330, 3443, 1392, 1392, 3443, 3443, 1392], "mode": "lines+markers+text", "name": "Abandons 2023", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2023 Abandons"], "textposition": "top right", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [742, 827, 903, 1000, 1077, 1077, 1240, 1329, 1395, 1619, 1673, 1722, 1838, 1884, 1914, 1884, 1984, 2014, 2078, 2139, 2183, 2216, 2247, 2266, 2294, 2323, 2535, 2535, 2456, 2456, 2512, 2512, 2512], "mode": "lines+markers+text", "name": "Abandons 2024", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2024 Abandons"], "textposition": "bottom right", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [44, 58, 69, 81, 96, 96, 110, 121, 124, 153, 158, 165, 203, 221, 239, 231, 252, 264, 303, 318, 335, 348, 369, 381, 405, 426, 477, 477, 572, 572, 636, 636, 636], "mode": "lines+markers+text", "name": "Abandons 2025", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2025 Abandons"], "textposition": "middle right", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [46, 53, 60, 69, 77, 79, 86, 94, 99, 111, 129, 132, 159, 176, 201, 184, 214, 223, 261, 279, 289, 307, 316, 333, 344, 356, 405, 428, 463, 480, 480, 480, 480], "mode": "lines+markers+text", "name": "Abandons 2026", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2026 Abandons"], "textposition": "top center", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23], "y": [0, 0, 0, 0, 0, 0, 0, 0, 69, 99, 106, 112, 137], "mode": "lines+markers+text", "name": "Abandons 2027", "line": {"color": "#e74c3c", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "2027 Abandons"], "textposition": "bottom center", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}], {
+
+        Plotly.newPlot("chart2", [{"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 18, 17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 11, 11, 10, 10, 9, 9, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1], "y": [283, 293, 355, 451, 499, 499, 668, 1540, 1750, 2780, 3130, 3497, 4773, 4773, 5491, 5491, 5888, 5912, 4248, 4477, 4670, 6323, 6598, 4670, 4990, 6942, 6942, 5188, 6942, 5676, 8121, 5941, 8121, 8793, 6244, 6489, 9719, 6717, 6933, 10291, 10985, 6933, 7252, 10985, 10917, 7252, 7327, 10917, 10917, 7349], "mode": "lines+markers+text", "name": "Interests 2023", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2023 Interests"], "textposition": "top right", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [3240, 3240, 3240, 4383, 4383, 4383, 5966, 5966, 5966, 5966, 5966, 5966, 7591, 7591, 8084, 8084, 8330, 8344, 8570, 8733, 8796, 8796, 8796, 9027, 9027, 9079, 9131, 9176, 9185, 9185, 9206, 9206, 9206], "mode": "lines+markers+text", "name": "Interests 2024", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2024 Interests"], "textposition": "bottom right", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [404, 465, 487, 574, 719, 719, 880, 933, 977, 1196, 1265, 1305, 1655, 1655, 2033, 2033, 2236, 2257, 2500, 2643, 2756, 2756, 2756, 3243, 3243, 3567, 4010, 4119, 4305, 4305, 4354, 4354, 4354], "mode": "lines+markers+text", "name": "Interests 2025", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2025 Interests"], "textposition": "middle right", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [590, 695, 743, 801, 913, 957, 1113, 1153, 1230, 1352, 1426, 1527, 1747, 1931, 2101, 2019, 2158, 2251, 2353, 2426, 2583, 2720, 2886, 2993, 3048, 3125, 3445, 3473, 3487, 3487, 3487, 3487, 3487], "mode": "lines+markers+text", "name": "Interests 2026", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2026 Interests"], "textposition": "top center", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [32, 29, 28, 27, 23, 22], "y": [996, 1050, 1200, 1400, 1672, 1715], "mode": "lines+markers+text", "name": "Interests 2027", "line": {"color": "#8e44ad", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "2027 Interests"], "textposition": "bottom center", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 18, 17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 11, 11, 10, 10, 9, 9, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1], "y": [1, 9, 198, 347, 404, 404, 629, 702, 777, 988, 1085, 1153, 53, 1442, 1547, 1442, 1593, 1650, 633, 662, 693, 1766, 1830, 693, 745, 1908, 1989, 777, 2099, 851, 2209, 898, 2314, 2397, 960, 1028, 2397, 1111, 1153, 2397, 3330, 1231, 1335, 3330, 3443, 1392, 1392, 3443, 3443, 1392], "mode": "lines+markers+text", "name": "Abandons 2023", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2023 Abandons"], "textposition": "top right", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [742, 827, 903, 1000, 1077, 1077, 1240, 1329, 1395, 1619, 1673, 1722, 1838, 1884, 1914, 1884, 1984, 2014, 2078, 2139, 2183, 2216, 2247, 2266, 2294, 2323, 2535, 2535, 2456, 2456, 2512, 2512, 2512], "mode": "lines+markers+text", "name": "Abandons 2024", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2024 Abandons"], "textposition": "bottom right", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [44, 58, 69, 81, 96, 96, 110, 121, 124, 153, 158, 165, 203, 221, 239, 231, 252, 264, 303, 318, 335, 348, 369, 381, 405, 426, 477, 477, 572, 572, 636, 636, 636], "mode": "lines+markers+text", "name": "Abandons 2025", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2025 Abandons"], "textposition": "middle right", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [40, 39, 38, 37, 36, 35, 34, 33, 32, 29, 28, 27, 23, 22, 22, 21, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1], "y": [46, 53, 60, 69, 77, 79, 86, 94, 99, 111, 129, 132, 159, 176, 201, 184, 214, 223, 261, 279, 289, 307, 316, 333, 344, 356, 405, 428, 463, 480, 480, 480, 480], "mode": "lines+markers+text", "name": "Abandons 2026", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "2026 Abandons"], "textposition": "top center", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [32, 29, 28, 27, 23, 22], "y": [69, 99, 106, 112, 137, 142], "mode": "lines+markers+text", "name": "Abandons 2027", "line": {"color": "#e74c3c", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "2027 Abandons"], "textposition": "bottom center", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}], {
             "title": {"text": ""},
             "xaxis": {
-                "autorange": "reversed", 
+                "autorange": "reversed",
                 "title": {"text": "Weeks Out (Countdown to 1)", "font": {"size": 14}},
                 "gridcolor": "#e9ecef"
             },
             "yaxis": {
-                "gridcolor": "#e9ecef", 
+                "gridcolor": "#e9ecef",
                 "title": {"text": "Count", "font": {"size": 14}}
             },
             "hovermode": "x unified",
@@ -418,23 +418,23 @@
                 "font": {"size": 11}
             },
             "shapes": [{
-                "line": {"color": "#A51C30", "dash": "dash", "width": 2}, 
-                "type": "line", 
-                "x0": 23, 
-                "x1": 23, 
-                "xref": "x", 
-                "y0": 0, 
-                "y1": 1, 
+                "line": {"color": "#A51C30", "dash": "dash", "width": 2},
+                "type": "line",
+                "x0": 22,
+                "x1": 22,
+                "xref": "x",
+                "y0": 0,
+                "y1": 1,
                 "yref": "y domain"
             }],
             "annotations": [{
-                "showarrow": false, 
-                "text": "23 Weeks Out", 
-                "x": 23, 
-                "xanchor": "right", 
-                "xref": "x", 
-                "y": 1, 
-                "yanchor": "top", 
+                "showarrow": false,
+                "text": "22 Weeks Out",
+                "x": 22,
+                "xanchor": "right",
+                "xref": "x",
+                "y": 1,
+                "yanchor": "top",
                 "yref": "y domain",
                 "font": {"color": "#A51C30", "size": 12, "weight": "bold"}
             }]
