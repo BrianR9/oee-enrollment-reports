@@ -3,57 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enrollment Funnel Analysis - Week 7</title>
+    <title>LAI Enrollment Funnel Analysis - Week 6</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             line-height: 1.6;
             color: #333;
             background-color: #f8f9fa;
         }
-        
+
         .header {
             background-color: #A51C30;
             color: white;
             padding: 2rem 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        
+
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
         }
-        
+
         .header h1 {
             font-size: 2rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
             letter-spacing: -0.5px;
         }
-        
+
         .header .subtitle {
             font-size: 1.1rem;
             font-weight: 300;
             opacity: 0.95;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
-        
+
         .section {
             background: white;
             border-radius: 8px;
@@ -61,7 +61,7 @@
             margin-bottom: 2rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        
+
         .section-title {
             font-size: 1.5rem;
             font-weight: 600;
@@ -70,7 +70,7 @@
             padding-bottom: 0.75rem;
             border-bottom: 3px solid #A51C30;
         }
-        
+
         .comparison-intro {
             background: #f8f9fa;
             border-left: 4px solid #A51C30;
@@ -78,25 +78,25 @@
             margin-bottom: 1.5rem;
             border-radius: 4px;
         }
-        
+
         .comparison-intro p {
             margin: 0;
             font-size: 1rem;
             color: #555;
         }
-        
+
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
             margin: 1.5rem 0;
             font-size: 0.95rem;
         }
-        
+
         .comparison-table thead {
             background-color: #2c3e50;
             color: white;
         }
-        
+
         .comparison-table th {
             padding: 1rem;
             text-align: left;
@@ -105,17 +105,17 @@
             font-size: 0.85rem;
             letter-spacing: 0.5px;
         }
-        
+
         .comparison-table td {
             padding: 0.875rem 1rem;
             border-bottom: 1px solid #e9ecef;
         }
-        
+
         .comparison-table tbody tr:hover {
             background-color: #f8f9fa;
             transition: background-color 0.2s ease;
         }
-        
+
         .status-badge {
             display: inline-block;
             padding: 0.375rem 0.75rem;
@@ -125,27 +125,27 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .status-green {
             background-color: #d4edda;
             color: #155724;
         }
-        
+
         .status-yellow {
             background-color: #fff3cd;
             color: #856404;
         }
-        
+
         .status-orange {
             background-color: #ffe5cc;
             color: #8b4513;
         }
-        
+
         .status-red {
             background-color: #f8d7da;
             color: #721c24;
         }
-        
+
         .metric-box {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -154,7 +154,7 @@
             text-align: center;
             margin: 1.5rem 0;
         }
-        
+
         .metric-box .label {
             font-size: 0.9rem;
             font-weight: 400;
@@ -162,13 +162,13 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        
+
         .metric-box .value {
             font-size: 2.5rem;
             font-weight: 700;
             margin-top: 0.5rem;
         }
-        
+
         .chart-container {
             background: white;
             border-radius: 8px;
@@ -176,14 +176,14 @@
             margin-bottom: 2rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        
+
         .chart-title {
             font-size: 1.25rem;
             font-weight: 600;
             color: #2c3e50;
             margin-bottom: 1rem;
         }
-        
+
         .footer {
             background-color: #2c3e50;
             color: white;
@@ -191,51 +191,51 @@
             margin-top: 3rem;
             text-align: center;
         }
-        
+
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
         }
-        
+
         .footer p {
             margin: 0.5rem 0;
             opacity: 0.8;
         }
-        
+
         .footer a {
             color: #A51C30;
             text-decoration: none;
             font-weight: 600;
         }
-        
+
         .footer a:hover {
             text-decoration: underline;
         }
-        
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.5rem;
             }
-            
+
             .container {
                 padding: 1rem;
             }
-            
+
             .section {
                 padding: 1.5rem;
             }
-            
+
             .comparison-table {
                 font-size: 0.85rem;
             }
-            
+
             .comparison-table th,
             .comparison-table td {
                 padding: 0.5rem;
             }
         }
-        
+
         /* Performance indicators */
         .perf-indicator {
             display: inline-block;
@@ -244,18 +244,18 @@
             border-radius: 50%;
             margin-right: 8px;
         }
-        
+
         .perf-green { background-color: #28a745; }
         .perf-yellow { background-color: #ffc107; }
         .perf-orange { background-color: #ff8c00; }
         .perf-red { background-color: #dc3545; }
-        
+
         /* Number formatting */
         .number {
             font-variant-numeric: tabular-nums;
             font-weight: 600;
         }
-        
+
         .percentage {
             font-weight: 700;
         }
@@ -265,23 +265,23 @@
     <div class="header">
         <div class="header-content">
             <h1>Enrollment Funnel Analysis</h1>
-            <p class="subtitle">Performance Analysis: 2024–2026 | Report Date: February 26, 2026</p>
+            <p class="subtitle">Performance Analysis: April 2025–June 2026 | Report Date: March 02, 2026</p>
         </div>
     </div>
-    
+
     <div class="container">
         <div class="section">
-            <h2 class="section-title">Performance Summary: Week 7</h2>
-            
+            <h2 class="section-title">Performance Summary: Week 6</h2>
+
             <div class="comparison-intro">
-                <p><strong>2026 Performance at 7 Weeks Out</strong> compared to historical average (2024–2025)</p>
+                <p><strong>June 2026 Performance at 6 Weeks Out</strong> compared to historical average (all previous periods)</p>
             </div>
-            
+
             <table class="comparison-table">
                 <thead>
                     <tr>
                         <th>Stage</th>
-                        <th style="text-align: center;">2026 Value</th>
+                        <th style="text-align: center;">June 2026 Value</th>
                         <th style="text-align: center;">Historical Avg</th>
                         <th style="text-align: center;">Performance</th>
                         <th style="text-align: center;">Status</th>
@@ -291,126 +291,126 @@
 
                     <tr>
                         <td><span class="perf-indicator perf-green"></span><strong>Abandons</strong></td>
-                        <td style="text-align: center;"><span class="number">123</span></td>
+                        <td style="text-align: center;"><span class="number">133</span></td>
                         <td style="text-align: center;"><span class="number">1.0</span></td>
-                        <td style="text-align: center;"><span class="percentage">12300.0%</span></td>
+                        <td style="text-align: center;"><span class="percentage">13300.0%</span></td>
                         <td style="text-align: center;"><span class="status-badge status-green">Green</span></td>
                     </tr>
 
                     <tr>
                         <td><span class="perf-indicator perf-green"></span><strong>Expect</strong></td>
-                        <td style="text-align: center;"><span class="number">27</span></td>
-                        <td style="text-align: center;"><span class="number">22.0</span></td>
-                        <td style="text-align: center;"><span class="percentage">122.7%</span></td>
+                        <td style="text-align: center;"><span class="number">29</span></td>
+                        <td style="text-align: center;"><span class="number">24.0</span></td>
+                        <td style="text-align: center;"><span class="percentage">120.8%</span></td>
                         <td style="text-align: center;"><span class="status-badge status-green">Green</span></td>
                     </tr>
 
                 </tbody>
             </table>
-            
+
             <div class="metric-box">
                 <div class="label">Historical Average Final Expected Enrollment</div>
                 <div class="value">58</div>
             </div>
         </div>
-        
+
         <div class="chart-container">
             <h3 class="chart-title">Submits, Admits & Expected Enrollment Trends</h3>
             <div id="chart1" style="height:600px; width:100%;"></div>
         </div>
-        
+
         <div class="chart-container">
             <h3 class="chart-title">Interests & Abandons Trends</h3>
             <div id="chart2" style="height:600px; width:100%;"></div>
         </div>
     </div>
-    
+
     <div class="footer">
         <div class="footer-content">
             <p><strong>Enrollment Funnel Analysis Report</strong></p>
-            <p>Generated on February 26, 2026 at 04:07 PM</p>
+            <p>Generated on March 02, 2026 at 05:18 PM</p>
         </div>
     </div>
-    
+
     <script src="https://cdn.plot.ly/plotly-2.4.1.min.js"></script>
     <script>
-        Plotly.newPlot("chart1", [{"x": [10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 65.0], "mode": "lines+markers+text", "name": "Submits 2024", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "2024 Submits"], "textposition": "top right", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 54.0], "mode": "lines+markers+text", "name": "Submits 2025", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "2025 Submits"], "textposition": "bottom right", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [15, 14, 13, 12, 11, 10, 9, 8, 7], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN], "mode": "lines+markers+text", "name": "Submits 2026", "line": {"color": "#0074D9", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "2026 Submits"], "textposition": "bottom center", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 65.0], "mode": "lines+markers+text", "name": "Admits 2024", "line": {"color": "#2ECC40", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "2024 Admits"], "textposition": "top right", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 52.0], "mode": "lines+markers+text", "name": "Admits 2025", "line": {"color": "#2ECC40", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "2025 Admits"], "textposition": "bottom right", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [15, 14, 13, 12, 11, 10, 9, 8, 7], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN], "mode": "lines+markers+text", "name": "Admits 2026", "line": {"color": "#2ECC40", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "2026 Admits"], "textposition": "bottom center", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [3, 4, 4, 9, 14, 16, 16, 21, 28, 32, 64], "mode": "lines+markers+text", "name": "Expect 2024", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "2024 Expect"], "textposition": "top right", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [17, 25, 30, 32, 34, 39, 42, 50, 52], "mode": "lines+markers+text", "name": "Expect 2025", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "2025 Expect"], "textposition": "bottom right", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [15, 14, 13, 12, 11, 10, 9, 8, 7], "y": [1, 2, 2, 2, 2, 5, 17, 27, 27], "mode": "lines+markers+text", "name": "Expect 2026", "line": {"color": "#FF851B", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "2026 Expect"], "textposition": "bottom center", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}], {
+        Plotly.newPlot("chart1", [{"x": [10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 65.0], "mode": "lines+markers+text", "name": "Submits April 2025", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "April 2025 Submits"], "textposition": "top right", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 54.0], "mode": "lines+markers+text", "name": "Submits November 2025", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "November 2025 Submits"], "textposition": "bottom right", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [15, 14, 13, 12, 11, 10, 9, 8, 7, 6], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 106.0], "mode": "lines+markers+text", "name": "Submits June 2026", "line": {"color": "#0074D9", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "", "June 2026 Submits"], "textposition": "bottom center", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN], "mode": "lines+markers+text", "name": "Admits April 2025", "line": {"color": "#2ECC40", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "April 2025 Admits"], "textposition": "top right", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN], "mode": "lines+markers+text", "name": "Admits November 2025", "line": {"color": "#2ECC40", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "November 2025 Admits"], "textposition": "bottom right", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [15, 14, 13, 12, 11, 10, 9, 8, 7, 6], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN], "mode": "lines+markers+text", "name": "Admits June 2026", "line": {"color": "#2ECC40", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "", "June 2026 Admits"], "textposition": "bottom center", "textfont": {"color": "#2ECC40", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [3, 4, 4, 9, 14, 16, 16, 21, 28, 32, 64], "mode": "lines+markers+text", "name": "Expect April 2025", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "April 2025 Expect"], "textposition": "top right", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [17, 25, 30, 32, 34, 39, 42, 50, 52], "mode": "lines+markers+text", "name": "Expect November 2025", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "November 2025 Expect"], "textposition": "bottom right", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [15, 14, 13, 12, 11, 10, 9, 8, 7, 6], "y": [1, 2, 2, 2, 2, 5, 17, 27, 27, 29], "mode": "lines+markers+text", "name": "Expect June 2026", "line": {"color": "#FF851B", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "", "June 2026 Expect"], "textposition": "bottom center", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}], {
             "title": {"text": ""},
             "xaxis": {
-                "autorange": "reversed", 
+                "autorange": "reversed",
                 "title": {"text": "Weeks Out (Countdown to 1)", "font": {"size": 14}},
                 "gridcolor": "#e9ecef"
             },
             "yaxis": {
-                "gridcolor": "#e9ecef", 
+                "gridcolor": "#e9ecef",
                 "title": {"text": "Count", "font": {"size": 14}}
             },
             "hovermode": "x unified",
             "plot_bgcolor": "#f8f9fa",
             "paper_bgcolor": "white",
             "legend": {
-                "title": {"text": "Stage & Year", "font": {"size": 12}},
+                "title": {"text": "Stage & Period", "font": {"size": 12}},
                 "font": {"size": 11}
             },
             "shapes": [{
-                "line": {"color": "#A51C30", "dash": "dash", "width": 2}, 
-                "type": "line", 
-                "x0": 7, 
-                "x1": 7, 
-                "xref": "x", 
-                "y0": 0, 
-                "y1": 1, 
+                "line": {"color": "#A51C30", "dash": "dash", "width": 2},
+                "type": "line",
+                "x0": 6,
+                "x1": 6,
+                "xref": "x",
+                "y0": 0,
+                "y1": 1,
                 "yref": "y domain"
             }],
             "annotations": [{
-                "showarrow": false, 
-                "text": "7 Weeks Out", 
-                "x": 7, 
-                "xanchor": "right", 
-                "xref": "x", 
-                "y": 1, 
-                "yanchor": "top", 
+                "showarrow": false,
+                "text": "6 Weeks Out",
+                "x": 6,
+                "xanchor": "right",
+                "xref": "x",
+                "y": 1,
+                "yanchor": "top",
                 "yref": "y domain",
                 "font": {"color": "#A51C30", "size": 12, "weight": "bold"}
             }]
         }, {"responsive": true});
-        
-        Plotly.newPlot("chart2", [{"x": [10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 3230.0], "mode": "lines+markers+text", "name": "Interests 2024", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "2024 Interests"], "textposition": "top right", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 869.0], "mode": "lines+markers+text", "name": "Interests 2025", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "2025 Interests"], "textposition": "bottom right", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [15, 14, 13, 12, 11, 10, 9, 8, 7], "y": [NaN, NaN, 39.0, NaN, NaN, NaN, NaN, NaN, 384.0], "mode": "lines+markers+text", "name": "Interests 2026", "line": {"color": "#8e44ad", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "2026 Interests"], "textposition": "bottom center", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, 1.0, 1.0, 2.0, 4.0, 222.0, 237.0, 301.0], "mode": "lines+markers+text", "name": "Abandons 2024", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "2024 Abandons"], "textposition": "top right", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 365.0], "mode": "lines+markers+text", "name": "Abandons 2025", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "2025 Abandons"], "textposition": "bottom right", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [15, 14, 13, 12, 11, 10, 9, 8, 7], "y": [8.0, 8.0, 39.0, 51.0, 62.0, 71.0, 82.0, 96.0, 123.0], "mode": "lines+markers+text", "name": "Abandons 2026", "line": {"color": "#e74c3c", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "2026 Abandons"], "textposition": "bottom center", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}], {
+
+        Plotly.newPlot("chart2", [{"x": [10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 3230.0], "mode": "lines+markers+text", "name": "Interests April 2025", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "April 2025 Interests"], "textposition": "top right", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 869.0], "mode": "lines+markers+text", "name": "Interests November 2025", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "November 2025 Interests"], "textposition": "bottom right", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [15, 14, 13, 12, 11, 10, 9, 8, 7, 6], "y": [NaN, NaN, 39.0, NaN, NaN, NaN, NaN, NaN, 384.0, 405.0], "mode": "lines+markers+text", "name": "Interests June 2026", "line": {"color": "#8e44ad", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "", "June 2026 Interests"], "textposition": "bottom center", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, 1.0, 1.0, 2.0, 4.0, 222.0, 237.0, 301.0], "mode": "lines+markers+text", "name": "Abandons April 2025", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "April 2025 Abandons"], "textposition": "top right", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [9, 8, 7, 6, 5, 4, 3, 2, 1], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 365.0], "mode": "lines+markers+text", "name": "Abandons November 2025", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "November 2025 Abandons"], "textposition": "bottom right", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [15, 14, 13, 12, 11, 10, 9, 8, 7, 6], "y": [8.0, 8.0, 39.0, 51.0, 62.0, 71.0, 82.0, 96.0, 123.0, 133.0], "mode": "lines+markers+text", "name": "Abandons June 2026", "line": {"color": "#e74c3c", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "", "June 2026 Abandons"], "textposition": "bottom center", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}], {
             "title": {"text": ""},
             "xaxis": {
-                "autorange": "reversed", 
+                "autorange": "reversed",
                 "title": {"text": "Weeks Out (Countdown to 1)", "font": {"size": 14}},
                 "gridcolor": "#e9ecef"
             },
             "yaxis": {
-                "gridcolor": "#e9ecef", 
+                "gridcolor": "#e9ecef",
                 "title": {"text": "Count", "font": {"size": 14}}
             },
             "hovermode": "x unified",
             "plot_bgcolor": "#f8f9fa",
             "paper_bgcolor": "white",
             "legend": {
-                "title": {"text": "Stage & Year", "font": {"size": 12}},
+                "title": {"text": "Stage & Period", "font": {"size": 12}},
                 "font": {"size": 11}
             },
             "shapes": [{
-                "line": {"color": "#A51C30", "dash": "dash", "width": 2}, 
-                "type": "line", 
-                "x0": 7, 
-                "x1": 7, 
-                "xref": "x", 
-                "y0": 0, 
-                "y1": 1, 
+                "line": {"color": "#A51C30", "dash": "dash", "width": 2},
+                "type": "line",
+                "x0": 6,
+                "x1": 6,
+                "xref": "x",
+                "y0": 0,
+                "y1": 1,
                 "yref": "y domain"
             }],
             "annotations": [{
-                "showarrow": false, 
-                "text": "7 Weeks Out", 
-                "x": 7, 
-                "xanchor": "right", 
-                "xref": "x", 
-                "y": 1, 
-                "yanchor": "top", 
+                "showarrow": false,
+                "text": "6 Weeks Out",
+                "x": 6,
+                "xanchor": "right",
+                "xref": "x",
+                "y": 1,
+                "yanchor": "top",
                 "yref": "y domain",
                 "font": {"color": "#A51C30", "size": 12, "weight": "bold"}
             }]
