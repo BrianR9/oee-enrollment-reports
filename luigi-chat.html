@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luigi Baseball League</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: #0d1f0d;
+      background-image: radial-gradient(ellipse at top, #1b3a1b 0%, #0d1a0d 70%);
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(180deg, #6b0000 0%, #900000 50%, #6b0000 100%);
+      text-align: center;
+      padding: 30px 20px 22px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+    }
+    header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg, transparent, transparent 12px,
+        rgba(255,255,255,0.025) 12px, rgba(255,255,255,0.025) 24px
+      );
+    }
+    .header-inner { position: relative; z-index: 1; }
+    .header-ball { font-size: 2.8em; display: block; margin-bottom: 4px; }
+    header h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.4em, 7vw, 4em);
+      font-weight: 700;
+      color: #f0c040;
+      text-transform: uppercase;
+      letter-spacing: 6px;
+      text-shadow: 3px 3px 0 #4a0000, 0 0 40px rgba(240,192,64,0.25);
+    }
+    .header-rule {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #f0c040, transparent);
+      max-width: 320px;
+      margin: 10px auto 8px;
+    }
+    header .tagline {
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 4px;
+      font-size: 0.85em;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      justify-content: center;
+      border-bottom: 2px solid rgba(240,192,64,0.25);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    .nav-btn {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95em;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      padding: 17px 48px;
+      cursor: pointer;
+      transition: color .25s, border-color .25s;
+    }
+    .nav-btn:hover { color: #fff; }
+    .nav-btn.active { color: #f0c040; border-bottom-color: #f0c040; }
+
+    /* ── MAIN ── */
+    main { max-width: 1100px; margin: 0 auto; padding: 36px 18px 50px; }
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* ── PANEL ── */
+    .panel {
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(240,192,64,0.2);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+    .panel-head {
+      background: linear-gradient(135deg, #7a0000, #a80000);
+      padding: 16px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(240,192,64,0.15);
+    }
+    .panel-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15em;
+      letter-spacing: 3px;
+      color: #f0c040;
+      text-transform: uppercase;
+    }
+
+    /* ── CHAT NAME SCREEN ── */
+    .chat-wrap { max-width: 740px; margin: 0 auto; }
+
+    #nameScreen {
+      padding: 56px 36px;
+      text-align: center;
+    }
+    #nameScreen .ns-icon { font-size: 3.8em; display: block; margin-bottom: 14px; }
+    #nameScreen h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2em;
+      color: #f0c040;
+      margin-bottom: 6px;
+      letter-spacing: 2px;
+    }
+    #nameScreen p { color: rgba(255,255,255,0.45); margin-bottom: 30px; font-size: .93em; }
+    .input-row { display: flex; gap: 10px; max-width: 370px; margin: 0 auto; }
+
+    .t-input {
+      flex: 1;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.07);
+      border: 1.5px solid rgba(240,192,64,0.35);
+      border-radius: 10px;
+      color: #fff;
+      font-size: .93em;
+      font-family: 'Open Sans', sans-serif;
+      outline: none;
+      transition: border-color .25s, background .25s;
+    }
+    .t-input:focus { border-color: #f0c040; background: rgba(255,255,255,0.1); }
+    .t-input::placeholder { color: rgba(255,255,255,0.3); }
+
+    .btn-gold {
+      padding: 12px 20px;
+      background: #8B0000;
+      color: #f0c040;
+      border: 1.5px solid #f0c040;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Oswald', sans-serif;
+      font-size: .93em;
+      letter-spacing: 1px;
+      transition: background .25s, color .25s, transform .15s, box-shadow .25s;
+      white-space: nowrap;
+    }
+    .btn-gold:hover {
+      background: #f0c040;
+      color: #5a0000;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(240,192,64,0.3);
+    }
+
+    /* ── CHAT ROOM ── */
+    #chatRoom { display: none; }
+
+    .chat-bar {
+      padding: 8px 20px;
+      background: rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .8em;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .user-badge { display: flex; align-items: center; gap: 7px; }
+    .live-dot {
+      width: 8px; height: 8px;
+      background: #4caf50;
+      border-radius: 50%;
+      animation: livePulse 2s infinite;
+    }
+    @keyframes livePulse {
+      0%,100% { opacity: 1; box-shadow: 0 0 4px #4caf50; }
+      50%      { opacity: .4; box-shadow: none; }
+    }
+    .uname { color: #f0c040; font-weight: 600; }
+    .btn-leave {
+      padding: 4px 11px;
+      background: transparent;
+      color: rgba(255,255,255,0.35);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: .82em;
+      font-family: 'Open Sans', sans-serif;
+      transition: color .2s, border-color .2s;
+    }
+    .btn-leave:hover { color: #ff6b6b; border-color: #ff6b6b; }
+
+    .msg-box {
+      height: 420px;
+      overflow-y: auto;
+      padding: 18px;
+      scroll-behavior: smooth;
+    }
+    .msg-box::-webkit-scrollbar { width: 5px; }
+    .msg-box::-webkit-scrollbar-track { background: transparent; }
+    .msg-box::-webkit-scrollbar-thumb { background: rgba(240,192,64,0.25); border-radius: 10px; }
+
+    .empty-state {
+      text-align: center;
+      color: rgba(255,255,255,0.22);
+      padding: 70px 20px;
+    }
+    .empty-state .e-icon { font-size: 2.8em; display: block; margin-bottom: 10px; }
+
+    .msg { margin-bottom: 16px; animation: msgFade .22s ease; }
+    @keyframes msgFade {
+      from { opacity: 0; transform: translateY(7px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg.sys { text-align: center; padding: 3px 0; }
+    .sys-pill {
+      display: inline-block;
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      padding: 4px 15px;
+      font-size: .76em;
+      color: rgba(255,255,255,0.38);
+      font-style: italic;
+    }
+
+    .msg-meta { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+    .msg-author { font-weight: 600; font-size: .86em; color: #f0c040; }
+    .msg.own .msg-author { color: #6fcf97; }
+    .msg-time { font-size: .7em; color: rgba(255,255,255,0.28); }
+
+    .msg-bubble {
+      display: inline-block;
+      max-width: 88%;
+      background: rgba(255,255,255,0.06);
+      border-radius: 0 12px 12px 12px;
+      padding: 10px 14px;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.55;
+      font-size: .9em;
+      word-break: break-word;
+    }
+    .msg.own { text-align: right; }
+    .msg.own .msg-meta { justify-content: flex-end; }
+    .msg.own .msg-bubble {
+      background: rgba(109,207,151,0.09);
+      border-radius: 12px 0 12px 12px;
+    }
+
+    .chat-foot {
+      display: flex;
+      gap: 10px;
+      padding: 13px 14px;
+      background: rgba(0,0,0,0.22);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .chat-foot .t-input  { border-radius: 25px; }
+    .chat-foot .btn-gold { border-radius: 25px; padding: 12px 18px; }
+
+    /* ── DRAFT GRID ── */
+    .draft-head-row { flex-wrap: wrap; }
+    .open-sheet-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 18px;
+      background: rgba(240,192,64,0.12);
+      color: #f0c040;
+      border: 1px solid #f0c040;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: 'Oswald', sans-serif;
+      font-size: .88em;
+      letter-spacing: 1px;
+      transition: background .25s, color .25s;
+    }
+    .open-sheet-btn:hover { background: #f0c040; color: #5a0000; }
+
+    .draft-note {
+      padding: 12px 22px;
+      background: rgba(0,0,0,0.2);
+      font-size: .8em;
+      color: rgba(255,255,255,0.38);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .draft-frame {
+      width: 100%;
+      height: 720px;
+      border: none;
+      background: #fff;
+      display: block;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 28px 20px;
+      color: rgba(255,255,255,0.18);
+      font-size: .78em;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    footer span { color: rgba(240,192,64,0.35); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 560px) {
+      .nav-btn { padding: 15px 22px; font-size: .82em; letter-spacing: 1px; }
+      #nameScreen { padding: 40px 18px; }
+      .input-row { flex-direction: column; }
+      .btn-gold { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header>
+  <div class="header-inner">
+    <span class="header-ball">⚾</span>
+    <h1>Luigi</h1>
+    <div class="header-rule"></div>
+    <p class="tagline">Baseball League &bull; Official Hub</p>
+  </div>
+</header>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav>
+  <button class="nav-btn active" onclick="switchTab('chat', this)">💬&nbsp; League Chat</button>
+  <button class="nav-btn" onclick="switchTab('draft', this)">📋&nbsp; Draft Grid</button>
+</nav>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<main>
+
+  <!-- ─── CHAT ─── -->
+  <section id="chat" class="section active">
+    <div class="chat-wrap">
+      <div class="panel">
+
+        <div class="panel-head">
+          <span class="panel-title">⚾ League Chat</span>
+          <span id="liveLabel" style="font-size:.76em;color:rgba(255,255,255,.35)">Join to chat</span>
+        </div>
+
+        <!-- Name entry screen -->
+        <div id="nameScreen">
+          <span class="ns-icon">⚾</span>
+          <h2>Join the Chat</h2>
+          <p>Enter your name to connect with fellow league members</p>
+          <div class="input-row">
+            <input class="t-input" id="nameInput" type="text" placeholder="Your name…" maxlength="20"
+                   onkeydown="if(event.key==='Enter') joinChat()" />
+            <button class="btn-gold" onclick="joinChat()">Join Chat</button>
+          </div>
+        </div>
+
+        <!-- Chat room -->
+        <div id="chatRoom">
+          <div class="chat-bar">
+            <div class="user-badge">
+              <div class="live-dot"></div>
+              <span>Chatting as <span class="uname" id="uDisplay"></span></span>
+            </div>
+            <button class="btn-leave" onclick="leaveChat()">✕ Leave</button>
+          </div>
+
+          <div class="msg-box" id="msgBox">
+            <div class="empty-state" id="emptyState">
+              <span class="e-icon">💬</span>
+              <p>No messages yet — say hello!</p>
+            </div>
+          </div>
+
+          <div class="chat-foot">
+            <input class="t-input" id="msgInput" type="text" placeholder="Type a message…" maxlength="500"
+                   onkeydown="if(event.key==='Enter') sendMsg()" />
+            <button class="btn-gold" onclick="sendMsg()">Send ▶</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── DRAFT GRID ─── -->
+  <section id="draft" class="section">
+    <div class="panel">
+      <div class="panel-head draft-head-row">
+        <span class="panel-title">📋 Draft Grid</span>
+        <a href="https://docs.google.com/spreadsheets/d/136M6j37hUjTtSfS8aIMj5uDfXDzokwpcBe90VvSB5Bs/edit?gid=187650027#gid=187650027"
+           target="_blank" class="open-sheet-btn">
+          Open in Google Sheets ↗
+        </a>
+      </div>
+      <div class="draft-note">
+        📌 If the sheet below doesn't display, click <strong>"Open in Google Sheets"</strong> above.
+        The sheet owner may need to publish it via <em>File → Share → Publish to web</em> to enable the embed.
+      </div>
+      <iframe class="draft-frame"
+        src="https://docs.google.com/spreadsheets/d/136M6j37hUjTtSfS8aIMj5uDfXDzokwpcBe90VvSB5Bs/pubhtml?gid=187650027&single=true&widget=true&headers=false"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <p><span>⚾</span> Luigi Baseball League &bull; 2024 <span>⚾</span></p>
+</footer>
+
+<!-- ══════════════ FIREBASE SDKs ══════════════ -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+
+  // ── FIREBASE CONFIG ──
+  const firebaseConfig = {
+    apiKey:            "AIzaSyB9o9osqbxj-DxkGqMZo92E0aIdjBwJnzI",
+    authDomain:        "luigi-baseball.firebaseapp.com",
+    databaseURL:       "https://luigi-baseball-default-rtdb.firebaseio.com",
+    projectId:         "luigi-baseball",
+    storageBucket:     "luigi-baseball.firebasestorage.app",
+    messagingSenderId: "971420589429",
+    appId:             "1:971420589429:web:c454f3894ba06f45fd073c",
+    measurementId:     "G-RNCB7WQ7D5"
+  };
+
+  // ── INIT FIREBASE ──
+  firebase.initializeApp(firebaseConfig);
+  const db      = firebase.database();
+  const msgsRef = db.ref('luigi-league/messages');
+
+  let currentUser = null;
+
+  // ── NAVIGATION ──
+  function switchTab(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // ── JOIN CHAT ──
+  function joinChat() {
+    const nameVal = document.getElementById('nameInput').value.trim();
+    if (!nameVal) {
+      const inp = document.getElementById('nameInput');
+      inp.style.borderColor = '#ff6b6b';
+      inp.focus();
+      setTimeout(() => inp.style.borderColor = '', 1200);
+      return;
+    }
+    currentUser = nameVal;
+    document.getElementById('uDisplay').textContent     = nameVal;
+    document.getElementById('nameScreen').style.display = 'none';
+    document.getElementById('chatRoom').style.display   = 'block';
+    document.getElementById('liveLabel').innerHTML =
+      '<span style="color:#4caf50">● Live</span>';
+
+    pushSystemMsg(`${nameVal} joined the chat ⚾`);
+    subscribeMessages();
+    document.getElementById('msgInput').focus();
+  }
+
+  // ── LEAVE CHAT ──
+  function leaveChat() {
+    if (currentUser) pushSystemMsg(`${currentUser} left the chat`);
+    msgsRef.off();
+    currentUser = null;
+    document.getElementById('nameScreen').style.display = 'block';
+    document.getElementById('chatRoom').style.display   = 'none';
+    document.getElementById('nameInput').value          = '';
+    document.getElementById('liveLabel').textContent    = 'Join to chat';
+    document.getElementById('msgBox').innerHTML = `
+      <div class="empty-state" id="emptyState">
+        <span class="e-icon">💬</span>
+        <p>No messages yet — say hello!</p>
+      </div>`;
+  }
+
+  // ── SEND MESSAGE ──
+  function sendMsg() {
+    const inp  = document.getElementById('msgInput');
+    const text = inp.value.trim();
+    if (!text || !currentUser) return;
+    inp.value = '';
+    msgsRef.push({
+      type:   'user',
+      author: currentUser,
+      text,
+      ts: firebase.database.ServerValue.TIMESTAMP
+    });
+  }
+
+  // ── SYSTEM MESSAGE ──
+  function pushSystemMsg(text) {
+    msgsRef.push({
+      type: 'system',
+      text,
+      ts: firebase.database.ServerValue.TIMESTAMP
+    });
+  }
+
+  // ── LISTEN FOR NEW MESSAGES ──
+  function subscribeMessages() {
+    removeEmptyState();
+    msgsRef.limitToLast(150).on('child_added', snap => {
+      const m = snap.val();
+      removeEmptyState();
+      if (m.type === 'system') appendSys(m.text);
+      else appendUser(m, m.author === currentUser);
+    });
+  }
+
+  function removeEmptyState() {
+    const el = document.getElementById('emptyState');
+    if (el) el.remove();
+  }
+
+  function appendSys(text) {
+    const box = document.getElementById('msgBox');
+    const d   = document.createElement('div');
+    d.className = 'msg sys';
+    d.innerHTML = `<span class="sys-pill">${esc(text)}</span>`;
+    box.appendChild(d);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function appendUser(m, isOwn) {
+    const box = document.getElementById('msgBox');
+    const d   = document.createElement('div');
+    d.className = `msg${isOwn ? ' own' : ''}`;
+    const time = m.ts
+      ? new Date(m.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      : '';
+    d.innerHTML = `
+      <div class="msg-meta">
+        <span class="msg-author">${esc(m.author)}</span>
+        <span class="msg-time">${time}</span>
+      </div>
+      <div class="msg-bubble">${esc(m.text)}</div>`;
+    box.appendChild(d);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+</script>
+</body>
+</html>
