@@ -216,7 +216,6 @@
       letter-spacing: 0.15em;
     }
 
-    /* FIX: removed margin-top here; card gap handles spacing uniformly */
     .program-links {
       display: flex;
       flex-wrap: wrap;
@@ -295,7 +294,6 @@
           Professional, Corporate, and Continuing Education
         </div>
       </div>
-      <!-- FIX: "Educatione" → "Education" -->
       <div class="site-header-tagline">
         Professional, Corporate, and Continuing Education Programs<br />
         Enrollment Data &amp; Reporting
@@ -319,21 +317,113 @@
 
   <main class="page" aria-label="Enrollment reports by program">
 
-    <!-- ── Postgraduate Medical Education Programs ── -->
+    <!-- ── Programs & Dashboards heading ── -->
     <header class="section-header">
       <div>
-        <h2 class="section-title">Programs &amp; Dashboards</h2><br>
-        <h3 class="section-title">Postgraduate Medical Education Programs</h3>
-        <p class="section-description">
-          Dashboards and enrollment reporting for Harvard Medical School's Postgraduate Medical
-          Education Programs (PGME).
-        </p>
+        <h2 class="section-title">Programs &amp; Dashboards</h2>
       </div>
       <p class="section-description">
         The following Marketing Analytics team dashboards provide weekly views of applications and
         enrollments by weeks out from course start, with comparisons to historical averages and
         enrollment targets to support real-time decision making.
       </p>
+    </header>
+
+    <!-- ── Corporate Learning Programs ── -->
+    <header class="section-header" style="margin-top: 2rem;">
+      <div>
+        <h3 class="section-title">Corporate Learning Programs</h3>
+      </div>
+      <p class="section-description">
+        Dashboards and enrollment reporting for Harvard Medical School's Corporate Learning Programs.
+      </p>
+    </header>
+
+    <section class="program-grid" aria-label="Corporate Learning programs">
+
+      <!-- HMX -->
+      <article class="program-card">
+        <div class="program-labels">
+          <span class="program-label program-label--type">Corporate Learning</span>
+          <span class="program-label">Online</span>
+        </div>
+        <h3 class="program-title">HMX</h3>
+        <div class="program-meta">
+          Enrollment dashboard &nbsp;•&nbsp; Live with January - June 2026 Data
+        </div>
+        <div class="program-links">
+          <a class="program-link-pill"
+             href="https://brianr9.github.io/oee-enrollment-reports/hmx-enrollment_report.html"
+             target="_blank" rel="noopener"
+             aria-label="Open HMX enrollment dashboard">
+            <span class="icon">📊</span>
+            Open Enrollment Dashboard
+          </a>
+        </div>
+        <div class="program-meta">UTM Source Report &nbsp;•&nbsp; Live</div>
+        <div class="program-links">
+          <a class="program-link-pill"
+             href="https://brianr9.github.io/oee-enrollment-reports/hmx26-cc-utm_report.html"
+             target="_blank" rel="noopener"
+             aria-label="Open HMX Jan–April 2026 Course Connection source dashboard">
+            <span class="icon">📊</span>
+            Course Connection Source Dashboard &nbsp;•&nbsp; Live with last 3 PCR Data
+          </a>
+        </div>
+        <div class="program-meta">Application Questions &nbsp;•&nbsp; Live with last 3 PCR Data</div>
+        <div class="program-links">
+          <a class="program-link-pill"
+             href="https://brianr9.github.io/oee-enrollment-reports/hmx-app-qs.html"
+             target="_blank" rel="noopener"
+             aria-label="Open HMX Jan–April 2026 application questions report">
+            <span class="icon">📊</span>
+            Application Questions (Marketing)
+          </a>
+        </div>
+      </article>
+
+      <!-- HealthX -->
+      <article class="program-card">
+        <div class="program-labels">
+          <span class="program-label program-label--type">Corporate Learning</span>
+          <span class="program-label">Online</span>
+        </div>
+        <h3 class="program-title">HealthX</h3>
+        <div class="program-meta">
+          Enrollment dashboard &nbsp;•&nbsp; Live
+        </div>
+        <div class="program-links">
+          <a class="program-link-pill"
+             href="https://brianr9.github.io/oee-enrollment-reports/healthx-enrollment_report.html"
+             target="_blank" rel="noopener"
+             aria-label="Open HealthX enrollment dashboard">
+            <span class="icon">📊</span>
+            Open Enrollment Dashboard
+          </a>
+        </div>
+        <div class="program-meta">UTM Source Report &nbsp;•&nbsp; Live</div>
+        <div class="program-links">
+          <a class="program-link-pill"
+             href="https://brianr9.github.io/oee-enrollment-reports/healthx26-cc-utm_report.html"
+             target="_blank" rel="noopener"
+             aria-label="Open HealthX Course Connection source dashboard">
+            <span class="icon">📊</span>
+            Course Connection Source Dashboard
+          </a>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ── Postgraduate Medical Education Programs ── -->
+    <header class="section-header" style="margin-top: 3.5rem;">
+      <div>
+        <h3 class="section-title">Postgraduate Medical Education Programs</h3>
+        <p class="section-description">
+          Dashboards and enrollment reporting for Harvard Medical School's Postgraduate Medical
+          Education Programs (PGME).
+        </p>
+      </div>
     </header>
 
     <section class="program-grid" aria-label="Postgraduate Medical Education programs">
@@ -409,7 +499,6 @@
             Open Enrollment Dashboard
           </a>
         </div>
-        <!-- FIX: program-meta moved OUTSIDE program-links -->
         <div class="program-meta">UTM Source Report &nbsp;•&nbsp; Live</div>
         <div class="program-links">
           <a class="program-link-pill"
@@ -443,7 +532,16 @@
             Open Enrollment Dashboard
           </a>
         </div>
-        <!-- FIX: program-meta moved OUTSIDE program-links -->
+        <div class="program-meta">Application Questions &nbsp;•&nbsp; Live</div>
+        <div class="program-links">
+          <a class="program-link-pill"
+             href="https://brianr9.github.io/oee-enrollment-reports/slp-app-qs.html"
+             target="_blank" rel="noopener"
+             aria-label="Open Surgical Leadership application questions report">
+            <span class="icon">📊</span>
+            Application Questions (Marketing)
+          </a>
+        </div>
         <div class="program-meta">UTM Source Report &nbsp;•&nbsp; Live</div>
         <div class="program-links">
           <a class="program-link-pill"
@@ -527,7 +625,6 @@
             Open Enrollment Dashboard
           </a>
         </div>
-        <!-- FIX: program-meta elements moved OUTSIDE program-links -->
         <div class="program-meta">UTM Source Report &nbsp;•&nbsp; Live</div>
         <div class="program-links">
           <a class="program-link-pill"
@@ -553,7 +650,6 @@
     </section>
 
     <!-- ── Continuing Education ── -->
-    <!-- FIX: was mixed into PGME grid; now its own labelled section -->
     <header class="section-header" style="margin-top: 3.5rem;">
       <div>
         <h3 class="section-title">Continuing Education</h3>
@@ -566,7 +662,6 @@
     <section class="program-grid" aria-label="Continuing Education programs">
 
       <!-- AI in Clinical Medicine -->
-      <!-- FIX: "Medecine" → "Medicine" -->
       <article class="program-card">
         <div class="program-labels">
           <span class="program-label program-label--type">Continuing Education</span>
@@ -592,7 +687,6 @@
     </section>
 
     <!-- ── Harvard Macy Institute ── -->
-    <!-- FIX: was mixed into PGME grid; now its own labelled section -->
     <header class="section-header" style="margin-top: 3.5rem;">
       <div>
         <h3 class="section-title">Harvard Macy Institute</h3>
@@ -625,7 +719,6 @@
             Open Enrollment Dashboard
           </a>
         </div>
-        <!-- FIX: program-meta moved OUTSIDE program-links -->
         <div class="program-meta">UTM Source Report &nbsp;•&nbsp; Live</div>
         <div class="program-links">
           <a class="program-link-pill"
@@ -659,7 +752,6 @@
             Open Enrollment Dashboard
           </a>
         </div>
-        <!-- FIX: program-meta moved OUTSIDE program-links -->
         <div class="program-meta">UTM Source Report &nbsp;•&nbsp; Live</div>
         <div class="program-links">
           <a class="program-link-pill"
@@ -674,99 +766,9 @@
 
     </section>
 
-    <!-- ── Corporate Learning Programs ── -->
-    <header class="section-header" style="margin-top: 3.5rem;">
-      <div>
-        <h3 class="section-title">Corporate Learning Programs</h3>
-      </div>
-      <p class="section-description">
-        Dashboards and enrollment reporting for Harvard Medical School's Corporate Learning Programs.
-      </p>
-    </header>
-
-    <section class="program-grid" aria-label="Corporate Learning programs">
-
-      <!-- HMX -->
-      <article class="program-card">
-        <div class="program-labels">
-          <span class="program-label program-label--type">Corporate Learning</span>
-          <span class="program-label">Online</span>
-        </div>
-        <h3 class="program-title">HMX</h3>
-        <div class="program-meta">
-          Enrollment dashboard &nbsp;•&nbsp; Live with January - June 2026 Data
-        </div>
-        <div class="program-links">
-          <a class="program-link-pill"
-             href="https://brianr9.github.io/oee-enrollment-reports/hmx-enrollment_report.html"
-             target="_blank" rel="noopener"
-             aria-label="Open HMX enrollment dashboard">
-            <span class="icon">📊</span>
-            Open Enrollment Dashboard
-          </a>
-        </div>
-        <!-- FIX: program-meta moved OUTSIDE program-links; removed <br> spacers -->
-        <div class="program-meta">UTM Source Report &nbsp;•&nbsp; Live</div>
-        <div class="program-links">
-          <a class="program-link-pill"
-             href="https://brianr9.github.io/oee-enrollment-reports/hmx26-cc-utm_report.html"
-             target="_blank" rel="noopener"
-             aria-label="Open HMX Jan–April 2026 Course Connection source dashboard">
-            <span class="icon">📊</span>
-            Course Connection Source Dashboard &nbsp;•&nbsp; Live with last 3 PCR Data
-          </a>
-        </div>
-                <div class="program-meta">Application Questions &nbsp;•&nbsp; ive with last 3 PCR Data</div>
-        <div class="program-links">
-          <a class="program-link-pill"
-             href="https://brianr9.github.io/oee-enrollment-reports/hmx-app-qs.html"
-             target="_blank" rel="noopener"
-             aria-label="Open HMX Jan–April 2026 application questions report">
-            <span class="icon">📊</span>
-            Application Questions (Marketing)
-          </a>
-        </div>
-      </article>
-
-      <!-- HealthX -->
-      <!-- FIX: card title was incorrectly set to "HMX"; corrected to "HealthX" -->
-      <article class="program-card">
-        <div class="program-labels">
-          <span class="program-label program-label--type">Corporate Learning</span>
-          <span class="program-label">Online</span>
-        </div>
-        <h3 class="program-title">HealthX</h3>
-        <div class="program-meta">
-          Enrollment dashboard &nbsp;•&nbsp; Live
-        </div>
-        <div class="program-links">
-          <a class="program-link-pill"
-             href="https://brianr9.github.io/oee-enrollment-reports/healthx-enrollment_report.html"
-             target="_blank" rel="noopener"
-             aria-label="Open HealthX enrollment dashboard">
-            <span class="icon">📊</span>
-            Open Enrollment Dashboard
-          </a>
-        </div>
-        <!-- FIX: program-meta moved OUTSIDE program-links; removed <br> spacers -->
-        <div class="program-meta">UTM Source Report &nbsp;•&nbsp; Live</div>
-        <div class="program-links">
-          <a class="program-link-pill"
-             href="https://brianr9.github.io/oee-enrollment-reports/healthx26-cc-utm_report.html"
-             target="_blank" rel="noopener"
-             aria-label="Open HealthX Course Connection source dashboard">
-            <span class="icon">📊</span>
-            Course Connection Source Dashboard
-          </a>
-        </div>
-      </article>
-
-    </section>
-
     <!-- Footnote / metadata -->
     <section class="page-footer-note" aria-label="Report notes">
       <div>
-        <!-- FIX: "foe" → "for" -->
         <strong>Data content:</strong> Reports are refreshed on a regular cadence. For questions
         about methodology, field definitions, or custom requests, please contact Brian Rabuffeti
         and the Office for External Education Marketing Analytics team.
