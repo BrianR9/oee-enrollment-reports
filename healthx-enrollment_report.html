@@ -86,7 +86,7 @@
     &nbsp;&bull;&nbsp;
     Revenue Goal: <strong>$75,000</strong>
     &nbsp;&bull;&nbsp;
-    May 12, 2026
+    May 18, 2026
   </p>
 </div>
 </div>
@@ -97,25 +97,25 @@
 <div class="grid">
   <div class="kpi">
     <div class="kpi-lbl">Cumulative Revenue</div>
-    <div class="kpi-val">$66,571</div>
-    <div class="kpi-sub">As of August 31, 2025</div>
+    <div class="kpi-val">$70,147</div>
+    <div class="kpi-sub">As of September 07, 2025</div>
   </div>
   <div class="kpi">
     <div class="kpi-lbl">Goal Progress</div>
-    <div class="kpi-val">88.8%</div>
+    <div class="kpi-val">93.5%</div>
     <div class="kpi-sub">Target $75,000 &bull; Jun 30, 2026</div>
-    <span class="badge neutral">$8,429 remaining</span>
+    <span class="badge neutral">$4,853 remaining</span>
   </div>
   <div class="kpi">
     <div class="kpi-lbl">Cumulative Enrollments</div>
-    <div class="kpi-val">70</div>
-    <div class="kpi-sub">As of August 31, 2025</div>
+    <div class="kpi-val">76</div>
+    <div class="kpi-sub">As of September 07, 2025</div>
   </div>
   <div class="kpi proj">
     <div class="kpi-lbl">&#9733; Projected Jun 30 Revenue</div>
-    <div class="kpi-val">$163,933</div>
+    <div class="kpi-val">$165,602</div>
     <div class="kpi-sub">OLS linear trend &bull; Jun 30, 2026</div>
-    <span class="badge positive">$88,933 above goal</span>
+    <span class="badge positive">$90,602 above goal</span>
   </div>
 </div>
 
@@ -125,12 +125,12 @@
   <div class="pg-wrap">
     <div class="pg-lbl">
       <span>Revenue Goal &mdash; $75,000</span>
-      <span><strong>88.8%</strong></span>
+      <span><strong>93.5%</strong></span>
     </div>
     <div class="pg-track">
       <div class="pg-fill"
-           style="width:88.8%; background:#2e86c1;">
-        88.8%
+           style="width:93.5%; background:#2e86c1;">
+        93.5%
       </div>
     </div>
   </div>
@@ -177,7 +177,7 @@
 <!-- ── FOOTER ────────────────────────────────────────────────────── -->
 <div class="ftr">
   <p><strong>HealthX Portfolio &mdash; FY2026 Performance Dashboard</strong></p>
-  <p>Generated May 12, 2026 at 12:39 PM</p>
+  <p>Generated May 18, 2026 at 01:44 PM</p>
 </div>
 
 <script src="https://cdn.plot.ly/plotly-2.4.1.min.js"></script>
@@ -185,31 +185,31 @@
 
 // Gauge — revenue vs goal
 Plotly.newPlot("gauge",
-  [{"type": "indicator", "mode": "gauge+number+delta", "value": 66571.0, "title": {"text": "FY2026 Revenue vs $75,000 Goal", "font": {"size": 20}}, "delta": {"reference": 75000, "increasing": {"color": "#28a745"}, "decreasing": {"color": "#dc3545"}}, "gauge": {"axis": {"range": [0, 97500.0], "tickformat": "$,.0f"}, "bar": {"color": "#1a5276"}, "steps": [{"range": [0, 37500.0], "color": "#f8d7da"}, {"range": [37500.0, 56250.0], "color": "#fff3cd"}, {"range": [56250.0, 75000], "color": "#d4edda"}], "threshold": {"line": {"color": "#2c3e50", "width": 4}, "thickness": 0.75, "value": 75000}}}],
+  [{"type": "indicator", "mode": "gauge+number+delta", "value": 70147.0, "title": {"text": "FY2026 Revenue vs $75,000 Goal", "font": {"size": 20}}, "delta": {"reference": 75000, "increasing": {"color": "#28a745"}, "decreasing": {"color": "#dc3545"}}, "gauge": {"axis": {"range": [0, 97500.0], "tickformat": "$,.0f"}, "bar": {"color": "#1a5276"}, "steps": [{"range": [0, 37500.0], "color": "#f8d7da"}, {"range": [37500.0, 56250.0], "color": "#fff3cd"}, {"range": [56250.0, 75000], "color": "#d4edda"}], "threshold": {"line": {"color": "#2c3e50", "width": 4}, "thickness": 0.75, "value": 75000}}}],
   {"height": 380, "margin": {"t": 50, "r": 60, "l": 60, "b": 50}},
   {"responsive": true});
 
 // Cumulative Revenue (+ goal line, OLS trend, projection)
 Plotly.newPlot("rev-chart",
-  [{"x": ["2025-07-06", "2025-07-13", "2025-07-20", "2025-07-27", "2025-08-03", "2025-08-10", "2025-08-17", "2025-08-24", "2025-08-31"], "y": [50000.0, 51250.0, 51745.0, 57079.0, 58700.0, 62091.0, 63329.0, 64418.0, 66571.0], "mode": "lines+markers", "name": "FY26", "line": {"color": "#1a5276", "width": 4}, "marker": {"size": 10, "symbol": "circle"}, "hovertemplate": "<b>FY26</b><br>Date: %{x}<br>Revenue: %{y:$,.0f}<extra></extra>"}, {"x": ["2025-07-06", "2025-08-31"], "y": [49422.466666549444, 67284.86666661501], "mode": "lines", "name": "OLS Trend", "line": {"color": "#888888", "width": 2, "dash": "dash"}, "hovertemplate": "Trend: $%{y:,.0f}<extra></extra>"}, {"x": ["2025-08-31", "2026-06-30"], "y": [67284.86666661501, 163933.20952421427], "mode": "lines", "name": "Projection \u2192 Jun 30", "line": {"color": "#FF6B35", "width": 2.5, "dash": "dot"}, "hovertemplate": "Projection: $%{y:,.0f}<extra></extra>"}, {"x": ["2026-06-30"], "y": [163933.20952421427], "mode": "markers", "name": "Jun 30 Est: $163,933", "marker": {"size": 18, "symbol": "star", "color": "#FF6B35", "line": {"color": "#cc4400", "width": 2}}, "hovertemplate": "<b>June 30, 2026 \u2014 Projected Year-End</b><br>Revenue: $%{y:,.0f}<extra></extra>"}],
-  {"xaxis": {"type": "date", "gridcolor": "#e9ecef", "title": {"text": "Date", "font": {"size": 14}}}, "yaxis": {"gridcolor": "#e9ecef", "tickformat": "$,.0f", "title": {"text": "Cumulative Revenue ($)", "font": {"size": 14}}}, "shapes": [{"type": "line", "xref": "paper", "x0": 0, "x1": 1, "yref": "y", "y0": 75000, "y1": 75000, "line": {"color": "#28a745", "width": 2.5, "dash": "dash"}}], "annotations": [{"x": 0.01, "xref": "paper", "y": 75000, "yref": "y", "text": "  Goal  $75,000", "showarrow": false, "xanchor": "left", "yanchor": "bottom", "bgcolor": "rgba(255,255,255,0.88)", "font": {"color": "#28a745", "size": 12}}, {"x": "2026-06-30", "xref": "x", "y": 163933.20952421427, "yref": "y", "text": "<b>June 30, 2026</b><br><b>$163,933</b><br><i>projected year-end</i>", "showarrow": true, "arrowhead": 2, "arrowcolor": "#FF6B35", "ax": -130, "ay": -65, "bgcolor": "rgba(255,255,255,0.93)", "bordercolor": "#FF6B35", "borderwidth": 1.5, "borderpad": 7, "font": {"color": "#FF6B35", "size": 12}}], "hovermode": "closest", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "white", "legend": {"title": {"text": "Series", "font": {"size": 12}}}},
+  [{"x": ["2025-07-06", "2025-07-13", "2025-07-20", "2025-07-27", "2025-08-03", "2025-08-10", "2025-08-17", "2025-08-24", "2025-08-31", "2025-09-07"], "y": [50000.0, 51250.0, 51745.0, 57079.0, 58700.0, 62091.0, 63329.0, 64418.0, 66571.0, 70147.0], "mode": "lines+markers", "name": "FY26", "line": {"color": "#1a5276", "width": 4}, "marker": {"size": 10, "symbol": "circle"}, "hovertemplate": "<b>FY26</b><br>Date: %{x}<br>Revenue: %{y:$,.0f}<extra></extra>"}, {"x": ["2025-07-06", "2025-09-07"], "y": [49330.92727291584, 69735.07272732258], "mode": "lines", "name": "OLS Trend", "line": {"color": "#888888", "width": 2, "dash": "dash"}, "hovertemplate": "Trend: $%{y:,.0f}<extra></extra>"}, {"x": ["2025-09-07", "2026-06-30"], "y": [69735.07272732258, 165602.16883060336], "mode": "lines", "name": "Projection \u2192 Jun 30", "line": {"color": "#FF6B35", "width": 2.5, "dash": "dot"}, "hovertemplate": "Projection: $%{y:,.0f}<extra></extra>"}, {"x": ["2026-06-30"], "y": [165602.16883060336], "mode": "markers", "name": "Jun 30 Est: $165,602", "marker": {"size": 18, "symbol": "star", "color": "#FF6B35", "line": {"color": "#cc4400", "width": 2}}, "hovertemplate": "<b>June 30, 2026 \u2014 Projected Year-End</b><br>Revenue: $%{y:,.0f}<extra></extra>"}],
+  {"xaxis": {"type": "date", "gridcolor": "#e9ecef", "title": {"text": "Date", "font": {"size": 14}}}, "yaxis": {"gridcolor": "#e9ecef", "tickformat": "$,.0f", "title": {"text": "Cumulative Revenue ($)", "font": {"size": 14}}}, "shapes": [{"type": "line", "xref": "paper", "x0": 0, "x1": 1, "yref": "y", "y0": 75000, "y1": 75000, "line": {"color": "#28a745", "width": 2.5, "dash": "dash"}}], "annotations": [{"x": 0.01, "xref": "paper", "y": 75000, "yref": "y", "text": "  Goal  $75,000", "showarrow": false, "xanchor": "left", "yanchor": "bottom", "bgcolor": "rgba(255,255,255,0.88)", "font": {"color": "#28a745", "size": 12}}, {"x": "2026-06-30", "xref": "x", "y": 165602.16883060336, "yref": "y", "text": "<b>June 30, 2026</b><br><b>$165,602</b><br><i>projected year-end</i>", "showarrow": true, "arrowhead": 2, "arrowcolor": "#FF6B35", "ax": -130, "ay": -65, "bgcolor": "rgba(255,255,255,0.93)", "bordercolor": "#FF6B35", "borderwidth": 1.5, "borderpad": 7, "font": {"color": "#FF6B35", "size": 12}}], "hovermode": "closest", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "white", "legend": {"title": {"text": "Series", "font": {"size": 12}}}},
   {"responsive": true});
 
 // Cumulative Enrollments
 Plotly.newPlot("enr-chart",
-  [{"x": ["2025-07-06", "2025-07-13", "2025-07-20", "2025-07-27", "2025-08-03", "2025-08-10", "2025-08-17", "2025-08-24", "2025-08-31"], "y": [41.0, 42.0, 43.0, 49.0, 51.0, 59.0, 62.0, 65.0, 70.0], "mode": "lines+markers", "name": "FY26", "line": {"color": "#1a5276", "width": 4}, "marker": {"size": 10, "symbol": "circle"}, "hovertemplate": "<b>FY26</b><br>Date: %{x}<br>Enrollments: %{y:,.0f}<extra></extra>"}],
+  [{"x": ["2025-07-06", "2025-07-13", "2025-07-20", "2025-07-27", "2025-08-03", "2025-08-10", "2025-08-17", "2025-08-24", "2025-08-31", "2025-09-07"], "y": [41.0, 42.0, 43.0, 49.0, 51.0, 59.0, 62.0, 65.0, 70.0, 76.0], "mode": "lines+markers", "name": "FY26", "line": {"color": "#1a5276", "width": 4}, "marker": {"size": 10, "symbol": "circle"}, "hovertemplate": "<b>FY26</b><br>Date: %{x}<br>Enrollments: %{y:,.0f}<extra></extra>"}],
   {"xaxis": {"type": "date", "gridcolor": "#e9ecef", "title": {"text": "Date", "font": {"size": 14}}}, "yaxis": {"gridcolor": "#e9ecef", "tickformat": ",.0f", "title": {"text": "Cumulative Enrollments", "font": {"size": 14}}}, "hovermode": "closest", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "white", "legend": {"title": {"text": "Fiscal Year", "font": {"size": 12}}}},
   {"responsive": true});
 
 // Monthly Revenue Bar
 Plotly.newPlot("bar-rev",
-  [{"x": ["Jul 2025", "Aug 2025"], "y": [57079.0, 9492.0], "name": "FY26", "type": "bar", "marker": {"color": "#1a5276"}, "hovertemplate": "<b>FY26</b><br>%{x}: %{y:$,.0f}<extra></extra>"}],
+  [{"x": ["Jul 2025", "Aug 2025", "Sep 2025"], "y": [57079.0, 9492.0, 3576.0], "name": "FY26", "type": "bar", "marker": {"color": "#1a5276"}, "hovertemplate": "<b>FY26</b><br>%{x}: %{y:$,.0f}<extra></extra>"}],
   {"barmode": "group", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "white", "hovermode": "closest", "xaxis": {"title": {"text": "Month", "font": {"size": 14}}, "gridcolor": "#e9ecef"}, "yaxis": {"title": {"text": "Revenue ($)", "font": {"size": 14}}, "tickformat": "$,.0f", "gridcolor": "#e9ecef"}, "legend": {"title": {"text": "Fiscal Year", "font": {"size": 12}}}},
   {"responsive": true});
 
 // Monthly Enrollment Bar
 Plotly.newPlot("bar-enr",
-  [{"x": ["Jul 2025", "Aug 2025"], "y": [49.0, 21.0], "name": "FY26", "type": "bar", "marker": {"color": "#1a5276"}, "hovertemplate": "<b>FY26</b><br>%{x}: %{y:,.0f}<extra></extra>"}],
+  [{"x": ["Jul 2025", "Aug 2025", "Sep 2025"], "y": [49.0, 21.0, 6.0], "name": "FY26", "type": "bar", "marker": {"color": "#1a5276"}, "hovertemplate": "<b>FY26</b><br>%{x}: %{y:,.0f}<extra></extra>"}],
   {"barmode": "group", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "white", "hovermode": "closest", "xaxis": {"title": {"text": "Month", "font": {"size": 14}}, "gridcolor": "#e9ecef"}, "yaxis": {"title": {"text": "Enrollments", "font": {"size": 14}}, "tickformat": ",.0f", "gridcolor": "#e9ecef"}, "legend": {"title": {"text": "Fiscal Year", "font": {"size": 12}}}},
   {"responsive": true});
 
