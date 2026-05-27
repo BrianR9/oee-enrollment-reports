@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debriefs &amp; Reporting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+
+    /* ── 1 · RESET ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── 2 · TOKENS ────────────────────────────────────────────── */
+    :root {
+      --nav-h     : 4rem;
+      --px        : clamp(1.5rem, 6vw, 6rem);
+      --py        : clamp(3rem, 5vh, 5rem);
+      --crimson   : #A41034;
+      --crimson-dk: #7D0C27;
+      --crimson-lt: rgba(164, 16, 52, 0.08);
+      --navy      : #1B2A4A;
+      --navy-lt   : rgba(27, 42, 74, 0.07);
+      --bg        : #F7F5F2;
+      --white     : #FFFFFF;
+      --ink       : #1C1C1E;
+      --muted     : #6E6E73;
+      --border    : #E0DBD5;
+      --border-dk : #BFBBB4;
+      --shadow-s  : 0 1px 4px rgba(0,0,0,0.08);
+      --r         : 8px;
+      --r-s       : 5px;
+    }
+
+    /* ── 3 · BASE ──────────────────────────────────────────────── */
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; }
+    @keyframes pop {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── 4 · NAV ───────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: var(--white);
+      border-bottom: 3px solid var(--crimson);
+      box-shadow: var(--shadow-s);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding-inline: var(--px);
+    }
+    nav ul {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      list-style: none;
+      gap: clamp(0.75rem, 2vw, 2rem);
+      overflow-x: auto;
+    }
+    nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.38rem;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.18s, border-color 0.18s;
+    }
+    nav a:hover  { color: var(--ink); border-bottom-color: var(--border-dk); }
+    nav a.active { color: var(--crimson); border-bottom-color: var(--crimson); }
+    .nav-n { font-size: 0.6rem; opacity: 0.5; font-variant-numeric: tabular-nums; }
+
+    /* ── 5 · SLIDE SHELL ───────────────────────────────────────── */
+    .slide {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: calc(var(--nav-h) + var(--py)) var(--px) var(--py);
+      overflow: hidden;
+    }
+    .slide-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1200px;
+      margin-inline: auto;
+    }
+    .ghost-num {
+      position: absolute;
+      bottom: -2rem;
+      right: var(--px);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(6rem, 18vw, 17rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      color: rgba(0,0,0,0.04);
+      pointer-events: none;
+      user-select: none;
+    }
+    .slide-title .ghost-num { color: rgba(255,255,255,0.08); }
+
+    /* ── Shared type ── */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 0.75rem;
+    }
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 2px;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+    .subtitle { color: var(--muted); line-height: 1.6; }
+    .chip {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.26rem 0.7rem;
+      border-radius: 2px;
+      background: var(--crimson-lt);
+      border: 1px solid rgba(164,16,52,0.22);
+      color: var(--crimson);
+      margin-bottom: 0.8rem;
+    }
+    .chip--navy { background: var(--navy-lt); border-color: rgba(27,42,74,0.22); color: var(--navy); }
+    .col-label, .panel-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      padding-bottom: 0.7rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1rem;
+    }
+    .placeholder-msg {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-style: italic;
+      padding: 1rem 0;
+    }
+
+    /* ── 6 · SLIDE 1 — TITLE ───────────────────────────────────── */
+    .slide-title {
+      background: var(--crimson);
+      min-height: 100vh;
+      justify-content: center;
+    }
+    .slide-title::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg, transparent, transparent 70px,
+        rgba(255,255,255,0.018) 70px, rgba(255,255,255,0.018) 140px
+      );
+      pointer-events: none;
+    }
+    .slide-title .slide-inner { display: flex; flex-direction: column; gap: 1.5rem; max-width: 900px; }
+    .slide-title .eyebrow     { color: rgba(255,255,255,0.6); }
+    .slide-title .eyebrow::before { background: rgba(255,255,255,0.4); }
+    .slide-title h1 {
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--white);
+    }
+    .slide-title .subtitle {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: rgba(255,255,255,0.68);
+      max-width: 44ch;
+    }
+
+    /* ── 7 · SLIDE 2 — CONTENT ─────────────────────────────────── */
+    .slide-content { background: var(--white); }
+    .slide-content .slide-inner { display: flex; flex-direction: column; gap: 2.5rem; }
+    .slide-content h2 {
+      font-size: clamp(2rem, 4.5vw, 3.25rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+    }
+    .slide-content .subtitle { font-size: clamp(0.9rem, 1.4vw, 1rem); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .dot-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
+    .dot-list li {
+      position: relative;
+      padding-left: 1.1rem;
+      font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+      line-height: 1.65;
+    }
+    .dot-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.62em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--crimson);
+    }
+
+    /* ── 8 · SLIDE 3 — BREAKOUT ────────────────────────────────── */
+    .slide-breakout { background: var(--bg); }
+    .slide-breakout .slide-inner { display: flex; flex-direction: column; gap: 2rem; max-width: 860px; }
+    .slide-breakout h2 {
+      font-size: clamp(2.5rem, 6vw, 4.75rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+    }
+    .slide-breakout .subtitle { font-size: clamp(1rem, 1.6vw, 1.1rem); max-width: 52ch; }
+    .slide-body { display: flex; flex-direction: column; gap: 1.25rem; }
+    .callout {
+      background: var(--crimson-lt);
+      border-left: 3px solid var(--crimson);
+      padding: 0.85rem 1.2rem;
+      border-radius: 0 var(--r-s) var(--r-s) 0;
+      font-size: clamp(0.88rem, 1.3vw, 1rem);
+      line-height: 1.6;
+    }
+    .task-list { list-style: none; counter-reset: tasks; display: flex; flex-direction: column; gap: 0.9rem; }
+    .task-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      counter-increment: tasks;
+      font-size: clamp(0.88rem, 1.2vw, 1rem);
+      line-height: 1.6;
+    }
+    .task-list li::before {
+      content: counter(tasks, decimal-leading-zero);
+      flex-shrink: 0;
+      width: 2.1rem;
+      height: 2.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: var(--crimson);
+      background: var(--crimson-lt);
+      border: 1px solid rgba(164,16,52,0.2);
+      border-radius: 50%;
+      margin-top: 0.1em;
+    }
+    .task-list strong { color: var(--crimson); font-weight: 600; }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+    .cta::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 2px;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ── 9 · SLIDE 4 — GROUPS ──────────────────────────────────── */
+    .slide-groups { background: var(--white); }
+    .slide-groups .slide-inner { display: flex; flex-direction: column; gap: 2.5rem; }
+    .slide-groups h2 {
+      font-size: clamp(2rem, 4.5vw, 3.25rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+    }
+    .slide-groups .subtitle { font-size: clamp(0.9rem, 1.4vw, 1rem); }
+
+    /* Timer widget */
+    .timer-widget {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.5rem 2rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .timer-left { display: flex; flex-direction: column; gap: 0.65rem; }
+    .timer-display {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+      transition: color 0.3s;
+    }
+    .timer-display.urgent { color: var(--crimson); }
+    .timer-display.done   { color: var(--border-dk); }
+    .timer-bar-track {
+      height: 4px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      min-width: 160px;
+    }
+    .timer-bar-fill {
+      height: 100%;
+      background: var(--navy);
+      border-radius: 999px;
+      width: 100%;
+      transition: width 1s linear, background 0.5s;
+    }
+    .timer-bar-fill.urgent { background: var(--crimson); }
+    .timer-right { display: flex; flex-direction: column; gap: 0.85rem; }
+    .timer-presets { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+    .timer-presets-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-right: 0.2rem;
+    }
+    .btn-preset {
+      padding: 0.28rem 0.65rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-s);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-preset:hover,
+    .btn-preset.active {
+      background: var(--crimson-lt);
+      border-color: rgba(164,16,52,0.3);
+      color: var(--crimson);
+    }
+    .timer-custom-row { display: flex; align-items: center; gap: 0.5rem; }
+    .timer-custom-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .timer-custom-input {
+      width: 5rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-s);
+      padding: 0.33rem 0.6rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+    .timer-custom-input:focus { border-color: var(--crimson); box-shadow: 0 0 0 3px var(--crimson-lt); }
+    .btn-timer-set {
+      padding: 0.33rem 0.75rem;
+      background: var(--crimson-lt);
+      border: 1px solid rgba(164,16,52,0.22);
+      border-radius: var(--r-s);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-timer-set:hover { background: rgba(164,16,52,0.14); }
+    .timer-actions { display: flex; gap: 0.5rem; }
+    .btn-timer-play {
+      flex: 1;
+      padding: 0.65rem;
+      background: var(--crimson);
+      color: var(--white);
+      border: none;
+      border-radius: var(--r-s);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .btn-timer-play:hover { background: var(--crimson-dk); }
+    .btn-timer-reset {
+      padding: 0.65rem 1rem;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: var(--r-s);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.18s, border-color 0.18s;
+    }
+    .btn-timer-reset:hover { color: var(--crimson); border-color: rgba(164,16,52,0.3); }
+
+    /* Groups builder */
+    .groups-layout { display: grid; grid-template-columns: 290px 1fr; gap: 2rem; align-items: start; }
+    .input-panel {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .name-row { display: flex; gap: 0.5rem; margin-bottom: 0.65rem; }
+    .name-row input {
+      flex: 1;
+      min-width: 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-s);
+      padding: 0.56rem 0.85rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+    .name-row input:focus { border-color: var(--crimson); box-shadow: 0 0 0 3px var(--crimson-lt); }
+    .name-row input::placeholder { color: var(--muted); }
+    .btn-add {
+      flex-shrink: 0;
+      background: var(--crimson);
+      color: var(--white);
+      border: none;
+      border-radius: var(--r-s);
+      padding: 0.56rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .btn-add:hover { background: var(--crimson-dk); }
+    .members-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+      max-height: 200px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+    .members-list::-webkit-scrollbar       { width: 3px; }
+    .members-list::-webkit-scrollbar-track { background: transparent; }
+    .members-list::-webkit-scrollbar-thumb { background: var(--border-dk); border-radius: 2px; }
+    .member-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-s);
+      padding: 0.38rem 0.42rem 0.38rem 0.72rem;
+      animation: pop 0.18s ease;
+    }
+    .member-item span { font-size: 0.85rem; }
+    .btn-rm {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.35rem;
+      height: 1.35rem;
+      background: none;
+      border: none;
+      border-radius: 3px;
+      font-size: 1rem;
+      line-height: 1;
+      color: var(--muted);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: color 0.15s, background 0.15s;
+    }
+    .btn-rm:hover { color: var(--crimson); background: var(--crimson-lt); }
+    .empty-note {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+      padding: 0.25rem 0;
+    }
+    .group-controls {
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .ctrl-row { display: flex; align-items: center; justify-content: space-between; }
+    .ctrl-row label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .counter { display: flex; align-items: center; gap: 0.75rem; }
+    .counter-btn {
+      width: 1.7rem;
+      height: 1.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-s);
+      font-size: 1.1rem;
+      font-family: inherit;
+      color: var(--ink);
+      cursor: pointer;
+      line-height: 1;
+      transition: all 0.15s;
+    }
+    .counter-btn:hover:not(:disabled) {
+      background: var(--crimson-lt);
+      border-color: rgba(164,16,52,0.25);
+      color: var(--crimson);
+    }
+    .counter-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .counter-val {
+      font-size: 1.1rem;
+      font-weight: 700;
+      min-width: 1.5rem;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+    .btn-generate {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--crimson);
+      color: var(--white);
+      border: none;
+      border-radius: var(--r-s);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .btn-generate:hover  { background: var(--crimson-dk); }
+    .btn-generate:active { transform: scale(0.98); }
+    .btn-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .btn-secondary {
+      padding: 0.62rem 0.5rem;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: var(--r-s);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.18s, border-color 0.18s;
+      white-space: nowrap;
+    }
+    .btn-secondary:hover { color: var(--crimson); border-color: rgba(164,16,52,0.3); }
+
+    /* Output panel */
+    .output-panel { display: flex; flex-direction: column; gap: 1rem; }
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 1rem;
+    }
+    .team-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--crimson);
+      border-radius: var(--r);
+      padding: 0.95rem 1.05rem 1.05rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      box-shadow: var(--shadow-s);
+      animation: pop 0.22s ease;
+    }
+    .team-name-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding-bottom: 0.55rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .team-name-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: pointer;
+      border-radius: 3px;
+      padding: 2px 4px;
+      margin: -2px -4px;
+      transition: background 0.15s;
+    }
+    .team-name-text:hover { background: var(--crimson-lt); }
+    .team-name-edit {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      flex: 1;
+      min-width: 0;
+      background: var(--crimson-lt);
+      border: 1px solid rgba(164,16,52,0.3);
+      border-radius: 3px;
+      padding: 2px 6px;
+      outline: none;
+    }
+    .btn-name-edit {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.3rem;
+      height: 1.3rem;
+      background: none;
+      border: none;
+      border-radius: 3px;
+      padding: 0;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.15s, background 0.15s;
+    }
+    .btn-name-edit:hover { color: var(--crimson); background: var(--crimson-lt); }
+    .btn-name-edit svg  { width: 11px; height: 11px; }
+
+    /* Team member rows with edit + move */
+    .team-members-ul { list-style: none; display: flex; flex-direction: column; gap: 0.42rem; }
+    .team-member-li  { display: flex; flex-direction: column; gap: 0.2rem; }
+    .member-row      { display: flex; align-items: center; gap: 0.35rem; }
+    .member-row-name {
+      flex: 1;
+      min-width: 0;
+      font-size: 0.86rem;
+      line-height: 1.3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .team-member-li.leader .member-row-name { font-weight: 600; }
+    .leader-star { font-size: 0.52rem; color: var(--crimson); flex-shrink: 0; }
+    .leader-tag {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      background: var(--crimson-lt);
+      border: 1px solid rgba(164,16,52,0.2);
+      border-radius: 2px;
+      padding: 0.1rem 0.3rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .member-action-btns { display: flex; gap: 0.15rem; flex-shrink: 0; margin-left: auto; }
+    .btn-mem-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.2rem;
+      height: 1.2rem;
+      background: none;
+      border: none;
+      border-radius: 3px;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+      transition: color 0.15s, background 0.15s;
+    }
+    .btn-mem-action:hover { color: var(--crimson); background: var(--crimson-lt); }
+    .btn-mem-action svg  { width: 9px; height: 9px; }
+    .member-name-input {
+      flex: 1;
+      min-width: 0;
+      background: var(--crimson-lt);
+      border: 1px solid rgba(164,16,52,0.3);
+      border-radius: 3px;
+      padding: 1px 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.86rem;
+      color: var(--ink);
+      outline: none;
+    }
+    .move-panel {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+      padding: 0.35rem 0.5rem;
+      background: var(--navy-lt);
+      border: 1px solid rgba(27,42,74,0.15);
+      border-radius: var(--r-s);
+    }
+    .move-panel-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .btn-move-to {
+      padding: 0.16rem 0.5rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--navy);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-move-to:hover { background: var(--navy-lt); border-color: rgba(27,42,74,0.3); }
+
+    /* ── 10 · SLIDE 5 — NOTES ──────────────────────────────────── */
+    .slide-notes { background: var(--bg); }
+    .slide-notes .slide-inner { display: flex; flex-direction: column; gap: 2.5rem; }
+    .slide-notes h2 {
+      font-size: clamp(2rem, 4.5vw, 3.25rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+    }
+    .slide-notes .subtitle { font-size: clamp(0.9rem, 1.4vw, 1rem); }
+
+    /* Stacked full-width note cards */
+    .notes-stack { display: flex; flex-direction: column; gap: 1.75rem; }
+    .note-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--navy);
+      border-radius: var(--r);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: var(--shadow-s);
+      animation: pop 0.22s ease;
+    }
+    .note-card-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .note-card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--navy);
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .note-card-count {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .pills { display: flex; flex-wrap: wrap; gap: 0.32rem; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.28rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 0.18rem 0.55rem;
+      border-radius: 999px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .pill.leader {
+      background: var(--crimson-lt);
+      border-color: rgba(164,16,52,0.2);
+      color: var(--crimson);
+      font-weight: 600;
+    }
+    .pill.leader::before { content: '★'; font-size: 0.52rem; }
+    .note-section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .note-ta {
+      width: 100%;
+      min-height: 130px;
+      resize: vertical;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r-s);
+      padding: 0.85rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+    }
+    .note-ta::placeholder { color: var(--muted); }
+    .note-ta:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px var(--navy-lt);
+      background: var(--white);
+    }
+    .note-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.4rem;
+    }
+    .note-chars { font-family: 'Inter', sans-serif; font-size: 0.67rem; color: var(--muted); }
+    .btn-note-clear {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.67rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.18s;
+    }
+    .btn-note-clear:hover { color: var(--crimson); }
+
+    /* Commitments & Next Steps */
+    .commitments-section {
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .commitments-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .commitment-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .commitment-field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .commitment-field label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .commitment-ta {
+      width: 100%;
+      min-height: 90px;
+      resize: vertical;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r-s);
+      padding: 0.65rem 0.8rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+    }
+    .commitment-ta::placeholder { color: var(--muted); }
+    .commitment-ta:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px var(--navy-lt);
+      background: var(--white);
+    }
+
+    /* ── 11 · RESPONSIVE ───────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .groups-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .two-col            { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-label          { display: none; }
+      .timer-widget       { grid-template-columns: 1fr; gap: 1.25rem; }
+      .commitment-fields  { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      :root { --px: 1.25rem; --py: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ─────────────────────────────────────────────── -->
+  <nav aria-label="Slide navigation">
+    <div class="nav-inner">
+      <ul>
+        <li><a href="#slide1"><span class="nav-n">01</span> <span class="nav-label">Discussion Topic</span></a></li>
+        <li><a href="#slide2"><span class="nav-n">02</span> <span class="nav-label">Debriefs &amp; Reporting</span></a></li>
+        <li><a href="#slide3"><span class="nav-n">03</span> <span class="nav-label">Breakout</span></a></li>
+        <li><a href="#slide4"><span class="nav-n">04</span> <span class="nav-label">Groups</span></a></li>
+        <li><a href="#slide5"><span class="nav-n">05</span> <span class="nav-label">Notes</span></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- 1 · TITLE -->
+    <section id="slide1" class="slide slide-title" aria-label="Slide 1 of 5">
+      <div class="slide-inner">
+        <p class="eyebrow">Discussion Topic</p>
+        <h1>Debriefs &amp;<br>Reporting</h1>
+        <p class="subtitle">Where are we, and where are we going?</p>
+      </div>
+      <span class="ghost-num" aria-hidden="true">01</span>
+    </section>
+
+    <!-- 2 · CONTENT -->
+    <section id="slide2" class="slide slide-content" aria-label="Slide 2 of 5">
+      <div class="slide-inner">
+        <header>
+          <span class="chip">03</span>
+          <h2>Debriefs &amp; Reporting</h2>
+          <p class="subtitle">Where are we, where are we going?</p>
+        </header>
+        <div class="two-col">
+          <div>
+            <h3 class="col-label">Where We Are</h3>
+            <ul class="dot-list">
+              <li>Detailed post-program debriefs used to happen for PGME certificate programs and HMX.</li>
+              <li>Learnings from campaigns, recruitment, and creative aren't reliably feeding the next cycle.</li>
+              <li>Reporting is fragmented across program portfolios, the funnel, and creative — each group sees a different slice.</li>
+              <li>We have data — the gap is shared definitions, cadence, and what we actually act on together.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="col-label">Discussion Prompts</h3>
+            <ul class="dot-list">
+              <li>What 3–5 metrics matter across our team — and which are unique to Program Marketing, AES, and Marketing Services?</li>
+              <li>What should debriefs look like moving forward — campaign, funnel, and creative in the same room — and who owns it?</li>
+              <li>How do we make reporting drive the next decision, not just describe the last cycle?</li>
+              <li>What should our reporting cadence look like a year from now?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <span class="ghost-num" aria-hidden="true">02</span>
+    </section>
+
+    <!-- 3 · BREAKOUT -->
+    <section id="slide3" class="slide slide-breakout" aria-label="Slide 3 of 5">
+      <div class="slide-inner">
+        <header>
+          <span class="chip chip--navy">15 Min</span>
+          <h2>Breakout</h2>
+          <p class="subtitle">Design a reporting and debrief cadence — end to end</p>
+        </header>
+        <div class="slide-body">
+          <p class="callout">In small groups, pick one program or course you know well.</p>
+          <ol class="task-list">
+            <li>Sketch a <strong>launch, check-in, reporting, and debrief cadence</strong> — who meets, when, and what gets reviewed.</li>
+            <li>List the <strong>3–5 metrics</strong> you'd report on, spanning campaign, funnel, and creative.</li>
+            <li>Name the <strong>one decision</strong> each debrief should drive.</li>
+          </ol>
+          <p class="cta">Be ready to walk the room through your cadence, metrics, and decisions.</p>
+        </div>
+      </div>
+      <span class="ghost-num" aria-hidden="true">03</span>
+    </section>
+
+    <!-- 4 · GROUPS -->
+    <section id="slide4" class="slide slide-groups" aria-label="Slide 4 of 5">
+      <div class="slide-inner">
+
+        <header>
+          <span class="chip">Groups</span>
+          <h2>Team Builder</h2>
+          <p class="subtitle">Set a discussion timer, add members, and randomly assign teams with leaders.</p>
+        </header>
+
+        <!-- Timer -->
+        <div class="timer-widget" aria-label="Discussion timer">
+          <div class="timer-left">
+            <div id="timer-display" class="timer-display" aria-live="polite" aria-label="Time remaining">15:00</div>
+            <div class="timer-bar-track" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+              <div id="timer-bar" class="timer-bar-fill"></div>
+            </div>
+          </div>
+          <div class="timer-right">
+            <div class="timer-presets">
+              <span class="timer-presets-label">Set time</span>
+              <button class="btn-preset" data-min="5">5 min</button>
+              <button class="btn-preset active" data-min="15">15 min</button>
+              <button class="btn-preset" data-min="20">20 min</button>
+              <button class="btn-preset" data-min="30">30 min</button>
+            </div>
+            <div class="timer-custom-row">
+              <span class="timer-custom-label">Custom</span>
+              <input
+                type="number"
+                id="timer-custom"
+                class="timer-custom-input"
+                min="1" max="120"
+                placeholder="min"
+                aria-label="Custom minutes"
+              >
+              <button id="btn-timer-set" class="btn-timer-set">Set</button>
+            </div>
+            <div class="timer-actions">
+              <button id="btn-timer-play"  class="btn-timer-play">▶ Start</button>
+              <button id="btn-timer-reset" class="btn-timer-reset">↺ Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Builder -->
+        <div class="groups-layout">
+
+          <div class="input-panel">
+            <h3 class="panel-label">Team Members</h3>
+            <div class="name-row">
+              <input
+                type="text"
+                id="name-input"
+                placeholder="Enter a name…"
+                autocomplete="off"
+                aria-label="Member name"
+              >
+              <button id="btn-add" class="btn-add">Add</button>
+            </div>
+            <ul id="members-list" class="members-list" aria-live="polite">
+              <li class="empty-note">No members added yet.</li>
+            </ul>
+            <div class="group-controls">
+              <div class="ctrl-row">
+                <label>Number of groups</label>
+                <div class="counter">
+                  <button id="btn-down" class="counter-btn" disabled aria-label="Decrease">−</button>
+                  <span id="grp-count" class="counter-val">2</span>
+                  <button id="btn-up"   class="counter-btn" aria-label="Increase">+</button>
+                </div>
+              </div>
+              <button id="btn-generate" class="btn-generate">Assign Teams</button>
+              <div class="btn-pair">
+                <button id="btn-clear-teams" class="btn-secondary">Clear Teams</button>
+                <button id="btn-clear-names" class="btn-secondary">Clear Names</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="output-panel">
+            <h3 class="panel-label">Generated Teams</h3>
+            <div id="teams-out" aria-live="polite">
+              <p class="placeholder-msg">Teams will appear here once generated.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <span class="ghost-num" aria-hidden="true">04</span>
+    </section>
+
+    <!-- 5 · NOTES -->
+    <section id="slide5" class="slide slide-notes" aria-label="Slide 5 of 5">
+      <div class="slide-inner">
+        <header>
+          <span class="chip chip--navy">Notes</span>
+          <h2>Team Notes</h2>
+          <p class="subtitle">Capture discussion notes, commitments, and next steps for each group.</p>
+        </header>
+        <div id="notes-out" aria-live="polite">
+          <p class="placeholder-msg">Generate teams first to unlock note cards for each group.</p>
+        </div>
+      </div>
+      <span class="ghost-num" aria-hidden="true">05</span>
+    </section>
+
+  </main>
+
+  <script>
+    /* ── UTILITIES ─────────────────────────────────────────────── */
+    const esc = s => String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+    const shuffle = arr => {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    };
+
+    /* ── NAV HIGHLIGHT ─────────────────────────────────────────── */
+    const navLinks  = document.querySelectorAll('nav a');
+    const allSlides = [...document.querySelectorAll('.slide')];
+    function updateNav() {
+      const mid = window.innerHeight * 0.4;
+      let active = null;
+      allSlides.forEach(s => { if (s.getBoundingClientRect().top <= mid) active = s.id; });
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + (active ?? '')));
+    }
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
+
+    /* ── STATE ─────────────────────────────────────────────────── */
+    let members    = [];
+    let teams      = [];
+    let notes      = {};
+    let groupCount = 2;
+    const MIN = 2, MAX = 10;
+
+    /* ── TIMER STATE ───────────────────────────────────────────── */
+    let timerDuration  = 15 * 60;
+    let timerRemaining = 15 * 60;
+    let timerRunning   = false;
+    let timerInterval  = null;
+    let activePreset   = 15;
+
+    /* ── DOM REFS ──────────────────────────────────────────────── */
+    const $           = id => document.getElementById(id);
+    const nameInput   = $('name-input');
+    const btnAdd      = $('btn-add');
+    const memberList  = $('members-list');
+    const btnDown     = $('btn-down');
+    const btnUp       = $('btn-up');
+    const grpCount    = $('grp-count');
+    const btnGen      = $('btn-generate');
+    const btnClrTeams = $('btn-clear-teams');
+    const btnClrNames = $('btn-clear-names');
+    const teamsOut    = $('teams-out');
+    const notesOut    = $('notes-out');
+    const timerDisp   = $('timer-display');
+    const timerBar    = $('timer-bar');
+    const timerCustom = $('timer-custom');
+    const btnTimerSet = $('btn-timer-set');
+    const btnTimerPly = $('btn-timer-play');
+    const btnTimerRst = $('btn-timer-reset');
+
+    /* ── TIMER ─────────────────────────────────────────────────── */
+    const fmtTime = s =>
+      `${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;
+
+    function renderTimer() {
+      timerDisp.textContent = fmtTime(timerRemaining);
+      const pct      = timerDuration > 0 ? timerRemaining / timerDuration : 0;
+      const isUrgent = timerRemaining > 0 && timerRemaining <= 60;
+      const isDone   = timerRemaining === 0;
+      timerBar.style.width = (pct * 100) + '%';
+      timerDisp.classList.toggle('urgent', isUrgent);
+      timerDisp.classList.toggle('done',   isDone);
+      timerBar.classList.toggle('urgent',  isUrgent);
+      btnTimerPly.textContent = timerRunning ? '⏸ Pause'
+                              : isDone       ? '↺ Restart'
+                              :                '▶ Start';
+    }
+
+    function tick() {
+      if (timerRemaining > 0) {
+        timerRemaining--;
+        renderTimer();
+      } else {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        renderTimer();
+      }
+    }
+
+    const startTimer = () => {
+      if (timerRunning || timerRemaining === 0) return;
+      timerRunning  = true;
+      timerInterval = setInterval(tick, 1000);
+      renderTimer();
+    };
+    const pauseTimer = () => {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      renderTimer();
+    };
+    const resetTimer = () => {
+      clearInterval(timerInterval);
+      timerRunning   = false;
+      timerRemaining = timerDuration;
+      renderTimer();
+    };
+    const setTimer = mins => {
+      clearInterval(timerInterval);
+      timerRunning   = false;
+      timerDuration  = mins * 60;
+      timerRemaining = timerDuration;
+      renderTimer();
+    };
+    const syncPresets = () => {
+      document.querySelectorAll('.btn-preset').forEach(b =>
+        b.classList.toggle('active', parseInt(b.dataset.min) === activePreset)
+      );
+    };
+
+    btnTimerPly.onclick = () => {
+      if (timerRemaining === 0) { resetTimer(); return; }
+      timerRunning ? pauseTimer() : startTimer();
+    };
+    btnTimerRst.onclick = resetTimer;
+    btnTimerSet.onclick = () => {
+      const v = parseInt(timerCustom.value);
+      if (v > 0 && v <= 120) {
+        activePreset = -1;
+        setTimer(v);
+        syncPresets();
+        timerCustom.value = '';
+      }
+    };
+    timerCustom.onkeydown = e => { if (e.key === 'Enter') btnTimerSet.click(); };
+    document.querySelectorAll('.btn-preset').forEach(btn => {
+      btn.onclick = () => {
+        activePreset = parseInt(btn.dataset.min);
+        setTimer(activePreset);
+        syncPresets();
+      };
+    });
+
+    /* ── GROUP COUNTER ─────────────────────────────────────────── */
+    function syncCounter() {
+      grpCount.textContent = groupCount;
+      btnDown.disabled = groupCount <= MIN;
+      btnUp.disabled   = groupCount >= MAX;
+    }
+    btnDown.onclick = () => { if (groupCount > MIN) { groupCount--; syncCounter(); } };
+    btnUp.onclick   = () => { if (groupCount < MAX) { groupCount++; syncCounter(); } };
+
+    /* ── MEMBER LIST ───────────────────────────────────────────── */
+    function renderMembers() {
+      if (!members.length) {
+        memberList.innerHTML = '<li class="empty-note">No members added yet.</li>';
+        return;
+      }
+      memberList.innerHTML = members.map((n, i) => `
+        <li class="member-item">
+          <span>${esc(n)}</span>
+          <button class="btn-rm" data-i="${i}" aria-label="Remove ${esc(n)}">×</button>
+        </li>`).join('');
+      memberList.querySelectorAll('.btn-rm').forEach(b => {
+        b.onclick = () => { members.splice(+b.dataset.i, 1); renderMembers(); };
+      });
+    }
+
+    function addMember() {
+      const v = nameInput.value.trim();
+      if (!v || members.some(m => m.toLowerCase() === v.toLowerCase())) {
+        nameInput.focus();
+        return;
+      }
+      members.push(v);
+      renderMembers();
+      nameInput.value = '';
+      nameInput.focus();
+    }
+    btnAdd.onclick      = addMember;
+    nameInput.onkeydown = e => { if (e.key === 'Enter') addMember(); };
+
+    /* ── ICONS ─────────────────────────────────────────────────── */
+    const ICON_EDIT  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
+    const ICON_CHECK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    const ICON_MOVE  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
+
+    /* ── TEAM NAME EDITING ─────────────────────────────────────── */
+    function enableTeamNameEdit(idx) {
+      const card = teamsOut.querySelector(`[data-ti="${idx}"]`);
+      if (!card) return;
+      const wrap    = card.querySelector('.team-name-wrap');
+      const display = wrap.querySelector('.team-name-text');
+      const editBtn = wrap.querySelector('.btn-name-edit');
+      const input   = document.createElement('input');
+      input.className = 'team-name-edit';
+      input.value = teams[idx].name;
+      input.setAttribute('aria-label', 'Edit team name');
+      display.replaceWith(input);
+      editBtn.innerHTML = ICON_CHECK;
+      input.focus(); input.select();
+      let done = false;
+      function save() {
+        if (done) return; done = true;
+        const newName = input.value.trim() || teams[idx].name;
+        teams[idx].name = newName;
+        const span = document.createElement('span');
+        span.className = 'team-name-text';
+        span.textContent = newName;
+        span.title = 'Click to rename';
+        span.setAttribute('role', 'button');
+        span.setAttribute('tabindex', '0');
+        span.onclick   = () => enableTeamNameEdit(idx);
+        span.onkeydown = e => { if (e.key === 'Enter') enableTeamNameEdit(idx); };
+        input.replaceWith(span);
+        editBtn.innerHTML = ICON_EDIT;
+        editBtn.onclick   = () => enableTeamNameEdit(idx);
+        // Sync note card heading without full re-render
+        const nc = notesOut.querySelector(`[data-ni="${idx}"] .note-card-name`);
+        if (nc) nc.textContent = newName;
+      }
+      input.onblur    = save;
+      input.onkeydown = e => {
+        if (e.key === 'Enter')  { e.preventDefault(); input.blur(); }
+        if (e.key === 'Escape') { input.value = teams[idx].name; input.blur(); }
+      };
+      editBtn.onclick = () => input.blur();
+    }
+
+    /* ── MEMBER NAME EDITING ───────────────────────────────────── */
+    function enableMemberEdit(ti, mi) {
+      const card = teamsOut.querySelector(`[data-ti="${ti}"]`);
+      if (!card) return;
+      const li      = card.querySelector(`[data-mi="${mi}"]`);
+      if (!li) return;
+      const nameEl  = li.querySelector('.member-row-name');
+      const editBtn = li.querySelector('.btn-mem-edit');
+      const input   = document.createElement('input');
+      input.className = 'member-name-input';
+      input.value = teams[ti].members[mi];
+      nameEl.replaceWith(input);
+      editBtn.innerHTML = ICON_CHECK;
+      input.focus(); input.select();
+      let done = false;
+      function save() {
+        if (done) return; done = true;
+        const newName = input.value.trim() || teams[ti].members[mi];
+        teams[ti].members[mi] = newName;
+        const span = document.createElement('span');
+        span.className = 'member-row-name';
+        span.textContent = newName;
+        input.replaceWith(span);
+        editBtn.innerHTML = ICON_EDIT;
+        editBtn.onclick   = () => enableMemberEdit(ti, mi);
+        updateNotePills();
+      }
+      input.onblur    = save;
+      input.onkeydown = e => {
+        if (e.key === 'Enter')  { e.preventDefault(); input.blur(); }
+        if (e.key === 'Escape') { input.value = teams[ti].members[mi]; input.blur(); }
+      };
+      editBtn.onclick = () => input.blur();
+    }
+
+    /* ── MOVE MEMBER ───────────────────────────────────────────── */
+    function toggleMovePanel(ti, mi) {
+      const card = teamsOut.querySelector(`[data-ti="${ti}"]`);
+      if (!card) return;
+      const li       = card.querySelector(`[data-mi="${mi}"]`);
+      if (!li) return;
+      const existing = li.querySelector('.move-panel');
+      // Close all open panels first
+      teamsOut.querySelectorAll('.move-panel').forEach(p => p.remove());
+      // If this panel was already open, we're done (toggled off)
+      if (existing) return;
+
+      const panel = document.createElement('div');
+      panel.className = 'move-panel';
+      const lbl = document.createElement('span');
+      lbl.className = 'move-panel-label';
+      lbl.textContent = 'Move to:';
+      panel.appendChild(lbl);
+
+      teams.forEach((t, ti2) => {
+        if (ti2 === ti) return;
+        const btn = document.createElement('button');
+        btn.className   = 'btn-move-to';
+        btn.textContent = t.name;
+        btn.onclick = () => {
+          const member = teams[ti].members.splice(mi, 1)[0];
+          teams[ti2].members.push(member);
+          renderTeams();
+          updateNotePills();
+        };
+        panel.appendChild(btn);
+      });
+      li.appendChild(panel);
+    }
+
+    /* Refresh only the pills + count in note cards (preserves note text) */
+    function updateNotePills() {
+      teams.forEach((t, i) => {
+        const card = notesOut.querySelector(`[data-ni="${i}"]`);
+        if (!card) return;
+        const pillsEl = card.querySelector('.pills');
+        if (pillsEl) pillsEl.innerHTML = t.members.map((m, j) =>
+          `<span class="pill ${j === 0 ? 'leader' : ''}">${esc(m)}</span>`
+        ).join('');
+        const countEl = card.querySelector('.note-card-count');
+        if (countEl) countEl.textContent =
+          `${t.members.length} member${t.members.length !== 1 ? 's' : ''}`;
+      });
+    }
+
+    /* ── RENDER TEAMS ──────────────────────────────────────────── */
+    function renderTeams() {
+      if (!teams.length) {
+        teamsOut.innerHTML = '<p class="placeholder-msg">Teams will appear here once generated.</p>';
+        return;
+      }
+      teamsOut.innerHTML = `
+        <div class="teams-grid">
+          ${teams.map((t, i) => `
+            <div class="team-card" data-ti="${i}">
+              <div class="team-name-wrap">
+                <span class="team-name-text" title="Click to rename" role="button" tabindex="0">${esc(t.name)}</span>
+                <button class="btn-name-edit" aria-label="Edit team name">${ICON_EDIT}</button>
+              </div>
+              <ul class="team-members-ul">
+                ${t.members.map((m, j) => `
+                  <li class="team-member-li ${j === 0 ? 'leader' : ''}" data-mi="${j}">
+                    <div class="member-row">
+                      ${j === 0 ? '<span class="leader-star">★</span>' : ''}
+                      <span class="member-row-name">${esc(m)}</span>
+                      ${j === 0 ? '<span class="leader-tag">Leader</span>' : ''}
+                      <div class="member-action-btns">
+                        <button class="btn-mem-action btn-mem-edit" title="Edit name">${ICON_EDIT}</button>
+                        ${teams.length > 1
+                          ? `<button class="btn-mem-action btn-mem-move" title="Move to group">${ICON_MOVE}</button>`
+                          : ''}
+                      </div>
+                    </div>
+                  </li>`).join('')}
+              </ul>
+            </div>`).join('')}
+        </div>`;
+
+      teams.forEach((_, i) => {
+        const card = teamsOut.querySelector(`[data-ti="${i}"]`);
+        card.querySelector('.team-name-text').onclick   = () => enableTeamNameEdit(i);
+        card.querySelector('.team-name-text').onkeydown = e => {
+          if (e.key === 'Enter') enableTeamNameEdit(i);
+        };
+        card.querySelector('.btn-name-edit').onclick = () => enableTeamNameEdit(i);
+
+        teams[i].members.forEach((_, j) => {
+          const li = card.querySelector(`[data-mi="${j}"]`);
+          li.querySelector('.btn-mem-edit').onclick = () => enableMemberEdit(i, j);
+          const mv = li.querySelector('.btn-mem-move');
+          if (mv) mv.onclick = () => toggleMovePanel(i, j);
+        });
+      });
+    }
+
+    /* ── RENDER NOTES ──────────────────────────────────────────── */
+    function renderNotes() {
+      if (!teams.length) {
+        notesOut.innerHTML = '<p class="placeholder-msg">Generate teams first to unlock note cards for each group.</p>';
+        return;
+      }
+      notesOut.innerHTML = `
+        <div class="notes-stack">
+          ${teams.map((t, i) => {
+            const n = notes[i] || {};
+            return `
+              <div class="note-card" data-ni="${i}">
+                <div class="note-card-head">
+                  <span class="note-card-name">${esc(t.name)}</span>
+                  <span class="note-card-count">${t.members.length} member${t.members.length !== 1 ? 's' : ''}</span>
+                </div>
+                <div class="pills">
+                  ${t.members.map((m, j) =>
+                    `<span class="pill ${j === 0 ? 'leader' : ''}">${esc(m)}</span>`
+                  ).join('')}
+                </div>
+                <div>
+                  <p class="note-section-label">Notes</p>
+                  <textarea
+                    class="note-ta"
+                    id="ta-${i}"
+                    rows="5"
+                    placeholder="Discussion notes for ${esc(t.name)}…"
+                    aria-label="Notes for ${esc(t.name)}"
+                  >${esc(n.text || '')}</textarea>
+                  <div class="note-foot">
+                    <span class="note-chars" id="cc-${i}">${(n.text || '').length} chars</span>
+                    <button class="btn-note-clear" data-ni="${i}">Clear notes</button>
+                  </div>
+                </div>
+                <div class="commitments-section">
+                  <h4>Commitments &amp; Next Steps</h4>
+                  <div class="commitment-fields">
+                    <div class="commitment-field">
+                      <label for="do-${i}">What we'll do</label>
+                      <textarea
+                        id="do-${i}"
+                        class="commitment-ta"
+                        rows="3"
+                        placeholder="Actions and deliverables…"
+                        aria-label="What we'll do — ${esc(t.name)}"
+                      >${esc(n.whatWeDo || '')}</textarea>
+                    </div>
+                    <div class="commitment-field">
+                      <label for="wo-${i}">Who owns it</label>
+                      <textarea
+                        id="wo-${i}"
+                        class="commitment-ta"
+                        rows="3"
+                        placeholder="Owner or lead…"
+                        aria-label="Who owns it — ${esc(t.name)}"
+                      >${esc(n.whoOwns || '')}</textarea>
+                    </div>
+                    <div class="commitment-field">
+                      <label for="wc-${i}">When we'll check in</label>
+                      <textarea
+                        id="wc-${i}"
+                        class="commitment-ta"
+                        rows="3"
+                        placeholder="Date or milestone…"
+                        aria-label="When we'll check in — ${esc(t.name)}"
+                      >${esc(n.whenCheckIn || '')}</textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>`;
+          }).join('')}
+        </div>`;
+
+      teams.forEach((_, i) => {
+        if (!notes[i]) notes[i] = { text:'', whatWeDo:'', whoOwns:'', whenCheckIn:'' };
+        const ta     = $(`ta-${i}`);
+        const cc     = $(`cc-${i}`);
+        const doTA   = $(`do-${i}`);
+        const woTA   = $(`wo-${i}`);
+        const wcTA   = $(`wc-${i}`);
+        const clrBtn = notesOut.querySelector(`.btn-note-clear[data-ni="${i}"]`);
+
+        ta.oninput    = () => { notes[i].text        = ta.value;   cc.textContent = `${ta.value.length} chars`; };
+        doTA.oninput  = () => { notes[i].whatWeDo    = doTA.value; };
+        woTA.oninput  = () => { notes[i].whoOwns     = woTA.value; };
+        wcTA.oninput  = () => { notes[i].whenCheckIn = wcTA.value; };
+        clrBtn.onclick = () => { ta.value = ''; notes[i].text = ''; cc.textContent = '0 chars'; };
+      });
+    }
+
+    /* ── GENERATE TEAMS ────────────────────────────────────────── */
+    btnGen.onclick = () => {
+      if (members.length < 2) {
+        teamsOut.innerHTML = '<p class="placeholder-msg">Add at least 2 members to generate teams.</p>';
+        return;
+      }
+      const count    = Math.min(groupCount, members.length);
+      const shuffled = shuffle(members);
+      teams = Array.from({ length: count }, (_, i) => ({ name: `Group ${i + 1}`, members: [] }));
+      shuffled.forEach((m, i) => teams[i % count].members.push(m));
+      notes = {};
+      teams.forEach((_, i) => {
+        notes[i] = { text: '', whatWeDo: '', whoOwns: '', whenCheckIn: '' };
+      });
+      renderTeams();
+      renderNotes();
+    };
+
+    /* ── CLEAR TEAMS — keeps names intact ──────────────────────── */
+    btnClrTeams.onclick = () => {
+      teams = []; notes = {};
+      teamsOut.innerHTML = '<p class="placeholder-msg">Teams will appear here once generated.</p>';
+      notesOut.innerHTML = '<p class="placeholder-msg">Generate teams first to unlock note cards for each group.</p>';
+    };
+
+    /* ── CLEAR NAMES — keeps teams intact ──────────────────────── */
+    btnClrNames.onclick = () => { members = []; renderMembers(); };
+  </script>
+
+</body>
+</html>
