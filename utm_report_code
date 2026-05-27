@@ -1,0 +1,631 @@
+============================================================
+#  OEE Enrollment Report  –  Source & Medium Attribution
+# ============================================================
+
+# ── 1. Install / import ──────────────────────────────────────
+!pip install plotly -q
+
+import pandas as pd
+import io
+from collections import Counter
+from datetime import datetime
+from google.colab import files
+import plotly.graph_objects as go
+import plotly.io as pio
+
+# ── 2. Upload data file ──────────────────────────────────────
+uploaded = files.upload()
+
+# ── 3. Load ──────────────────────────────────────────────────
+file_name = next(iter(uploaded))
+df_raw = (
+    pd.read_csv(io.BytesIO(uploaded[file_name]))
+    if file_name.lower().endswith(".csv")
+    else pd.read_excel(io.BytesIO(uploaded[file_name]))
+)
+
+# ── 3b. Normalise all text columns to lowercase ──────────────
+string_cols = df_raw.select_dtypes(include=["object", "string"]).columns
+df_raw[string_cols] = (
+    df_raw[string_cols]
+    .apply(lambda col: col.str.strip().str.lower())
+)
+print(f"✅  Lowercased & stripped {len(string_cols)} text column(s): "
+      f"{string_cols.tolist()}")
+
+# ── 3b-ii. Collapse internal whitespace ──────────────────────
+df_raw[string_cols] = df_raw[string_cols].apply(
+    lambda col: col.str.replace(r"\s+", " ", regex=True).str.strip()
+)
+print("✅  Internal whitespace collapsed.")
+
+# ── 3c. Fill empty / NaN cells with "blank" ──────────────────
+df_raw[string_cols] = (
+    df_raw[string_cols]
+    .fillna("blank")
+    .replace("", "blank")
+)
+blank_counts = (df_raw[string_cols] == "blank").sum()
+blank_cols   = blank_counts[blank_counts > 0]
+if len(blank_cols):
+    print("✅  Empty / NaN cells replaced with 'blank':")
+    for col, n in blank_cols.items():
+        print(f"      {col}: {n:,} cell(s)")
+else:
+    print("✅  No empty / NaN cells found in text columns.")
+
+# ── 3d. Contains "webinar" → "webinar" ───────────────────────
+webinar_report = {}
+for col in string_cols:
+    mask = df_raw[col].str.contains("webinar", na=False)
+    n    = int(mask.sum())
+    if n > 0:
+        df_raw.loc[mask, col] = "webinar"
+        webinar_report[col]   = n
+if webinar_report:
+    print("✅  Cells containing 'webinar' normalised to 'webinar':")
+    for col, n in webinar_report.items():
+        print(f"      {col}: {n:,} cell(s)")
+else:
+    print("✅  No cells containing 'webinar' found.")
+
+# ── 3e. Contains "medlist" → "medlist" ───────────────────────
+medlist_report = {}
+for col in string_cols:
+    mask = df_raw[col].str.contains("medlist", na=False)
+    n    = int(mask.sum())
+    if n > 0:
+        df_raw.loc[mask, col] = "medlist"
+        medlist_report[col]   = n
+if medlist_report:
+    print("✅  Cells containing 'medlist' normalised to 'medlist':")
+    for col, n in medlist_report.items():
+        print(f"      {col}: {n:,} cell(s)")
+else:
+    print("✅  No cells containing 'medlist' found.")
+
+# ── 3f. Contains "linkedin.com" → "linkedin" ─────────────────
+linkedin_report = {}
+for col in string_cols:
+    mask = df_raw[col].str.contains("linkedin.com", na=False)
+    n    = int(mask.sum())
+    if n > 0:
+        df_raw.loc[mask, col] = "linkedin"
+        linkedin_report[col]  = n
+if linkedin_report:
+    print("✅  Cells containing 'linkedin.com' normalised to 'linkedin':")
+    for col, n in linkedin_report.items():
+        print(f"      {col}: {n:,} cell(s)")
+else:
+    print("✅  No cells containing 'linkedin.com' found.")
+
+# ── 3g. Enrollment "expected" → "enrolled" ───────────────────
+enrol_col     = "Enrollment Status"
+expected_mask = df_raw[enrol_col] == "expected"
+n_expected    = int(expected_mask.sum())
+if n_expected > 0:
+    df_raw.loc[expected_mask, enrol_col] = "enrolled"
+    print(f"✅  {n_expected:,} 'expected' enrollment status row(s) changed to 'enrolled'.")
+else:
+    print("✅  No 'expected' enrollment status rows found.")
+
+# ── 3h. Helper: contains-based normalisation ─────────────────
+def _norm(cols, pattern, replacement, label, regex=True):
+    report = {}
+    for col in cols:
+        if col not in df_raw.columns:
+            continue
+        mask = (
+            df_raw[col].str.contains(pattern, na=False, regex=regex)
+            & (df_raw[col] != replacement)
+        )
+        n = int(mask.sum())
+        if n:
+            df_raw.loc[mask, col] = replacement
+            report[col] = n
+    if report:
+        print(f"✅  {label} → '{replacement}':")
+        for col, n in report.items():
+            print(f"      {col}: {n:,} cell(s)")
+    else:
+        print(f"✅  No {label.lower()} found.")
+
+# ── 3i. Attribution column lists ─────────────────────────────
+_src_cols = [c for c in [
+    "Contact Original Source",
+    "Course Connection First Source",
+    "Course Connection Latest Source",
+] if c in df_raw.columns]
+
+_med_cols = [c for c in [
+    "Contact Original Medium",
+    "Course Connection First Medium",
+    "Course Connection Latest Medium",
+] if c in df_raw.columns]
+
+_attr_cols = _src_cols + _med_cols
+print(f"ℹ️   Source cols : {_src_cols}")
+print(f"ℹ️   Medium cols : {_med_cols}")
+
+# ── 3j. Strip GA-style parentheses ───────────────────────────
+paren_report = {}
+for col in string_cols:
+    mask = df_raw[col].str.contains(r"[()]", na=False, regex=True)
+    n    = int(mask.sum())
+    if n:
+        df_raw.loc[mask, col] = (
+            df_raw.loc[mask, col]
+            .str.replace(r"[()]", "", regex=True)
+            .str.strip()
+        )
+        paren_report[col] = n
+if paren_report:
+    print("✅  Parentheses stripped (e.g. '(direct)' → 'direct'):")
+    for col, n in paren_report.items():
+        print(f"      {col}: {n:,} cell(s)")
+else:
+    print("✅  No parenthetical values found.")
+
+# ── 3k. Remaining non-value strings → "blank" ────────────────
+_NOT_SET = {
+    "not set", "not provided", "not available",
+    "unknown", "undefined", "none", "null", "nan",
+}
+ns_report = {}
+for col in string_cols:
+    mask = df_raw[col].isin(_NOT_SET)
+    n    = int(mask.sum())
+    if n:
+        df_raw.loc[mask, col] = "blank"
+        ns_report[col] = n
+if ns_report:
+    print("✅  Non-value strings ('not set', 'unknown', …) → 'blank':")
+    for col, n in ns_report.items():
+        print(f"      {col}: {n:,} cell(s)")
+else:
+    print("✅  No 'not set' / 'unknown' values found.")
+
+# ── 3l. Platform normalisation (attr cols only) ───────────────
+print("── Platform normalisation ────────────────────────────────")
+_norm(_attr_cols, r"facebook|fb\.com",    "facebook",  "Facebook variants")
+_norm(_attr_cols, r"instagram",           "instagram", "Instagram variants")
+_norm(_attr_cols, r"google",              "google",    "Google variants")
+_norm(_attr_cols, r"youtube",             "youtube",   "YouTube variants")
+_norm(_attr_cols, r"twitter|x\.com",      "twitter",   "Twitter / X variants")
+_norm(_attr_cols, r"tiktok",              "tiktok",    "TikTok variants")
+_norm(_attr_cols, r"snapchat",            "snapchat",  "Snapchat variants")
+_norm(_attr_cols, r"pinterest",           "pinterest", "Pinterest variants")
+_norm(_attr_cols, r"\bbing\b",            "bing",      "Bing variants")
+_norm(_attr_cols, r"\be[\-_]?mail\b",     "email",     "Email variants")
+
+# ── 3m. Medium normalisation (medium cols only) ───────────────
+print("── Medium normalisation ──────────────────────────────────")
+_norm(_med_cols, r"paid[\s\-_]?social|social[\s\-_]?paid",
+      "paid-social", "Paid-social medium variants")
+_norm(_med_cols, r"organic",
+      "organic",     "Organic medium variants")
+_norm(_med_cols, r"\bcpc\b|\bppc\b|paid[\s\-_]?search",
+      "cpc",         "CPC / PPC / paid-search medium variants")
+_norm(_med_cols, r"\bdisplay\b",
+      "display",     "Display medium variants")
+
+# ── 3n. Domain simplification ─────────────────────────────────
+print("── Domain simplification ─────────────────────────────────")
+_norm(_attr_cols, r"chatgpt\.com",    "chatgpt",    "chatgpt.com → chatgpt")
+_norm(_attr_cols, r"duckduckgo\.com", "duckduckgo", "duckduckgo.com → duckduckgo")
+
+# ── 3o. CRM list-source normalisation ─────────────────────────
+print("── CRM list-source normalisation ─────────────────────────")
+_norm(_attr_cols, "hmx interest list", "sfmc",
+      "HMX interest list → sfmc", regex=False)
+
+# ── 3p. WordStream campaign-tag normalisation ─────────────────
+print("── WordStream tag normalisation ──────────────────────────")
+_norm(_attr_cols, "_nw", "wordstream",
+      "'_nw' suffix → wordstream", regex=False)
+
+# ── 3q. Retakes keyword normalisation ─────────────────────────
+print("── Retakes normalisation ─────────────────────────────────")
+_norm(_attr_cols, "retakes", "retakes", "retakes variants → retakes")
+
+# ── 3r. PLL portal normalisation (MUST run before 3s) ─────────
+print("── PLL portal normalisation ──────────────────────────────")
+_norm(_attr_cols, "pll", "pll-portal", "pll → pll-portal")
+
+# ── 3s. Harvard website / HMS normalisation ───────────────────
+print("── Harvard / HMS normalisation ───────────────────────────")
+harvard_report = {}
+for col in _attr_cols:
+    if col not in df_raw.columns:
+        continue
+    mask_harvard = (
+        df_raw[col].str.contains("harvard", na=False, regex=False)
+        & ~df_raw[col].str.contains("pll.harvard.edu", na=False, regex=False)
+    )
+    mask_hms = df_raw[col].str.contains(r"\bhms\b", na=False, regex=True)
+    mask = (mask_harvard | mask_hms) & (df_raw[col] != "harvard website")
+    n = int(mask.sum())
+    if n:
+        df_raw.loc[mask, col] = "harvard website"
+        harvard_report[col]   = n
+if harvard_report:
+    print("✅  Harvard URLs / HMS references → 'harvard website':")
+    for col, n in harvard_report.items():
+        print(f"      {col}: {n:,} cell(s)")
+else:
+    print("✅  No Harvard URL / HMS references found.")
+
+print("\n✅  All clean-up steps complete.")
+
+# ── 4. Column pairs & enrolled filter ────────────────────────
+SOURCE_MEDIUM_PAIRS = [
+    ("Contact Original Source",         "Contact Original Medium"),
+    ("Course Connection First Source",  "Course Connection First Medium"),
+    ("Course Connection Latest Source", "Course Connection Latest Medium"),
+]
+df_enrolled = df_raw[df_raw["Enrollment Status"] == "enrolled"].copy()
+
+# ── 5. Helpers ────────────────────────────────────────────────
+BLANKS    = {"", "blank", "nan", "none", "n/a", "na"}
+MEDIUMMAP = {
+    "sponsored":   "paid-social",
+    "ppc":         "cpc",
+    "paid search": "cpc",
+    "paid-search": "cpc",
+    "paid_search": "cpc",
+    "e-mail":      "email",
+    "e_mail":      "email",
+}
+
+def is_valid(v)  -> bool: return str(v).strip().lower() not in BLANKS
+def norm_med(v)  -> str:  s = str(v).strip().lower(); return MEDIUMMAP.get(s, s)
+def n_valid(row) -> int:
+    return sum(
+        int(is_valid(row[sc])) + int(is_valid(row[mc]))
+        for sc, mc in SOURCE_MEDIUM_PAIRS
+    )
+
+# ── 6. Classify rows ──────────────────────────────────────────
+df_enrolled["n_valid"] = df_enrolled.apply(n_valid, axis=1)
+total_all_blank        = int((df_enrolled["n_valid"] == 0).sum())
+df                     = df_enrolled[df_enrolled["n_valid"] > 0].copy()
+total_with_data        = len(df)
+
+# ── 7. Attribution credits ────────────────────────────────────
+src_ctr: Counter = Counter()
+med_ctr: Counter = Counter()
+
+for _, row in df.iterrows():
+    srcs = [str(row[sc]).strip().lower() for sc, _  in SOURCE_MEDIUM_PAIRS if is_valid(row[sc])]
+    meds = [norm_med(row[mc])            for _,  mc in SOURCE_MEDIUM_PAIRS if is_valid(row[mc])]
+    if srcs:
+        c = 1 / len(srcs)
+        for s in srcs: src_ctr[s] += c
+    if meds:
+        c = 1 / len(meds)
+        for m in meds: med_ctr[m] += c
+
+src_df = (pd.DataFrame(src_ctr.items(), columns=["Source", "Credit"])
+            .sort_values("Credit", ascending=False).reset_index(drop=True))
+med_df = (pd.DataFrame(med_ctr.items(), columns=["Medium", "Credit"])
+            .sort_values("Credit", ascending=False).reset_index(drop=True))
+total_sources = len(src_df)
+total_mediums = len(med_df)
+
+# ── 8. Plotly charts ──────────────────────────────────────────
+
+# ── 8a. Filter items under 1% of total credit from charts ─────
+# src_df / med_df are kept intact so tables still show everything.
+_SRC_TOTAL   = src_df["Credit"].sum()
+_MED_TOTAL   = med_df["Credit"].sum()
+
+src_chart_df = src_df[src_df["Credit"] / _SRC_TOTAL >= 0.01].copy()
+med_chart_df = med_df[med_df["Credit"] / _MED_TOTAL >= 0.01].copy()
+
+_src_hidden  = len(src_df) - len(src_chart_df)
+_med_hidden  = len(med_df) - len(med_chart_df)
+
+print(f"ℹ️   Source chart : showing {len(src_chart_df)} of {len(src_df)} "
+      f"({_src_hidden} under 1% hidden)")
+print(f"ℹ️   Medium chart : showing {len(med_chart_df)} of {len(med_df)} "
+      f"({_med_hidden} under 1% hidden)")
+
+# ── 8b. Chart builder ─────────────────────────────────────────
+def bar_fig(cats, vals, color):
+    max_val = max(vals) if vals else 1
+    y_max   = max_val * 1.20
+    fig = go.Figure(go.Bar(
+        x=cats, y=vals,
+        text=[f"{v:.2f}" for v in vals],
+        textposition="outside",
+        textfont=dict(size=10.5, color="#555"),
+        marker_color=color,
+        marker_line_color="rgba(0,0,0,.05)",
+        marker_line_width=1,
+        hovertemplate="<b>%{x}</b><br>Credit: %{y:.2f}<extra></extra>",
+    ))
+    fig.update_layout(
+        autosize=True, height=340,
+        margin=dict(t=20, b=10, l=46, r=18),
+        plot_bgcolor="white",
+        paper_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Inter, Segoe UI, Arial, sans-serif", color="#555"),
+        xaxis=dict(tickangle=-40, showgrid=False, showline=True,
+                   linecolor="#e4e4e4"),
+        yaxis=dict(
+            showgrid=True, gridcolor="#f0f0f0", zeroline=False,
+            title_text="Attribution Credit", title_font_size=12,
+            range=[0, y_max],
+        ),
+        showlegend=False, bargap=0.3,
+    )
+    return fig
+
+_cfg = {"responsive": True, "displayModeBar": False}
+
+# ── 8c. Render charts from filtered data ──────────────────────
+src_chart = pio.to_html(
+    bar_fig(src_chart_df["Source"].tolist(),
+            src_chart_df["Credit"].tolist(), "#f47920"),
+    include_plotlyjs=False, full_html=False, config=_cfg,
+    default_width="100%", default_height="340px")
+
+med_chart = pio.to_html(
+    bar_fig(med_chart_df["Medium"].tolist(),
+            med_chart_df["Credit"].tolist(), "#4a90d9"),
+    include_plotlyjs=False, full_html=False, config=_cfg,
+    default_width="100%", default_height="340px")
+
+# ── 9. Data tables ────────────────────────────────────────────
+def build_table(df, col, accent):
+    total = df["Credit"].sum()
+    rows  = "".join(
+        f'<tr>'
+        f'<td><span class="badge {accent}">{i + 1}</span></td>'
+        f'<td><span class="iname">{row[col]}</span></td>'
+        f'<td class="num">{row["Credit"]:.2f}</td>'
+        f'<td><div class="bwrap">'
+        f'<div class="bfill {accent}" style="width:{min(row["Credit"]/total*100,100):.1f}%"></div>'
+        f'<span class="blabel">{row["Credit"]/total*100:.1f}%</span>'
+        f'</div></td>'
+        f'</tr>'
+        for i, row in df.iterrows()
+    )
+    return (
+        f'<div class="twrap"><table class="dtable">'
+        f'<thead><tr>'
+        f'<th style="width:38px">#</th>'
+        f'<th>{col}</th>'
+        f'<th class="num" style="width:80px">Credit</th>'
+        f'<th style="min-width:150px">Share of Total</th>'
+        f'</tr></thead>'
+        f'<tbody>{rows}</tbody>'
+        f'</table></div>'
+    )
+
+src_table = build_table(src_df, "Source", "orange")
+med_table = build_table(med_df, "Medium", "blue")
+
+# ── 10. Assemble full HTML page ───────────────────────────────
+rpt_date = datetime.now().strftime("%B %d, %Y at %H:%M")
+
+_src_note = f"{_src_hidden} source(s) under 1% not shown" if _src_hidden else "all sources shown"
+_med_note = f"{_med_hidden} medium(s) under 1% not shown" if _med_hidden else "all mediums shown"
+
+HTML = (
+    '<!DOCTYPE html>\n'
+    '<html lang="en">\n'
+    '<head>\n'
+    '<meta charset="UTF-8">\n'
+    '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
+    '<title>PCCE \u2013 Source &amp; Medium Attribution Report</title>\n'
+    '<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>\n'
+    '<style>\n'
+    ':root{\n'
+    '  --navy:#A51C30; --navy2:#7a0e22;\n'
+    '  --orange:#f47920; --blue:#4a90d9;\n'
+    '  --green:#27ae60; --red:#e74c3c; --bg:#f0f2f5; --white:#fff;\n'
+    '  --border:#e5e9f0; --muted:#8a94a6; --r:12px;\n'
+    '  --shadow:0 1px 4px rgba(0,0,0,.07),0 4px 18px rgba(0,0,0,.05);\n'
+    '}\n'
+    '*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}\n'
+    'html{scroll-behavior:smooth}\n'
+    'body{font-family:\'Inter\',\'Segoe UI\',system-ui,Arial,sans-serif;'
+    'background:var(--bg);color:#333;line-height:1.5}\n'
+    'header{background:linear-gradient(155deg,var(--navy) 0%,var(--navy2) 100%);'
+    'color:#fff;box-shadow:0 2px 14px rgba(0,0,0,.28)}\n'
+    '.h-top{display:flex;align-items:center;justify-content:space-between;'
+    'padding:13px 36px;border-bottom:1px solid rgba(255,255,255,.09)}\n'
+    '.h-brand{display:flex;align-items:center;gap:12px}\n'
+    '.h-pill{background:var(--orange);border-radius:7px;padding:5px 11px;'
+    'font-weight:800;font-size:14px;letter-spacing:.8px}\n'
+    '.h-name{font-size:14.5px;font-weight:500;opacity:.88}\n'
+    '.h-date{font-size:12px;opacity:.55}\n'
+    '.h-hero{padding:30px 36px 34px}\n'
+    '.h-hero h1{font-size:25px;font-weight:700;letter-spacing:-.4px;margin-bottom:8px}\n'
+    '.h-hero p{font-size:13.5px;opacity:.7;max-width:640px}\n'
+    'nav.tabs{background:rgba(0,0,0,.22);padding:0 36px;display:flex;gap:2px}\n'
+    'nav.tabs a{color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;'
+    'font-weight:500;padding:11px 17px;border-bottom:3px solid transparent;'
+    'transition:color .2s,border-color .2s;display:block}\n'
+    'nav.tabs a:hover{color:#fff}\n'
+    'nav.tabs a.active{color:#fff;border-bottom-color:var(--orange)}\n'
+    'main{max-width:1200px;margin:0 auto;padding:28px 22px 70px}\n'
+    '.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:26px}\n'
+    '@media(max-width:860px){.sg{grid-template-columns:repeat(2,1fr)}}\n'
+    '@media(max-width:480px){.sg{grid-template-columns:1fr}}\n'
+    '.sc{background:var(--white);border-radius:var(--r);padding:20px 22px;'
+    'box-shadow:var(--shadow);border-left:5px solid var(--border);'
+    'transition:transform .18s,box-shadow .18s;cursor:default}\n'
+    '.sc:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.1)}\n'
+    '.sc.co{border-left-color:var(--orange)}\n'
+    '.sc.cb{border-left-color:var(--blue)}\n'
+    '.sc.cg{border-left-color:var(--green)}\n'
+    '.sc.cr{border-left-color:var(--red)}\n'
+    '.sl{font-size:10.5px;font-weight:700;letter-spacing:1px;'
+    'text-transform:uppercase;color:var(--muted);margin-bottom:8px}\n'
+    '.sv{font-size:38px;font-weight:800;line-height:1;margin-bottom:4px}\n'
+    '.ss{font-size:12px;color:var(--muted)}\n'
+    '.sc.co .sv{color:var(--orange)}\n'
+    '.sc.cb .sv{color:var(--blue)}\n'
+    '.sc.cg .sv{color:var(--green)}\n'
+    '.sc.cr .sv{color:var(--red)}\n'
+    '.card{background:var(--white);border-radius:var(--r);'
+    'box-shadow:var(--shadow);overflow:hidden}\n'
+    '.ch{display:flex;align-items:center;gap:13px;padding:16px 22px;'
+    'border-bottom:1px solid var(--border)}\n'
+    '.ci{width:36px;height:36px;border-radius:8px;display:flex;'
+    'align-items:center;justify-content:center;font-size:17px;flex-shrink:0}\n'
+    '.ci.o{background:#fff3e6}\n'
+    '.ci.b{background:#e8f4fd}\n'
+    '.ct{font-size:15.5px;font-weight:600;color:var(--navy)}\n'
+    '.csub{font-size:12px;color:var(--muted);margin-top:2px}\n'
+    '.cbody{padding:18px 20px}\n'
+    '.tc{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}\n'
+    '@media(max-width:860px){.tc{grid-template-columns:1fr}}\n'
+    '.twrap{overflow-x:auto}\n'
+    '.dtable{width:100%;border-collapse:collapse;font-size:13px}\n'
+    '.dtable thead th{background:var(--navy);color:#fff;padding:10px 13px;'
+    'text-align:left;font-size:10.5px;font-weight:700;'
+    'text-transform:uppercase;letter-spacing:.7px;white-space:nowrap}\n'
+    '.dtable tbody tr{border-bottom:1px solid #f2f5f9}\n'
+    '.dtable tbody tr:last-child{border-bottom:none}\n'
+    '.dtable tbody tr:hover{background:#f5f9ff;transition:background .12s}\n'
+    '.dtable td{padding:9px 13px;vertical-align:middle}\n'
+    '.dtable td.num{text-align:right;font-variant-numeric:tabular-nums;'
+    'font-weight:600;color:var(--navy)}\n'
+    '.badge{display:inline-flex;align-items:center;justify-content:center;'
+    'width:21px;height:21px;border-radius:50%;font-size:10px;'
+    'font-weight:700;color:#fff}\n'
+    '.badge.orange{background:var(--orange)}\n'
+    '.badge.blue{background:var(--blue)}\n'
+    '.iname{font-weight:500;color:#1a1a2e}\n'
+    '.bwrap{display:flex;align-items:center;gap:7px;min-width:130px}\n'
+    '.bfill{height:7px;border-radius:3.5px;min-width:2px;flex-shrink:0}\n'
+    '.bfill.orange{background:var(--orange)}\n'
+    '.bfill.blue{background:var(--blue)}\n'
+    '.blabel{font-size:11.5px;color:var(--muted);white-space:nowrap}\n'
+    '.section-label{font-size:11px;font-weight:700;letter-spacing:1.2px;'
+    'text-transform:uppercase;color:var(--muted);'
+    'margin-bottom:14px;padding-left:2px}\n'
+    'footer{text-align:center;padding:18px 22px;font-size:12px;'
+    'color:var(--muted);border-top:1px solid var(--border)}\n'
+    'footer strong{color:var(--navy)}\n'
+    '</style>\n'
+    '</head>\n'
+    '<body>\n'
+    '<header>\n'
+    '  <div class="h-top">\n'
+    '    <div class="h-brand">\n'
+    '      <span class="h-pill">PCCE</span>\n'
+    '      <span class="h-name">Professional, Corporate, and Continuing Education</span>\n'
+    '    </div>\n'
+    f'    <span class="h-date">Generated: {rpt_date}</span>\n'
+    '  </div>\n'
+    '  <div class="h-hero">\n'
+    '    <h1>Enrollment Source &amp; Medium Attribution</h1>\n'
+    '    <p>Proportional credit attribution across enrolled learners using contact origin,\n'
+    '       first-touch, and latest-touch data across three source/medium pairs.</p>\n'
+    '  </div>\n'
+    '  <nav class="tabs">\n'
+    '    <a href="#overview" class="active">Overview</a>\n'
+    '    <a href="#charts">Charts</a>\n'
+    '    <a href="#tables">Data Tables</a>\n'
+    '  </nav>\n'
+    '</header>\n'
+    '<main>\n'
+    '  <section id="overview" style="scroll-margin-top:20px;padding-top:8px">\n'
+    '    <p class="section-label">Summary</p>\n'
+    '    <div class="sg">\n'
+    '      <div class="sc co">\n'
+    '        <div class="sl">Learners with Data</div>\n'
+    f'        <div class="sv">{total_with_data:,}</div>\n'
+    '        <div class="ss">Enrolled with \u22651 source / medium value</div>\n'
+    '      </div>\n'
+    '      <div class="sc cb">\n'
+    '        <div class="sl">Unique Sources</div>\n'
+    f'        <div class="sv">{total_sources}</div>\n'
+    '        <div class="ss">Distinct acquisition sources identified</div>\n'
+    '      </div>\n'
+    '      <div class="sc cg">\n'
+    '        <div class="sl">Unique Mediums</div>\n'
+    f'        <div class="sv">{total_mediums}</div>\n'
+    '        <div class="ss">Distinct acquisition mediums identified</div>\n'
+    '      </div>\n'
+    '      <div class="sc cr">\n'
+    '        <div class="sl">All-Blank Learners</div>\n'
+    f'        <div class="sv">{total_all_blank:,}</div>\n'
+    '        <div class="ss">Enrolled with no source / medium data</div>\n'
+    '      </div>\n'
+    '    </div>\n'
+    '  </section>\n'
+    '  <section id="charts" style="scroll-margin-top:20px">\n'
+    '    <p class="section-label">Attribution Charts</p>\n'
+    '    <div class="tc">\n'
+    '      <div class="card">\n'
+    '        <div class="ch">\n'
+    '          <div class="ci o">\U0001f4ca</div>\n'
+    '          <div>\n'
+    '            <div class="ct">Source Attribution</div>\n'
+    f'            <div class="csub">Proportional credit by acquisition source &mdash; {_src_note}</div>\n'
+    '          </div>\n'
+    '        </div>\n'
+    f'        <div class="cbody">{src_chart}</div>\n'
+    '      </div>\n'
+    '      <div class="card">\n'
+    '        <div class="ch">\n'
+    '          <div class="ci b">\U0001f4c8</div>\n'
+    '          <div>\n'
+    '            <div class="ct">Medium Attribution</div>\n'
+    f'            <div class="csub">Proportional credit by acquisition medium &mdash; {_med_note}</div>\n'
+    '          </div>\n'
+    '        </div>\n'
+    f'        <div class="cbody">{med_chart}</div>\n'
+    '      </div>\n'
+    '    </div>\n'
+    '  </section>\n'
+    '  <section id="tables" style="scroll-margin-top:20px">\n'
+    '    <p class="section-label">Full Breakdown</p>\n'
+    '    <div class="tc">\n'
+    '      <div class="card">\n'
+    '        <div class="ch">\n'
+    '          <div class="ci o">\U0001f5c2\ufe0f</div>\n'
+    '          <div>\n'
+    '            <div class="ct">Source Credits</div>\n'
+    f'            <div class="csub">All {total_sources} sources ranked by attribution credit</div>\n'
+    '          </div>\n'
+    '        </div>\n'
+    f'        {src_table}\n'
+    '      </div>\n'
+    '      <div class="card">\n'
+    '        <div class="ch">\n'
+    '          <div class="ci b">\U0001f5c2\ufe0f</div>\n'
+    '          <div>\n'
+    '            <div class="ct">Medium Credits</div>\n'
+    f'            <div class="csub">All {total_mediums} mediums ranked by attribution credit</div>\n'
+    '          </div>\n'
+    '        </div>\n'
+    f'        {med_table}\n'
+    '      </div>\n'
+    '    </div>\n'
+    '  </section>\n'
+    '</main>\n'
+    '<footer>\n'
+    f'  <strong>PCCE Enrollment Reports</strong> &nbsp;&middot;&nbsp; {rpt_date}\n'
+    f'  &nbsp;&middot;&nbsp; {total_with_data:,} learners analysed\n'
+    f'  &nbsp;&middot;&nbsp; {total_sources} sources &nbsp;&middot;&nbsp; {total_mediums} mediums\n'
+    '</footer>\n'
+    '</body>\n'
+    '</html>'
+)
+
+# ── 11. Save & download ───────────────────────────────────────
+with open("enrollment_report.html", "w", encoding="utf-8") as f:
+    f.write(HTML)
+
+files.download("enrollment_report.html")
+print("✅  Report generated and downloaded.")
+print(f"    Learners with data  : {total_with_data:,}")
+print(f"    All-blank learners  : {total_all_blank:,}")
+print(f"    Unique sources      : {total_sources}")
+print(f"    Unique mediums      : {total_mediums}")
