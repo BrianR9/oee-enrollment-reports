@@ -44,6 +44,8 @@
     nav a:hover { color:var(--ink); border-bottom-color:var(--border-dk); }
     nav a.active { color:var(--crimson); border-bottom-color:var(--crimson); }
     .nav-n { font-size:.6rem; opacity:.5; font-variant-numeric:tabular-nums; }
+
+    /* connection status */
     .nav-sync { display:flex; align-items:center; gap:.4rem; margin-left:auto; flex-shrink:0; padding-left:1rem; }
     .conn-dot { width:8px; height:8px; border-radius:50%; background:var(--border-dk); flex-shrink:0; transition:background .3s; }
     .conn-dot.live  { background:#22c55e; box-shadow:0 0 0 2px rgba(34,197,94,.2); }
@@ -56,6 +58,8 @@
     .slide-inner { position:relative; z-index:1; width:100%; max-width:1200px; margin-inline:auto; }
     .ghost-num { position:absolute; bottom:-2rem; right:var(--px); font-family:'Playfair Display',serif; font-size:clamp(6rem,18vw,17rem); font-weight:900; line-height:1; letter-spacing:-.05em; color:rgba(0,0,0,.04); pointer-events:none; user-select:none; }
     .slide-title .ghost-num { color:rgba(255,255,255,.08); }
+
+    /* shared type */
     .eyebrow { display:inline-flex; align-items:center; gap:.6rem; font-family:'Inter',sans-serif; font-size:.68rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--crimson); margin-bottom:.75rem; }
     .eyebrow::before { content:''; display:block; width:2rem; height:2px; background:currentColor; flex-shrink:0; }
     .subtitle { color:var(--muted); line-height:1.6; }
@@ -97,11 +101,13 @@
     .cta { display:inline-flex; align-items:center; gap:.75rem; font-family:'Inter',sans-serif; font-size:.75rem; font-weight:700; letter-spacing:.10em; text-transform:uppercase; color:var(--navy); }
     .cta::before { content:''; display:block; width:1.5rem; height:2px; background:currentColor; flex-shrink:0; }
 
-    /* ── SLIDE 4 ── */
+    /* ── SLIDE 4 — GROUPS ── */
     .slide-groups { background:var(--white); }
     .slide-groups .slide-inner { display:flex; flex-direction:column; gap:2.5rem; }
     .slide-groups h2 { font-size:clamp(2rem,4.5vw,3.25rem); font-weight:700; letter-spacing:-.02em; line-height:1.1; color:var(--ink); margin-bottom:.35rem; }
     .slide-groups .subtitle { font-size:clamp(.9rem,1.4vw,1rem); }
+
+    /* timer */
     .timer-widget { background:var(--bg); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem 2rem; display:grid; grid-template-columns:auto 1fr; gap:2.5rem; align-items:center; }
     .timer-left { display:flex; flex-direction:column; gap:.65rem; }
     .timer-display { font-family:'Playfair Display',serif; font-size:4rem; font-weight:700; line-height:1; letter-spacing:-.02em; color:var(--ink); font-variant-numeric:tabular-nums; transition:color .3s; }
@@ -126,6 +132,8 @@
     .btn-timer-play:hover { background:var(--crimson-dk); }
     .btn-timer-reset { padding:.65rem 1rem; background:transparent; color:var(--muted); border:1px solid var(--border); border-radius:var(--r-s); font-family:'Inter',sans-serif; font-size:.72rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; transition:color .18s,border-color .18s; }
     .btn-timer-reset:hover { color:var(--crimson); border-color:rgba(164,16,52,.3); }
+
+    /* groups builder */
     .groups-layout { display:grid; grid-template-columns:290px 1fr; gap:2rem; align-items:start; }
     .input-panel { background:var(--bg); border:1px solid var(--border); border-radius:var(--r); padding:1.25rem; display:flex; flex-direction:column; }
     .name-row { display:flex; gap:.5rem; margin-bottom:.65rem; }
@@ -184,7 +192,7 @@
     .btn-move-to { padding:.16rem .5rem; background:var(--white); border:1px solid var(--border); border-radius:999px; font-family:'Inter',sans-serif; font-size:.65rem; font-weight:600; color:var(--navy); cursor:pointer; transition:all .15s; }
     .btn-move-to:hover { background:var(--navy-lt); border-color:rgba(27,42,74,.3); }
 
-    /* ── SLIDE 5 ── */
+    /* ── SLIDE 5 — WORKSHEET ── */
     .slide-notes { background:var(--bg); }
     .slide-notes .slide-inner { display:flex; flex-direction:column; gap:2.5rem; }
     .slide-notes h2 { font-size:clamp(2rem,4.5vw,3.25rem); font-weight:700; letter-spacing:-.02em; line-height:1.1; color:var(--ink); margin-bottom:.35rem; }
@@ -225,8 +233,27 @@
     .ws-table.has-phase td:first-child:focus { background:#FEF5F7 !important; }
     .row-del-cell { width:2.4rem; min-width:2.4rem; padding:0 !important; text-align:center; vertical-align:middle !important; border-right:none !important; }
     .th-del { width:2.4rem; min-width:2.4rem; padding:0 !important; border-right:none !important; }
-    .btn-del-row { display:inline-flex; align-items:center; justify-content:center; width:1.55rem; height:1.55rem; margin:auto; background:none; border:none; border-radius:4px; font-size:1rem; line-height:1; color:var(--border-dk); cursor:pointer; opacity:0; transition:opacity .15s,color .15s,background .15s; }
-    .ws-table tbody tr:hover .btn-del-row { opacity:1; }
+
+/* REPLACE WITH THIS */
+.btn-del-row {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:1.55rem; height:1.55rem; margin:auto;
+  background: rgba(164,16,52,0.07);
+  border: 1px solid rgba(164,16,52,0.18);
+  border-radius:4px; font-size:.8rem; line-height:1;
+  color: var(--crimson);
+  cursor:pointer;
+  opacity: 0.55;
+  transition: opacity .15s, color .15s, background .15s, border-color .15s;
+}
+.ws-table tbody tr:hover .btn-del-row { opacity:1; }
+.btn-del-row:hover {
+  opacity:1;
+  background: var(--crimson);
+  color: var(--white);
+  border-color: var(--crimson);
+}
+
     .btn-del-row:hover { color:var(--crimson); background:var(--crimson-lt); }
     .btn-add-row { align-self:flex-start; padding:.38rem .9rem; background:transparent; border:1px dashed var(--border-dk); border-radius:var(--r-s); font-family:'Inter',sans-serif; font-size:.72rem; font-weight:600; color:var(--muted); cursor:pointer; transition:all .15s; }
     .btn-add-row:hover { color:var(--crimson); border-color:var(--crimson); border-style:solid; background:var(--crimson-lt); }
@@ -240,6 +267,7 @@
     .ws-section--final { border-top:2px solid var(--navy) !important; }
     .ws-section--final .ws-section-title { color:var(--navy); }
 
+    /* ── RESPONSIVE ── */
     @media (max-width:960px)  { .groups-layout { grid-template-columns:1fr; } }
     @media (max-width:768px)  { .two-col{grid-template-columns:1fr;gap:2rem} .nav-label{display:none} .timer-widget{grid-template-columns:1fr;gap:1.25rem} }
     @media (max-width:480px)  { :root{--px:1.25rem;--py:2.5rem} .note-card{padding:1.25rem} }
@@ -257,8 +285,8 @@
         <li><a href="#slide5"><span class="nav-n">05</span> <span class="nav-label">Worksheet</span></a></li>
       </ul>
       <div class="nav-sync">
-        <span id="conn-dot" class="conn-dot local" title="Connecting…"></span>
-        <span id="conn-label" class="conn-label">Connecting…</span>
+        <span id="conn-dot" class="conn-dot local" title="Firebase not configured — running locally"></span>
+        <span id="conn-label" class="conn-label">Local only</span>
       </div>
     </div>
   </nav>
@@ -413,34 +441,41 @@
 
   <script>
     /* ═══════════════════════════════════════════════════════════
-       FIREBASE CONFIG — paste your values here
+       FIREBASE — REAL-TIME COLLABORATION
        ═══════════════════════════════════════════════════════════
-       Add ?session=name to the URL to isolate workshops, e.g.
-         index.html?session=jan-workshop
-    ═══════════════════════════════════════════════════════════ */
-    const FIREBASE_CONFIG = {
-      apiKey            : "AIzaSyACXjiJHBKLGDF-VDbjQkg4v_HYh1hW_VE",
-      authDomain        : "debriefs-reporting.firebaseapp.com",
-      databaseURL       : "https://debriefs-reporting-default-rtdb.firebaseio.com",
-      projectId         : "debriefs-reporting",
-      storageBucket     : "debriefs-reporting.firebasestorage.app",
-      messagingSenderId : "4438721929",
-      appId             : "1:4438721929:web:4f7c2a6822c75afad4cd58",
-    };
+       1. Go to https://console.firebase.google.com/
+       2. Create a project → Add a Web App → copy the config
+       3. Build → Realtime Database → Create database (test mode)
+       4. Paste your values below (replace all YOUR_… placeholders)
+       5. Add ?session=any-name to the URL to create isolated
+          sessions for different workshops, e.g.:
+             index.html?session=jan-workshop
+    ══════════════════════════════════════════════════════════════ */
 
-    /* Session key */
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyACXjiJHBKLGDF-VDbjQkg4v_HYh1hW_VE",
+  authDomain: "debriefs-reporting.firebaseapp.com",
+  databaseURL: "https://debriefs-reporting-default-rtdb.firebaseio.com",
+  projectId: "debriefs-reporting",
+  storageBucket: "debriefs-reporting.firebasestorage.app",
+  messagingSenderId: "4438721929",
+  appId: "1:4438721929:web:4f7c2a6822c75afad4cd58",
+};
+
+    /* Session key — each unique URL creates its own isolated room */
     const SESSION_ID = new URLSearchParams(location.search).get('session') || 'default';
 
     /* Firebase state */
     let db = null, sessionRef = null, firebaseReady = false;
+    /* Prevents feedback loops: writes inside listeners are suppressed */
     let isRemoteApply = false;
 
     try {
-      /* The check below just tests that the placeholder hasn't been left in.
-         Your real key is already there so this will always be true now. */
-      if (FIREBASE_CONFIG.apiKey !== 'YOUR_API_KEY') {
+      if (FIREBASE_CONFIG.apiKey !== 'AIzaSyACXjiJHBKLGDF-VDbjQkg4v_HYh1hW_VE') {
         firebase.initializeApp(FIREBASE_CONFIG);
-        db         = firebase.database();
+        db = firebase.database();
         sessionRef = db.ref('sessions/' + SESSION_ID);
         firebaseReady = true;
       }
@@ -460,17 +495,29 @@
       return a;
     };
 
-    const fbArr   = v => { if (!v) return []; if (Array.isArray(v)) return v; return Object.keys(v).sort((a,b)=>+a-+b).map(k=>v[k]); };
+    /* Convert Firebase object-keyed data back to a JS array */
+    const fbArr = v => {
+      if (!v) return [];
+      if (Array.isArray(v)) return v;
+      return Object.keys(v).sort((a,b) => +a - +b).map(k => v[k]);
+    };
     const fbArr2d = v => fbArr(v).map(r => fbArr(r));
 
+    /* Per-key debounce */
     const dTimers = {};
-    const debounce = (key, fn, ms = 600) => { clearTimeout(dTimers[key]); dTimers[key] = setTimeout(fn, ms); };
+    const debounce = (key, fn, ms = 600) => {
+      clearTimeout(dTimers[key]);
+      dTimers[key] = setTimeout(fn, ms);
+    };
 
     /* ── FIREBASE WRITE HELPER ──────────────────────────────────── */
     function fbSet(path, value) {
       if (!firebaseReady || isRemoteApply) return;
-      if (value === null || value === undefined) { sessionRef.child(path).remove(); }
-      else { sessionRef.child(path).set(value); }
+      if (value === null || value === undefined) {
+        sessionRef.child(path).remove();
+      } else {
+        sessionRef.child(path).set(value);
+      }
     }
 
     /* ── CONNECTION STATUS ──────────────────────────────────────── */
@@ -487,18 +534,26 @@
       const rows = [];
       table.querySelectorAll('tbody tr').forEach(tr => {
         const cells = [];
-        tr.querySelectorAll('td[contenteditable]').forEach(td => { cells.push(td.textContent || ''); });
+        tr.querySelectorAll('td[contenteditable]').forEach(td => {
+          /* Store a zero-width space for empty cells so Firebase doesn't drop the key */
+          cells.push(td.textContent || '');
+        });
         rows.push(cells);
       });
       return rows;
     }
 
     function applyTableData(tableId, rows) {
-      const table = document.getElementById(tableId); if (!table) return;
-      if (table.contains(document.activeElement) && document.activeElement.hasAttribute('contenteditable')) return;
-      const tbody     = table.querySelector('tbody');
-      const existRows = [...tbody.querySelectorAll('tr')];
-      const rowsArr   = fbArr2d(rows);
+      const table = document.getElementById(tableId);
+      if (!table) return;
+      /* Never overwrite what the user is actively typing */
+      if (table.contains(document.activeElement) &&
+          document.activeElement.hasAttribute('contenteditable')) return;
+
+      const tbody      = table.querySelector('tbody');
+      const existRows  = [...tbody.querySelectorAll('tr')];
+      const rowsArr    = fbArr2d(rows);
+
       rowsArr.forEach((rowData, ri) => {
         if (ri < existRows.length) {
           const cells = [...existRows[ri].querySelectorAll('td[contenteditable]')];
@@ -509,24 +564,42 @@
             }
           });
         } else {
+          /* New row from a remote add */
           const tr = document.createElement('tr');
-          rowData.forEach(text => { const td = document.createElement('td'); td.contentEditable = 'true'; td.textContent = String(text||''); tr.appendChild(td); });
-          const delTd = document.createElement('td'); delTd.className = 'row-del-cell'; delTd.innerHTML = '<button class="btn-del-row" aria-label="Delete row">×</button>'; tr.appendChild(delTd);
+          rowData.forEach(text => {
+            const td = document.createElement('td');
+            td.contentEditable = 'true';
+            td.textContent = String(text || '');
+            tr.appendChild(td);
+          });
+          const delTd = document.createElement('td');
+          delTd.className = 'row-del-cell';
+          delTd.innerHTML = '<button class="btn-del-row" aria-label="Delete row">×</button>';
+          tr.appendChild(delTd);
           tbody.appendChild(tr);
         }
       });
-      for (let ri = rowsArr.length; ri < existRows.length; ri++) { existRows[ri].remove(); }
+      /* Remove rows that were deleted remotely */
+      for (let ri = rowsArr.length; ri < existRows.length; ri++) {
+        existRows[ri].remove();
+      }
     }
 
     /* ── APPLY STORED WORKSHEET DATA ────────────────────────────── */
     let currentWsData = {};
+
     function applyStoredWorksheetData() {
       teams.forEach((t, i) => {
-        const d = currentWsData[i] ?? currentWsData[String(i)]; if (!d) return;
+        const d = currentWsData[i] ?? currentWsData[String(i)];
+        if (!d) return;
         if (d.ms) applyTableData(`ms-${i}`, d.ms);
         if (d.rm) applyTableData(`rm-${i}`, d.rm);
         if (d.da) applyTableData(`da-${i}`, d.da);
-        const applyTA = (id, val) => { if (val === undefined || val === null) return; const ta = document.getElementById(id); if (ta && ta !== document.activeElement) ta.value = String(val); };
+        const applyTA = (id, val) => {
+          if (val === undefined || val === null) return;
+          const ta = document.getElementById(id);
+          if (ta && ta !== document.activeElement) ta.value = String(val);
+        };
         applyTA(`note-ms-${i}`,  d.noteMs);
         applyTA(`note-rm-${i}`,  d.noteRm);
         applyTA(`note-daf-${i}`, d.noteDaFormat);
@@ -538,7 +611,8 @@
     const navLinks  = document.querySelectorAll('nav a');
     const allSlides = [...document.querySelectorAll('.slide')];
     function updateNav() {
-      const mid = window.innerHeight * 0.4; let active = null;
+      const mid = window.innerHeight * 0.4;
+      let active = null;
       allSlides.forEach(s => { if (s.getBoundingClientRect().top <= mid) active = s.id; });
       navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + (active ?? '')));
     }
@@ -546,61 +620,149 @@
     updateNav();
 
     /* ── STATE ──────────────────────────────────────────────────── */
-    let members = [], teams = [], groupCount = 2;
+    let members    = [];
+    let teams      = [];
+    let groupCount = 2;
     const MIN = 2, MAX = 10;
-    let timerDuration = 15*60, timerRemaining = 15*60, timerRunning = false, timerInterval = null, activePreset = 15;
+
+    /* ── TIMER STATE ─────────────────────────────────────────────  */
+    let timerDuration  = 15 * 60;
+    let timerRemaining = 15 * 60;
+    let timerRunning   = false;
+    let timerInterval  = null;
+    let activePreset   = 15;
 
     /* ── DOM REFS ───────────────────────────────────────────────── */
     const $ = id => document.getElementById(id);
-    const nameInput=_('name-input'), btnAdd=_('btn-add'), memberList=_('members-list'),
-          btnDown=_('btn-down'), btnUp=_('btn-up'), grpCount=_('grp-count'),
-          btnGen=_('btn-generate'), btnClrTeams=_('btn-clear-teams'), btnClrNames=_('btn-clear-names'),
-          teamsOut=_('teams-out'), notesOut=_('notes-out'),
-          timerDisp=_('timer-display'), timerBar=_('timer-bar'),
-          timerCustom=_('timer-custom'), btnTimerSet=_('btn-timer-set'),
-          btnTimerPly=_('btn-timer-play'), btnTimerRst=_('btn-timer-reset');
-    function _(id){ return document.getElementById(id); }
+    const nameInput   = $('name-input');
+    const btnAdd      = $('btn-add');
+    const memberList  = $('members-list');
+    const btnDown     = $('btn-down');
+    const btnUp       = $('btn-up');
+    const grpCount    = $('grp-count');
+    const btnGen      = $('btn-generate');
+    const btnClrTeams = $('btn-clear-teams');
+    const btnClrNames = $('btn-clear-names');
+    const teamsOut    = $('teams-out');
+    const notesOut    = $('notes-out');
+    const timerDisp   = $('timer-display');
+    const timerBar    = $('timer-bar');
+    const timerCustom = $('timer-custom');
+    const btnTimerSet = $('btn-timer-set');
+    const btnTimerPly = $('btn-timer-play');
+    const btnTimerRst = $('btn-timer-reset');
 
     /* ── TIMER ──────────────────────────────────────────────────── */
-    const fmtTime = s => `${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;
+    const fmtTime = s =>
+      `${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;
+
     function renderTimer() {
       timerDisp.textContent = fmtTime(timerRemaining);
-      const pct=timerDuration>0?timerRemaining/timerDuration:0, isUrgent=timerRemaining>0&&timerRemaining<=60, isDone=timerRemaining===0;
-      timerBar.style.width=(pct*100)+'%';
-      timerDisp.classList.toggle('urgent',isUrgent); timerDisp.classList.toggle('done',isDone);
-      timerBar.classList.toggle('urgent',isUrgent);
-      btnTimerPly.textContent=timerRunning?'⏸ Pause':isDone?'↺ Restart':'▶ Start';
+      const pct      = timerDuration > 0 ? timerRemaining / timerDuration : 0;
+      const isUrgent = timerRemaining > 0 && timerRemaining <= 60;
+      const isDone   = timerRemaining === 0;
+      timerBar.style.width = (pct * 100) + '%';
+      timerDisp.classList.toggle('urgent', isUrgent);
+      timerDisp.classList.toggle('done',   isDone);
+      timerBar.classList.toggle('urgent',  isUrgent);
+      btnTimerPly.textContent = timerRunning ? '⏸ Pause' : isDone ? '↺ Restart' : '▶ Start';
     }
-    function tick() { if(timerRemaining>0){timerRemaining--;renderTimer();}else{clearInterval(timerInterval);timerRunning=false;renderTimer();} }
-    function startTimer() { if(timerRunning||timerRemaining===0)return; timerRunning=true; timerInterval=setInterval(tick,1000); renderTimer(); fbSet('timer',{duration:timerDuration,startedAt:Date.now(),remainingAtPause:timerRemaining}); }
-    function pauseTimer() { clearInterval(timerInterval); timerRunning=false; renderTimer(); fbSet('timer',{duration:timerDuration,startedAt:null,remainingAtPause:timerRemaining}); }
-    function resetTimer() { clearInterval(timerInterval); timerRunning=false; timerRemaining=timerDuration; renderTimer(); fbSet('timer',{duration:timerDuration,startedAt:null,remainingAtPause:timerDuration}); }
-    function setTimer(mins) { clearInterval(timerInterval); timerRunning=false; timerDuration=mins*60; timerRemaining=timerDuration; renderTimer(); fbSet('timer',{duration:timerDuration,startedAt:null,remainingAtPause:timerDuration}); }
-    const syncPresets = () => { document.querySelectorAll('.btn-preset').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.min)===activePreset)); };
-    btnTimerPly.onclick = () => { if(timerRemaining===0){resetTimer();return;} timerRunning?pauseTimer():startTimer(); };
+    function tick() {
+      if (timerRemaining > 0) { timerRemaining--; renderTimer(); }
+      else { clearInterval(timerInterval); timerRunning = false; renderTimer(); }
+    }
+
+    function startTimer() {
+      if (timerRunning || timerRemaining === 0) return;
+      timerRunning  = true;
+      timerInterval = setInterval(tick, 1000);
+      renderTimer();
+      fbSet('timer', { duration: timerDuration, startedAt: Date.now(), remainingAtPause: timerRemaining });
+    }
+    function pauseTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      renderTimer();
+      fbSet('timer', { duration: timerDuration, startedAt: null, remainingAtPause: timerRemaining });
+    }
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerRunning   = false;
+      timerRemaining = timerDuration;
+      renderTimer();
+      fbSet('timer', { duration: timerDuration, startedAt: null, remainingAtPause: timerDuration });
+    }
+    function setTimer(mins) {
+      clearInterval(timerInterval);
+      timerRunning   = false;
+      timerDuration  = mins * 60;
+      timerRemaining = timerDuration;
+      renderTimer();
+      fbSet('timer', { duration: timerDuration, startedAt: null, remainingAtPause: timerDuration });
+    }
+    const syncPresets = () => {
+      document.querySelectorAll('.btn-preset').forEach(b =>
+        b.classList.toggle('active', parseInt(b.dataset.min) === activePreset)
+      );
+    };
+
+    btnTimerPly.onclick = () => {
+      if (timerRemaining === 0) { resetTimer(); return; }
+      timerRunning ? pauseTimer() : startTimer();
+    };
     btnTimerRst.onclick = resetTimer;
-    btnTimerSet.onclick = () => { const v=parseInt(timerCustom.value); if(v>0&&v<=120){activePreset=-1;setTimer(v);syncPresets();timerCustom.value='';} };
-    timerCustom.onkeydown = e => { if(e.key==='Enter')btnTimerSet.click(); };
-    document.querySelectorAll('.btn-preset').forEach(btn => { btn.onclick=()=>{activePreset=parseInt(btn.dataset.min);setTimer(activePreset);syncPresets();}; });
+    btnTimerSet.onclick = () => {
+      const v = parseInt(timerCustom.value);
+      if (v > 0 && v <= 120) { activePreset = -1; setTimer(v); syncPresets(); timerCustom.value = ''; }
+    };
+    timerCustom.onkeydown = e => { if (e.key === 'Enter') btnTimerSet.click(); };
+    document.querySelectorAll('.btn-preset').forEach(btn => {
+      btn.onclick = () => { activePreset = parseInt(btn.dataset.min); setTimer(activePreset); syncPresets(); };
+    });
 
     /* ── GROUP COUNTER ──────────────────────────────────────────── */
-    function syncCounter() { grpCount.textContent=groupCount; btnDown.disabled=groupCount<=MIN; btnUp.disabled=groupCount>=MAX; }
-    btnDown.onclick = () => { if(groupCount>MIN){groupCount--;syncCounter();fbSet('groupCount',groupCount);} };
-    btnUp.onclick   = () => { if(groupCount<MAX){groupCount++;syncCounter();fbSet('groupCount',groupCount);} };
+    function syncCounter() {
+      grpCount.textContent = groupCount;
+      btnDown.disabled = groupCount <= MIN;
+      btnUp.disabled   = groupCount >= MAX;
+    }
+    btnDown.onclick = () => {
+      if (groupCount > MIN) { groupCount--; syncCounter(); fbSet('groupCount', groupCount); }
+    };
+    btnUp.onclick = () => {
+      if (groupCount < MAX) { groupCount++; syncCounter(); fbSet('groupCount', groupCount); }
+    };
 
     /* ── MEMBER LIST ─────────────────────────────────────────────  */
     function renderMembers() {
-      if(!members.length){memberList.innerHTML='<li class="empty-note">No members added yet.</li>';return;}
-      memberList.innerHTML=members.map((n,i)=>`<li class="member-item"><span>${esc(n)}</span><button class="btn-rm" data-i="${i}" aria-label="Remove ${esc(n)}">×</button></li>`).join('');
-      memberList.querySelectorAll('.btn-rm').forEach(b=>{ b.onclick=()=>{members.splice(+b.dataset.i,1);renderMembers();fbSet('members',members.length?members:null);}; });
+      if (!members.length) {
+        memberList.innerHTML = '<li class="empty-note">No members added yet.</li>';
+        return;
+      }
+      memberList.innerHTML = members.map((n, i) => `
+        <li class="member-item">
+          <span>${esc(n)}</span>
+          <button class="btn-rm" data-i="${i}" aria-label="Remove ${esc(n)}">×</button>
+        </li>`).join('');
+      memberList.querySelectorAll('.btn-rm').forEach(b => {
+        b.onclick = () => {
+          members.splice(+b.dataset.i, 1);
+          renderMembers();
+          fbSet('members', members.length ? members : null);
+        };
+      });
     }
     function addMember() {
-      const v=nameInput.value.trim();
-      if(!v||members.some(m=>m.toLowerCase()===v.toLowerCase())){nameInput.focus();return;}
-      members.push(v);renderMembers();fbSet('members',members);nameInput.value='';nameInput.focus();
+      const v = nameInput.value.trim();
+      if (!v || members.some(m => m.toLowerCase() === v.toLowerCase())) { nameInput.focus(); return; }
+      members.push(v);
+      renderMembers();
+      fbSet('members', members);
+      nameInput.value = '';
+      nameInput.focus();
     }
-    btnAdd.onclick=addMember;
-    nameInput.onkeydown=e=>{if(e.key==='Enter')addMember();};
+    btnAdd.onclick      = addMember;
+    nameInput.onkeydown = e => { if (e.key === 'Enter') addMember(); };
 
     /* ── ICONS ──────────────────────────────────────────────────── */
     const ICON_EDIT  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
@@ -609,87 +771,170 @@
 
     /* ── TEAM NAME EDITING ──────────────────────────────────────── */
     function enableTeamNameEdit(idx) {
-      const card=teamsOut.querySelector(`[data-ti="${idx}"]`);if(!card)return;
-      const wrap=card.querySelector('.team-name-wrap'),display=wrap.querySelector('.team-name-text'),editBtn=wrap.querySelector('.btn-name-edit');
-      const input=document.createElement('input');input.className='team-name-edit';input.value=teams[idx].name;input.setAttribute('aria-label','Edit team name');
-      display.replaceWith(input);editBtn.innerHTML=ICON_CHECK;input.focus();input.select();
-      let done=false;
-      function save(){
-        if(done)return;done=true;
-        const newName=input.value.trim()||teams[idx].name;teams[idx].name=newName;
-        const span=document.createElement('span');span.className='team-name-text';span.textContent=newName;span.title='Click to rename';
-        span.setAttribute('role','button');span.setAttribute('tabindex','0');
-        span.onclick=()=>enableTeamNameEdit(idx);span.onkeydown=e=>{if(e.key==='Enter')enableTeamNameEdit(idx);};
-        input.replaceWith(span);editBtn.innerHTML=ICON_EDIT;editBtn.onclick=()=>enableTeamNameEdit(idx);
-        const nc=notesOut.querySelector(`[data-ni="${idx}"] .note-card-name`);if(nc)nc.textContent=newName;
-        fbSet('teams',teams);
+      const card = teamsOut.querySelector(`[data-ti="${idx}"]`); if (!card) return;
+      const wrap = card.querySelector('.team-name-wrap');
+      const display = wrap.querySelector('.team-name-text');
+      const editBtn = wrap.querySelector('.btn-name-edit');
+      const input   = document.createElement('input');
+      input.className = 'team-name-edit';
+      input.value = teams[idx].name;
+      input.setAttribute('aria-label', 'Edit team name');
+      display.replaceWith(input);
+      editBtn.innerHTML = ICON_CHECK;
+      input.focus(); input.select();
+      let done = false;
+      function save() {
+        if (done) return; done = true;
+        const newName = input.value.trim() || teams[idx].name;
+        teams[idx].name = newName;
+        const span = document.createElement('span');
+        span.className   = 'team-name-text';
+        span.textContent = newName;
+        span.title = 'Click to rename';
+        span.setAttribute('role','button'); span.setAttribute('tabindex','0');
+        span.onclick   = () => enableTeamNameEdit(idx);
+        span.onkeydown = e => { if (e.key === 'Enter') enableTeamNameEdit(idx); };
+        input.replaceWith(span);
+        editBtn.innerHTML = ICON_EDIT;
+        editBtn.onclick   = () => enableTeamNameEdit(idx);
+        const nc = notesOut.querySelector(`[data-ni="${idx}"] .note-card-name`);
+        if (nc) nc.textContent = newName;
+        fbSet('teams', teams);
       }
-      input.onblur=save;
-      input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();input.blur();}if(e.key==='Escape'){input.value=teams[idx].name;input.blur();}};
-      editBtn.onclick=()=>input.blur();
+      input.onblur    = save;
+      input.onkeydown = e => {
+        if (e.key === 'Enter')  { e.preventDefault(); input.blur(); }
+        if (e.key === 'Escape') { input.value = teams[idx].name; input.blur(); }
+      };
+      editBtn.onclick = () => input.blur();
     }
 
     /* ── MEMBER NAME EDITING ────────────────────────────────────── */
-    function enableMemberEdit(ti,mi){
-      const card=teamsOut.querySelector(`[data-ti="${ti}"]`);if(!card)return;
-      const li=card.querySelector(`[data-mi="${mi}"]`);if(!li)return;
-      const nameEl=li.querySelector('.member-row-name'),editBtn=li.querySelector('.btn-mem-edit');
-      const input=document.createElement('input');input.className='member-name-input';input.value=teams[ti].members[mi];
-      nameEl.replaceWith(input);editBtn.innerHTML=ICON_CHECK;input.focus();input.select();
-      let done=false;
-      function save(){
-        if(done)return;done=true;
-        const newName=input.value.trim()||teams[ti].members[mi];teams[ti].members[mi]=newName;
-        const span=document.createElement('span');span.className='member-row-name';span.textContent=newName;
-        input.replaceWith(span);editBtn.innerHTML=ICON_EDIT;editBtn.onclick=()=>enableMemberEdit(ti,mi);
-        updateNotePills();fbSet('teams',teams);
+    function enableMemberEdit(ti, mi) {
+      const card = teamsOut.querySelector(`[data-ti="${ti}"]`); if (!card) return;
+      const li   = card.querySelector(`[data-mi="${mi}"]`);     if (!li)   return;
+      const nameEl  = li.querySelector('.member-row-name');
+      const editBtn = li.querySelector('.btn-mem-edit');
+      const input   = document.createElement('input');
+      input.className = 'member-name-input';
+      input.value = teams[ti].members[mi];
+      nameEl.replaceWith(input);
+      editBtn.innerHTML = ICON_CHECK;
+      input.focus(); input.select();
+      let done = false;
+      function save() {
+        if (done) return; done = true;
+        const newName = input.value.trim() || teams[ti].members[mi];
+        teams[ti].members[mi] = newName;
+        const span = document.createElement('span');
+        span.className   = 'member-row-name';
+        span.textContent = newName;
+        input.replaceWith(span);
+        editBtn.innerHTML = ICON_EDIT;
+        editBtn.onclick   = () => enableMemberEdit(ti, mi);
+        updateNotePills();
+        fbSet('teams', teams);
       }
-      input.onblur=save;
-      input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();input.blur();}if(e.key==='Escape'){input.value=teams[ti].members[mi];input.blur();}};
-      editBtn.onclick=()=>input.blur();
+      input.onblur    = save;
+      input.onkeydown = e => {
+        if (e.key === 'Enter')  { e.preventDefault(); input.blur(); }
+        if (e.key === 'Escape') { input.value = teams[ti].members[mi]; input.blur(); }
+      };
+      editBtn.onclick = () => input.blur();
     }
 
     /* ── MOVE MEMBER ─────────────────────────────────────────────  */
-    function toggleMovePanel(ti,mi){
-      const card=teamsOut.querySelector(`[data-ti="${ti}"]`);if(!card)return;
-      const li=card.querySelector(`[data-mi="${mi}"]`);if(!li)return;
-      const existing=li.querySelector('.move-panel');
-      teamsOut.querySelectorAll('.move-panel').forEach(p=>p.remove());
-      if(existing)return;
-      const panel=document.createElement('div');panel.className='move-panel';
-      const lbl=document.createElement('span');lbl.className='move-panel-label';lbl.textContent='Move to:';panel.appendChild(lbl);
-      teams.forEach((t,ti2)=>{
-        if(ti2===ti)return;
-        const btn=document.createElement('button');btn.className='btn-move-to';btn.textContent=t.name;
-        btn.onclick=()=>{const member=teams[ti].members.splice(mi,1)[0];teams[ti2].members.push(member);renderTeams();updateNotePills();fbSet('teams',teams);};
+    function toggleMovePanel(ti, mi) {
+      const card = teamsOut.querySelector(`[data-ti="${ti}"]`); if (!card) return;
+      const li   = card.querySelector(`[data-mi="${mi}"]`);     if (!li)   return;
+      const existing = li.querySelector('.move-panel');
+      teamsOut.querySelectorAll('.move-panel').forEach(p => p.remove());
+      if (existing) return;
+      const panel = document.createElement('div');
+      panel.className = 'move-panel';
+      const lbl = document.createElement('span');
+      lbl.className = 'move-panel-label'; lbl.textContent = 'Move to:';
+      panel.appendChild(lbl);
+      teams.forEach((t, ti2) => {
+        if (ti2 === ti) return;
+        const btn = document.createElement('button');
+        btn.className   = 'btn-move-to';
+        btn.textContent = t.name;
+        btn.onclick = () => {
+          const member = teams[ti].members.splice(mi, 1)[0];
+          teams[ti2].members.push(member);
+          renderTeams();
+          updateNotePills();
+          fbSet('teams', teams);
+        };
         panel.appendChild(btn);
       });
       li.appendChild(panel);
     }
 
-    /* ── UPDATE NOTE PILLS ──────────────────────────────────────── */
-    function updateNotePills(){
-      teams.forEach((t,i)=>{
-        const card=notesOut.querySelector(`[data-ni="${i}"]`);if(!card)return;
-        const pillsEl=card.querySelector('.pills');
-        if(pillsEl)pillsEl.innerHTML=t.members.map((m,j)=>`<span class="pill ${j===0?'leader':''}">${esc(m)}</span>`).join('');
-        const countEl=card.querySelector('.note-card-count');
-        if(countEl)countEl.textContent=`${t.members.length} member${t.members.length!==1?'s':''}`;
+    /* ── UPDATE NOTE PILLS (without full re-render) ─────────────── */
+    function updateNotePills() {
+      teams.forEach((t, i) => {
+        const card = notesOut.querySelector(`[data-ni="${i}"]`); if (!card) return;
+        const pillsEl = card.querySelector('.pills');
+        if (pillsEl) pillsEl.innerHTML = t.members.map((m, j) =>
+          `<span class="pill ${j===0?'leader':''}">${esc(m)}</span>`
+        ).join('');
+        const countEl = card.querySelector('.note-card-count');
+        if (countEl) countEl.textContent = `${t.members.length} member${t.members.length!==1?'s':''}`;
       });
     }
 
     /* ── WORKSHEET DATA ─────────────────────────────────────────── */
-    const MS_ROWS=[['Pre launch','Kick Off'],['',''],['Launch','Launch Meeting'],['',''],['Check in 1','Team Check-Ins'],['',''],['Check in 2','Mid-Cycle Check-In'],['',''],['Early Deadline','Deadline Update(s)'],['',''],['End-of-Cycle','Final Update Email'],['',''],['Debrief','Program Debrief'],['','']];
-    const RM_ROWS=['Leads Generated','Prospective Learner Inquiries','YOY Traffic #s from Email','YOY Website Traffic #s and Source of Traffic','Social Media Engagement','# of Applications Started, Submitted, Admitted and Enrolled','Lead and Application Source Data','Enrollment / Revenue Target'];
-    const DA_ROWS=['1. Program Overview and Enrollment Data Year-over-Year','2. Admissions Snapshot/Overview, Tuition Reductions, Learner Demos','3. Marketing Efforts, Digital Reach, Target Audience, and Industry Channels','4. Application and Enrollment Data Source Overview','5. Marketing Plan Highlights and Priorities','6. Finance Overview','7. Education, Curriculum, and Post-Learner Surveys','8. AES Plan Highlights and Priorities'];
-    const delCell=()=>`<td class="row-del-cell"><button class="btn-del-row" aria-label="Delete row">×</button></td>`;
+    const MS_ROWS = [
+      ['Pre launch','Kick Off'],['',''],
+      ['Launch','Launch Meeting'],['',''],
+      ['Check in 1','Team Check-Ins'],['',''],
+      ['Check in 2','Mid-Cycle Check-In'],['',''],
+      ['Early Deadline','Deadline Update(s)'],['',''],
+      ['End-of-Cycle','Final Update Email'],['',''],
+      ['Debrief','Program Debrief'],['',''],
+    ];
+    const RM_ROWS = [
+      'Leads Generated','Prospective Learner Inquiries',
+      'YOY Traffic #s from Email','YOY Website Traffic #s and Source of Traffic',
+      'Social Media Engagement','# of Applications Started, Submitted, Admitted and Enrolled',
+      'Lead and Application Source Data','Enrollment / Revenue Target',
+    ];
+    const DA_ROWS = [
+      '1. Program Overview and Enrollment Data Year-over-Year',
+      '2. Admissions Snapshot/Overview, Tuition Reductions, Learner Demos',
+      '3. Marketing Efforts, Digital Reach, Target Audience, and Industry Channels',
+      '4. Application and Enrollment Data Source Overview',
+      '5. Marketing Plan Highlights and Priorities',
+      '6. Finance Overview',
+      '7. Education, Curriculum, and Post-Learner Surveys',
+      '8. AES Plan Highlights and Priorities',
+    ];
+    const delCell = () =>
+      `<td class="row-del-cell"><button class="btn-del-row" aria-label="Delete row">×</button></td>`;
 
     /* ── WORKSHEET CARD BUILDER ─────────────────────────────────── */
-    function worksheetCard(t,i){
-      const pillsHTML=t.members.map((m,j)=>`<span class="pill ${j===0?'leader':''}">${esc(m)}</span>`).join('');
-      const msHTML=MS_ROWS.map(([ph,mt])=>`<tr><td contenteditable="true">${esc(ph)}</td><td contenteditable="true">${esc(mt)}</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>${delCell()}</tr>`).join('');
-      const rmHTML=RM_ROWS.map(m=>`<tr><td contenteditable="true">${esc(m)}</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>${delCell()}</tr>`).join('');
-      const daHTML=DA_ROWS.map(item=>`<tr><td contenteditable="true">${esc(item)}</td><td contenteditable="true"></td><td contenteditable="true"></td>${delCell()}</tr>`).join('');
+    function worksheetCard(t, i) {
+      const pillsHTML = t.members.map((m,j) =>
+        `<span class="pill ${j===0?'leader':''}">${esc(m)}</span>`
+      ).join('');
+      const msHTML = MS_ROWS.map(([ph,mt]) => `<tr>
+        <td contenteditable="true">${esc(ph)}</td>
+        <td contenteditable="true">${esc(mt)}</td>
+        <td contenteditable="true"></td><td contenteditable="true"></td>
+        <td contenteditable="true"></td><td contenteditable="true"></td>
+        ${delCell()}</tr>`).join('');
+      const rmHTML = RM_ROWS.map(m => `<tr>
+        <td contenteditable="true">${esc(m)}</td>
+        <td contenteditable="true"></td><td contenteditable="true"></td>
+        <td contenteditable="true"></td><td contenteditable="true"></td>
+        <td contenteditable="true"></td>${delCell()}</tr>`).join('');
+      const daHTML = DA_ROWS.map(item => `<tr>
+        <td contenteditable="true">${esc(item)}</td>
+        <td contenteditable="true"></td><td contenteditable="true"></td>
+        ${delCell()}</tr>`).join('');
+
       return `
         <div class="note-card" data-ni="${i}">
           <div class="note-card-head">
@@ -700,205 +945,411 @@
             <span class="note-card-count">${t.members.length} member${t.members.length!==1?'s':''}</span>
           </div>
           <div class="pills">${pillsHTML}</div>
+
           <div class="ws-section">
-            <div><h4 class="ws-section-title">Milestone &amp; Reporting Overview</h4><p class="ws-section-intro">Use this table to map meetings/checkpoints. These are just some examples of what we do now to get you started and thinking. They can be kept as is, altered, or removed from your plan.</p></div>
-            <div class="ws-table-wrap"><table class="ws-table has-phase" id="ms-${i}">
-              <colgroup><col style="min-width:110px;width:9%"><col style="min-width:140px;width:14%"><col style="min-width:160px;width:17%"><col style="min-width:150px;width:16%"><col style="min-width:110px;width:10%"><col style="min-width:140px;"><col style="width:2.4rem;min-width:2.4rem;"></colgroup>
-              <thead><tr><th>Phase</th><th>Meeting / Update Name</th><th>Who Attends or is Included (roles)</th><th>Timing &amp; Cadence (relative to deadline)</th><th>Owner (role)</th><th>Primary Purpose</th><th class="th-del"></th></tr></thead>
-              <tbody>${msHTML}</tbody>
-            </table></div>
+            <div>
+              <h4 class="ws-section-title">Milestone &amp; Reporting Overview</h4>
+              <p class="ws-section-intro">Use this table to map meetings/checkpoints. These are just some examples of what we do now to get you started and thinking. They can be kept as is, altered, or removed from your plan.</p>
+            </div>
+            <div class="ws-table-wrap">
+              <table class="ws-table has-phase" id="ms-${i}">
+                <colgroup>
+                  <col style="min-width:110px;width:9%"><col style="min-width:140px;width:14%">
+                  <col style="min-width:160px;width:17%"><col style="min-width:150px;width:16%">
+                  <col style="min-width:110px;width:10%"><col style="min-width:140px;">
+                  <col style="width:2.4rem;min-width:2.4rem;">
+                </colgroup>
+                <thead><tr>
+                  <th>Phase</th><th>Meeting / Update Name</th>
+                  <th>Who Attends or is Included (roles)</th>
+                  <th>Timing &amp; Cadence (relative to deadline)</th>
+                  <th>Owner (role)</th><th>Primary Purpose</th>
+                  <th class="th-del"></th>
+                </tr></thead>
+                <tbody>${msHTML}</tbody>
+              </table>
+            </div>
             <button class="btn-add-row" data-table-id="ms-${i}" data-cols="6">+ Add Row</button>
-            <div class="ws-notes-block"><span class="ws-notes-label">Notes:</span><textarea id="note-ms-${i}" class="ws-notes-ta" rows="2" placeholder="Additional notes…" aria-label="Milestone notes"></textarea></div>
+            <div class="ws-notes-block">
+              <span class="ws-notes-label">Notes:</span>
+              <textarea id="note-ms-${i}" class="ws-notes-ta" rows="2" placeholder="Additional notes…" aria-label="Milestone notes"></textarea>
+            </div>
           </div>
+
           <div class="ws-section">
-            <div><h4 class="ws-section-title">Reports and Metrics</h4><p class="ws-section-intro">Use this table to map the major reports and KPIs. These are just some examples. They can be kept or removed from your plan. 8 is great, but 3–5 will be good.</p></div>
-            <div class="ws-table-wrap"><table class="ws-table" id="rm-${i}">
-              <colgroup><col style="min-width:160px;width:15%"><col style="min-width:100px;width:10%"><col style="min-width:150px;width:16%"><col style="min-width:160px;width:18%"><col style="min-width:160px;width:18%"><col style="min-width:110px;"><col style="width:2.4rem;min-width:2.4rem;"></colgroup>
-              <thead><tr><th>Metric Name</th><th>Owner (role)</th><th>Description</th><th>What report, dashboard, or platform can it be found in</th><th>In Which Meeting(s) or Update(s) Does it Belong?</th><th>Target or Benchmark</th><th class="th-del"></th></tr></thead>
-              <tbody>${rmHTML}</tbody>
-            </table></div>
+            <div>
+              <h4 class="ws-section-title">Reports and Metrics</h4>
+              <p class="ws-section-intro">Use this table to map the major reports and KPIs. These are just some examples. They can be kept or removed from your plan. 8 is great, but 3–5 will be good.</p>
+            </div>
+            <div class="ws-table-wrap">
+              <table class="ws-table" id="rm-${i}">
+                <colgroup>
+                  <col style="min-width:160px;width:15%"><col style="min-width:100px;width:10%">
+                  <col style="min-width:150px;width:16%"><col style="min-width:160px;width:18%">
+                  <col style="min-width:160px;width:18%"><col style="min-width:110px;">
+                  <col style="width:2.4rem;min-width:2.4rem;">
+                </colgroup>
+                <thead><tr>
+                  <th>Metric Name</th><th>Owner (role)</th><th>Description</th>
+                  <th>What report, dashboard, or platform can it be found in</th>
+                  <th>In Which Meeting(s) or Update(s) Does it Belong?</th>
+                  <th>Target or Benchmark</th><th class="th-del"></th>
+                </tr></thead>
+                <tbody>${rmHTML}</tbody>
+              </table>
+            </div>
             <button class="btn-add-row" data-table-id="rm-${i}" data-cols="6">+ Add Row</button>
-            <div class="ws-notes-block"><span class="ws-notes-label">Notes:</span><textarea id="note-rm-${i}" class="ws-notes-ta" rows="2" placeholder="Additional notes…" aria-label="Reports notes"></textarea></div>
+            <div class="ws-notes-block">
+              <span class="ws-notes-label">Notes:</span>
+              <textarea id="note-rm-${i}" class="ws-notes-ta" rows="2" placeholder="Additional notes…" aria-label="Reports notes"></textarea>
+            </div>
           </div>
+
           <div class="ws-section">
-            <div><h4 class="ws-section-title">Debrief Agenda, Format, Structure and Goals</h4><p class="ws-section-intro">Outline a simple, repeatable agenda. Below is a trimmed-down agenda from the defunct 360 Program Debriefs. Edit this to make it your own.</p></div>
-            <div class="ws-table-wrap"><table class="ws-table" id="da-${i}">
-              <colgroup><col style="min-width:260px;width:55%"><col style="min-width:150px;width:25%"><col style="min-width:110px;"><col style="width:2.4rem;min-width:2.4rem;"></colgroup>
-              <thead><tr><th>Agenda Item</th><th>Report / Dashboard / Metric Used</th><th>Owner (role)</th><th class="th-del"></th></tr></thead>
-              <tbody>${daHTML}</tbody>
-            </table></div>
+            <div>
+              <h4 class="ws-section-title">Debrief Agenda, Format, Structure and Goals</h4>
+              <p class="ws-section-intro">Outline a simple, repeatable agenda. Below is a trimmed-down agenda from the defunct 360 Program Debriefs. Edit this to make it your own.</p>
+            </div>
+            <div class="ws-table-wrap">
+              <table class="ws-table" id="da-${i}">
+                <colgroup>
+                  <col style="min-width:260px;width:55%"><col style="min-width:150px;width:25%">
+                  <col style="min-width:110px;"><col style="width:2.4rem;min-width:2.4rem;">
+                </colgroup>
+                <thead><tr>
+                  <th>Agenda Item</th><th>Report / Dashboard / Metric Used</th>
+                  <th>Owner (role)</th><th class="th-del"></th>
+                </tr></thead>
+                <tbody>${daHTML}</tbody>
+              </table>
+            </div>
             <button class="btn-add-row" data-table-id="da-${i}" data-cols="3">+ Add Row</button>
-            <div class="ws-notes-block"><span class="ws-notes-label ws-notes-label--para">What is the format of the debriefs (e.g., slide presentation vs. slides shared in advance and more of a discussion taking place), who is invited, and when and what is the goal of the debrief?</span><textarea id="note-daf-${i}" class="ws-notes-ta" rows="3" placeholder="Format, attendees, timing, and goals…" aria-label="Debrief format notes"></textarea></div>
+            <div class="ws-notes-block">
+              <span class="ws-notes-label ws-notes-label--para">What is the format of the debriefs (e.g., slide presentation vs. slides shared in advance and more of a discussion taking place), who is invited, and when and what is the goal of the debrief?</span>
+              <textarea id="note-daf-${i}" class="ws-notes-ta" rows="3" placeholder="Format, attendees, timing, and goals…" aria-label="Debrief format notes"></textarea>
+            </div>
           </div>
+
           <div class="ws-section ws-section--final">
-            <div><h4 class="ws-section-title">Discussion Wrap Up</h4><h5 class="ws-section-sub">Commitments &amp; Next Steps</h5><p class="ws-section-intro">What we'll do, who owns it, and when we'll check in.</p></div>
+            <div>
+              <h4 class="ws-section-title">Discussion Wrap Up</h4>
+              <h5 class="ws-section-sub">Commitments &amp; Next Steps</h5>
+              <p class="ws-section-intro">What we'll do, who owns it, and when we'll check in.</p>
+            </div>
             <textarea id="note-wu-${i}" class="ws-notes-ta ws-notes-ta--lg" rows="5" placeholder="Commitments and next steps…" aria-label="Commitments and next steps"></textarea>
           </div>
         </div>`;
     }
 
     /* ── RENDER TEAMS ─────────────────────────────────────────────  */
-    function renderTeams(){
-      if(!teams.length){teamsOut.innerHTML='<p class="placeholder-msg">Teams will appear here once generated.</p>';return;}
-      teamsOut.innerHTML=`<div class="teams-grid">${teams.map((t,i)=>`
-        <div class="team-card" data-ti="${i}">
-          <div class="team-name-wrap">
-            <span class="team-name-text" title="Click to rename" role="button" tabindex="0">${esc(t.name)}</span>
-            <button class="btn-name-edit" aria-label="Edit team name">${ICON_EDIT}</button>
-          </div>
-          <ul class="team-members-ul">
-            ${t.members.map((m,j)=>`
-              <li class="team-member-li ${j===0?'leader':''}" data-mi="${j}">
-                <div class="member-row">
-                  ${j===0?'<span class="leader-star">★</span>':''}
-                  <span class="member-row-name">${esc(m)}</span>
-                  ${j===0?'<span class="leader-tag">Leader</span>':''}
-                  <div class="member-action-btns">
-                    <button class="btn-mem-action btn-mem-edit" title="Edit name">${ICON_EDIT}</button>
-                    ${teams.length>1?`<button class="btn-mem-action btn-mem-move" title="Move to group">${ICON_MOVE}</button>`:''}
-                  </div>
-                </div>
-              </li>`).join('')}
-          </ul>
-        </div>`).join('')}</div>`;
-      teams.forEach((_,i)=>{
-        const card=teamsOut.querySelector(`[data-ti="${i}"]`);
-        card.querySelector('.team-name-text').onclick=()=>enableTeamNameEdit(i);
-        card.querySelector('.team-name-text').onkeydown=e=>{if(e.key==='Enter')enableTeamNameEdit(i);};
-        card.querySelector('.btn-name-edit').onclick=()=>enableTeamNameEdit(i);
-        teams[i].members.forEach((_,j)=>{
-          const li=card.querySelector(`[data-mi="${j}"]`);
-          li.querySelector('.btn-mem-edit').onclick=()=>enableMemberEdit(i,j);
-          const mv=li.querySelector('.btn-mem-move');if(mv)mv.onclick=()=>toggleMovePanel(i,j);
+    function renderTeams() {
+      if (!teams.length) {
+        teamsOut.innerHTML = '<p class="placeholder-msg">Teams will appear here once generated.</p>';
+        return;
+      }
+      teamsOut.innerHTML = `
+        <div class="teams-grid">
+          ${teams.map((t,i) => `
+            <div class="team-card" data-ti="${i}">
+              <div class="team-name-wrap">
+                <span class="team-name-text" title="Click to rename" role="button" tabindex="0">${esc(t.name)}</span>
+                <button class="btn-name-edit" aria-label="Edit team name">${ICON_EDIT}</button>
+              </div>
+              <ul class="team-members-ul">
+                ${t.members.map((m,j) => `
+                  <li class="team-member-li ${j===0?'leader':''}" data-mi="${j}">
+                    <div class="member-row">
+                      ${j===0?'<span class="leader-star">★</span>':''}
+                      <span class="member-row-name">${esc(m)}</span>
+                      ${j===0?'<span class="leader-tag">Leader</span>':''}
+                      <div class="member-action-btns">
+                        <button class="btn-mem-action btn-mem-edit" title="Edit name">${ICON_EDIT}</button>
+                        ${teams.length>1?`<button class="btn-mem-action btn-mem-move" title="Move to group">${ICON_MOVE}</button>`:''}
+                      </div>
+                    </div>
+                  </li>`).join('')}
+              </ul>
+            </div>`).join('')}
+        </div>`;
+      teams.forEach((_,i) => {
+        const card = teamsOut.querySelector(`[data-ti="${i}"]`);
+        card.querySelector('.team-name-text').onclick   = () => enableTeamNameEdit(i);
+        card.querySelector('.team-name-text').onkeydown = e => { if(e.key==='Enter') enableTeamNameEdit(i); };
+        card.querySelector('.btn-name-edit').onclick    = () => enableTeamNameEdit(i);
+        teams[i].members.forEach((_,j) => {
+          const li = card.querySelector(`[data-mi="${j}"]`);
+          li.querySelector('.btn-mem-edit').onclick = () => enableMemberEdit(i,j);
+          const mv = li.querySelector('.btn-mem-move');
+          if (mv) mv.onclick = () => toggleMovePanel(i,j);
         });
       });
     }
 
     /* ── RENDER WORKSHEETS ──────────────────────────────────────── */
-    function renderNotes(){
-      if(!teams.length){notesOut.innerHTML='<p class="placeholder-msg">Generate teams first to unlock a worksheet for each group.</p>';return;}
-      notesOut.innerHTML=`<div class="notes-stack">${teams.map((t,i)=>worksheetCard(t,i)).join('')}</div>`;
-      setTimeout(()=>applyStoredWorksheetData(),60);
+    function renderNotes() {
+      if (!teams.length) {
+        notesOut.innerHTML = '<p class="placeholder-msg">Generate teams first to unlock a worksheet for each group.</p>';
+        return;
+      }
+      notesOut.innerHTML =
+        `<div class="notes-stack">${teams.map((t,i) => worksheetCard(t,i)).join('')}</div>`;
+      /* Apply any data already in Firebase after the DOM settles */
+      setTimeout(() => applyStoredWorksheetData(), 60);
     }
 
     /* ── WORKSHEET EVENT DELEGATION ─────────────────────────────── */
-    notesOut.addEventListener('keydown',e=>{
-      if(e.target.getAttribute('contenteditable')==='true'&&e.key==='Tab'){
+
+    /* Tab between editable cells */
+    notesOut.addEventListener('keydown', e => {
+      if (e.target.getAttribute('contenteditable') === 'true' && e.key === 'Tab') {
         e.preventDefault();
-        const cells=[...notesOut.querySelectorAll('[contenteditable="true"]')];
-        const idx=cells.indexOf(document.activeElement);if(idx===-1)return;
-        const next=cells[e.shiftKey?idx-1:idx+1];if(next)next.focus();
+        const cells = [...notesOut.querySelectorAll('[contenteditable="true"]')];
+        const idx   = cells.indexOf(document.activeElement);
+        if (idx === -1) return;
+        const next  = cells[e.shiftKey ? idx-1 : idx+1];
+        if (next) next.focus();
       }
     });
-    notesOut.addEventListener('blur',e=>{
-      if(e.target.getAttribute('contenteditable')!=='true')return;
-      const table=e.target.closest('.ws-table'),card=e.target.closest('[data-ni]');if(!table||!card)return;
-      const teamIdx=card.dataset.ni,tableName=table.id.replace(new RegExp(`-${teamIdx}$`),'');
-      fbSet(`worksheets/${teamIdx}/${tableName}`,readTableData(table));
-    },true);
-    notesOut.addEventListener('input',e=>{
-      if(e.target.tagName!=='TEXTAREA')return;
-      const card=e.target.closest('[data-ni]');if(!card)return;
-      const teamIdx=card.dataset.ni;
-      const keyMap={[`note-ms-${teamIdx}`]:'noteMs',[`note-rm-${teamIdx}`]:'noteRm',[`note-daf-${teamIdx}`]:'noteDaFormat',[`note-wu-${teamIdx}`]:'noteWrap'};
-      const fbKey=keyMap[e.target.id];if(!fbKey)return;
-      const val=e.target.value;
-      debounce(`ta-${e.target.id}`,()=>fbSet(`worksheets/${teamIdx}/${fbKey}`,val||null));
+
+    /* Sync cell on blur → Firebase */
+    notesOut.addEventListener('blur', e => {
+      if (e.target.getAttribute('contenteditable') !== 'true') return;
+      const table = e.target.closest('.ws-table');
+      const card  = e.target.closest('[data-ni]');
+      if (!table || !card) return;
+      const teamIdx  = card.dataset.ni;
+      const tableName = table.id.replace(new RegExp(`-${teamIdx}$`), '');
+      fbSet(`worksheets/${teamIdx}/${tableName}`, readTableData(table));
+    }, true);
+
+    /* Sync textarea on input (debounced) → Firebase */
+    notesOut.addEventListener('input', e => {
+      if (e.target.tagName !== 'TEXTAREA') return;
+      const card = e.target.closest('[data-ni]');
+      if (!card) return;
+      const teamIdx = card.dataset.ni;
+      const keyMap  = {
+        [`note-ms-${teamIdx}`]  : 'noteMs',
+        [`note-rm-${teamIdx}`]  : 'noteRm',
+        [`note-daf-${teamIdx}`] : 'noteDaFormat',
+        [`note-wu-${teamIdx}`]  : 'noteWrap',
+      };
+      const fbKey = keyMap[e.target.id];
+      if (!fbKey) return;
+      const val = e.target.value;
+      debounce(`ta-${e.target.id}`, () => fbSet(`worksheets/${teamIdx}/${fbKey}`, val || null));
     });
-    notesOut.addEventListener('click',e=>{
-      const delBtn=e.target.closest('.btn-del-row');
-      if(delBtn){
-        const tr=delBtn.closest('tr'),table=tr?.closest('.ws-table'),card=tr?.closest('[data-ni]');
-        if(tr){tr.remove();if(table&&card){const teamIdx=card.dataset.ni,tableName=table.id.replace(new RegExp(`-${teamIdx}$`),'');fbSet(`worksheets/${teamIdx}/${tableName}`,readTableData(table));}}
+
+    /* Row delete and add */
+    notesOut.addEventListener('click', e => {
+      const delBtn = e.target.closest('.btn-del-row');
+      if (delBtn) {
+        const tr    = delBtn.closest('tr');
+        const table = tr?.closest('.ws-table');
+        const card  = tr?.closest('[data-ni]');
+        if (tr) {
+          tr.remove();
+          if (table && card) {
+            const teamIdx  = card.dataset.ni;
+            const tableName = table.id.replace(new RegExp(`-${teamIdx}$`), '');
+            fbSet(`worksheets/${teamIdx}/${tableName}`, readTableData(table));
+          }
+        }
         return;
       }
-      const addBtn=e.target.closest('.btn-add-row');
-      if(addBtn){
-        const tableId=addBtn.dataset.tableId,table=document.getElementById(tableId);if(!table)return;
-        const cols=parseInt(addBtn.dataset.cols),tbody=table.querySelector('tbody'),tr=document.createElement('tr');
-        for(let c=0;c<cols;c++){const td=document.createElement('td');td.contentEditable='true';tr.appendChild(td);}
-        const delTd=document.createElement('td');delTd.className='row-del-cell';delTd.innerHTML='<button class="btn-del-row" aria-label="Delete row">×</button>';tr.appendChild(delTd);
-        tbody.appendChild(tr);tr.querySelector('td[contenteditable]')?.focus();
-        const card=addBtn.closest('[data-ni]');
-        if(card){const teamIdx=card.dataset.ni,tableName=tableId.replace(new RegExp(`-${teamIdx}$`),'');fbSet(`worksheets/${teamIdx}/${tableName}`,readTableData(table));}
+      const addBtn = e.target.closest('.btn-add-row');
+      if (addBtn) {
+        const tableId = addBtn.dataset.tableId;
+        const table   = document.getElementById(tableId);
+        if (!table) return;
+        const cols  = parseInt(addBtn.dataset.cols);
+        const tbody = table.querySelector('tbody');
+        const tr    = document.createElement('tr');
+        for (let c = 0; c < cols; c++) {
+          const td = document.createElement('td');
+          td.contentEditable = 'true';
+          tr.appendChild(td);
+        }
+        const delTd = document.createElement('td');
+        delTd.className = 'row-del-cell';
+        delTd.innerHTML = '<button class="btn-del-row" aria-label="Delete row">×</button>';
+        tr.appendChild(delTd);
+        tbody.appendChild(tr);
+        tr.querySelector('td[contenteditable]')?.focus();
+        const card = addBtn.closest('[data-ni]');
+        if (card) {
+          const teamIdx  = card.dataset.ni;
+          const tableName = tableId.replace(new RegExp(`-${teamIdx}$`), '');
+          fbSet(`worksheets/${teamIdx}/${tableName}`, readTableData(table));
+        }
       }
     });
 
-    /* ── GENERATE ───────────────────────────────────────────────── */
-    btnGen.onclick=()=>{
-      if(members.length<2){teamsOut.innerHTML='<p class="placeholder-msg">Add at least 2 members to generate teams.</p>';return;}
-      const count=Math.min(groupCount,members.length),shuffled=shuffle(members);
-      teams=Array.from({length:count},(_,i)=>({name:`Group ${i+1}`,members:[]}));
-      shuffled.forEach((m,i)=>teams[i%count].members.push(m));
-      currentWsData={};renderTeams();renderNotes();
-      fbSet('teams',teams);fbSet('worksheets',null);
+    /* ── GENERATE TEAMS ─────────────────────────────────────────── */
+    btnGen.onclick = () => {
+      if (members.length < 2) {
+        teamsOut.innerHTML = '<p class="placeholder-msg">Add at least 2 members to generate teams.</p>';
+        return;
+      }
+      const count    = Math.min(groupCount, members.length);
+      const shuffled = shuffle(members);
+      teams = Array.from({ length: count }, (_,i) => ({ name:`Group ${i+1}`, members:[] }));
+      shuffled.forEach((m,i) => teams[i % count].members.push(m));
+      currentWsData = {}; // clear local cache
+      renderTeams();
+      renderNotes();
+      fbSet('teams', teams);
+      fbSet('worksheets', null); // clear any previous worksheet data
     };
-    btnClrTeams.onclick=()=>{teams=[];currentWsData={};renderTeams();renderNotes();fbSet('teams',null);fbSet('worksheets',null);};
-    btnClrNames.onclick=()=>{members=[];renderMembers();fbSet('members',null);};
+
+    /* ── CLEAR TEAMS (keeps names) ──────────────────────────────── */
+    btnClrTeams.onclick = () => {
+      teams = []; currentWsData = {};
+      renderTeams();
+      renderNotes();
+      fbSet('teams', null);
+      fbSet('worksheets', null);
+    };
+
+    /* ── CLEAR NAMES (keeps teams) ──────────────────────────────── */
+    btnClrNames.onclick = () => {
+      members = [];
+      renderMembers();
+      fbSet('members', null);
+    };
 
     /* ═══════════════════════════════════════════════════════════
-       FIREBASE LISTENERS
+       FIREBASE LISTENERS — set up last so all functions exist
     ═══════════════════════════════════════════════════════════ */
-    if(firebaseReady){
+    if (firebaseReady) {
 
-      db.ref('.info/connected').on('value',snap=>{
-        setConnStatus(snap.val()?'live':'away',snap.val()?`Live · session: ${SESSION_ID}`:'Reconnecting…');
+      /* Live connection indicator */
+      db.ref('.info/connected').on('value', snap => {
+        setConnStatus(
+          snap.val() ? 'live' : 'away',
+          snap.val() ? `Live · session: ${SESSION_ID}` : 'Reconnecting…'
+        );
       });
 
-      sessionRef.child('members').on('value',snap=>{
-        isRemoteApply=true;
-        const newM=fbArr(snap.val()).map(String);
-        if(JSON.stringify(newM)!==JSON.stringify(members)){members=newM;renderMembers();}
-        isRemoteApply=false;
-      });
-
-      sessionRef.child('groupCount').on('value',snap=>{
-        isRemoteApply=true;
-        const v=snap.val();
-        if(v!==null&&v!==groupCount){groupCount=Math.max(MIN,Math.min(MAX,parseInt(v)||MIN));syncCounter();}
-        isRemoteApply=false;
-      });
-
-      sessionRef.child('teams').on('value',snap=>{
-        isRemoteApply=true;
-        const raw=snap.val();
-        const newTeams=raw?fbArr(raw).map(t=>({name:String(t.name||''),members:fbArr(t.members).map(String)})):[];
-        if(JSON.stringify(newTeams)===JSON.stringify(teams)){isRemoteApply=false;return;}
-        const wasEmpty=teams.length===0,countDiff=teams.length!==newTeams.length;
-        teams=newTeams;renderTeams();
-        if(wasEmpty||countDiff){renderNotes();}
-        else{updateNotePills();teams.forEach((t,i)=>{const nc=notesOut.querySelector(`[data-ni="${i}"] .note-card-name`);if(nc&&nc.textContent!==t.name)nc.textContent=t.name;});}
-        isRemoteApply=false;
-      });
-
-      sessionRef.child('timer').on('value',snap=>{
-        isRemoteApply=true;
-        const data=snap.val();
-        if(data){
-          const newDur=data.duration||15*60,newRem=data.remainingAtPause!==undefined?data.remainingAtPause:newDur,started=data.startedAt||null;
-          const remoteNow=started?Math.max(0,newRem-Math.floor((Date.now()-started)/1000)):newRem;
-          if(Math.abs(remoteNow-timerRemaining)<3&&newDur===timerDuration&&!!started===timerRunning){isRemoteApply=false;return;}
-          timerDuration=newDur;clearInterval(timerInterval);timerRunning=false;
-          if(started){const elapsed=Math.floor((Date.now()-started)/1000);timerRemaining=Math.max(0,newRem-elapsed);if(timerRemaining>0){timerRunning=true;timerInterval=setInterval(tick,1000);}}
-          else{timerRemaining=newRem;}
-          renderTimer();activePreset=Math.round(newDur/60);syncPresets();
+      /* Members */
+      sessionRef.child('members').on('value', snap => {
+        isRemoteApply = true;
+        const newM = fbArr(snap.val()).map(String);
+        if (JSON.stringify(newM) !== JSON.stringify(members)) {
+          members = newM;
+          renderMembers();
         }
-        isRemoteApply=false;
+        isRemoteApply = false;
       });
 
-      sessionRef.child('worksheets').on('value',snap=>{
-        isRemoteApply=true;
-        const raw=snap.val();
-        if(!raw){currentWsData={};}
-        else{
-          currentWsData={};
-          Object.entries(raw).forEach(([idx,d])=>{
-            if(!d)return;
-            currentWsData[idx]={ms:d.ms?fbArr2d(d.ms):undefined,rm:d.rm?fbArr2d(d.rm):undefined,da:d.da?fbArr2d(d.da):undefined,noteMs:d.noteMs,noteRm:d.noteRm,noteDaFormat:d.noteDaFormat,noteWrap:d.noteWrap};
+      /* Group count */
+      sessionRef.child('groupCount').on('value', snap => {
+        isRemoteApply = true;
+        const v = snap.val();
+        if (v !== null && v !== groupCount) {
+          groupCount = Math.max(MIN, Math.min(MAX, parseInt(v) || MIN));
+          syncCounter();
+        }
+        isRemoteApply = false;
+      });
+
+      /* Teams */
+      sessionRef.child('teams').on('value', snap => {
+        isRemoteApply = true;
+        const raw = snap.val();
+        const newTeams = raw
+          ? fbArr(raw).map(t => ({ name: String(t.name||''), members: fbArr(t.members).map(String) }))
+          : [];
+
+        if (JSON.stringify(newTeams) === JSON.stringify(teams)) {
+          isRemoteApply = false;
+          return; // nothing changed
+        }
+
+        const wasEmpty   = teams.length === 0;
+        const countDiff  = teams.length !== newTeams.length;
+        teams = newTeams;
+        renderTeams();
+
+        if (wasEmpty || countDiff) {
+          /* Structural change — rebuild worksheets then apply stored data */
+          renderNotes(); // renderNotes already calls applyStoredWorksheetData via setTimeout
+        } else {
+          /* Only names / member order changed — update displays without re-rendering worksheets */
+          updateNotePills();
+          teams.forEach((t, i) => {
+            const nc = notesOut.querySelector(`[data-ni="${i}"] .note-card-name`);
+            if (nc && nc.textContent !== t.name) nc.textContent = t.name;
+          });
+        }
+        isRemoteApply = false;
+      });
+
+      /* Timer */
+      sessionRef.child('timer').on('value', snap => {
+        isRemoteApply = true;
+        const data = snap.val();
+        if (data) {
+          const newDur  = data.duration || 15 * 60;
+          const newRem  = data.remainingAtPause !== undefined ? data.remainingAtPause : newDur;
+          const started = data.startedAt || null;
+
+          /* Skip if our local state is already close to what Firebase says */
+          const remoteNow = started
+            ? Math.max(0, newRem - Math.floor((Date.now() - started) / 1000))
+            : newRem;
+          if (Math.abs(remoteNow - timerRemaining) < 3 &&
+              newDur === timerDuration &&
+              !!started === timerRunning) {
+            isRemoteApply = false;
+            return;
+          }
+
+          timerDuration = newDur;
+          clearInterval(timerInterval);
+          timerRunning = false;
+
+          if (started) {
+            const elapsed = Math.floor((Date.now() - started) / 1000);
+            timerRemaining = Math.max(0, newRem - elapsed);
+            if (timerRemaining > 0) {
+              timerRunning  = true;
+              timerInterval = setInterval(tick, 1000);
+            }
+          } else {
+            timerRemaining = newRem;
+          }
+
+          renderTimer();
+          activePreset = Math.round(newDur / 60);
+          syncPresets();
+        }
+        isRemoteApply = false;
+      });
+
+      /* Worksheets */
+      sessionRef.child('worksheets').on('value', snap => {
+        isRemoteApply = true;
+        const raw = snap.val();
+        if (!raw) {
+          currentWsData = {};
+        } else {
+          currentWsData = {};
+          Object.entries(raw).forEach(([idx, d]) => {
+            if (!d) return;
+            currentWsData[idx] = {
+              ms          : d.ms ? fbArr2d(d.ms) : undefined,
+              rm          : d.rm ? fbArr2d(d.rm) : undefined,
+              da          : d.da ? fbArr2d(d.da) : undefined,
+              noteMs      : d.noteMs,
+              noteRm      : d.noteRm,
+              noteDaFormat: d.noteDaFormat,
+              noteWrap    : d.noteWrap,
+            };
           });
           applyStoredWorksheetData();
         }
-        isRemoteApply=false;
+        isRemoteApply = false;
       });
     }
   </script>
