@@ -454,7 +454,7 @@ const firebaseConfig = {
     let isRemoteApply = false;
 
     try {
-      if (FIREBASE_CONFIG.apiKey !== 'YOUR_API_KEY') {
+      if (FIREBASE_CONFIG.apiKey !== 'AIzaSyACXjiJHBKLGDF-VDbjQkg4v_HYh1hW_VE') {
         firebase.initializeApp(FIREBASE_CONFIG);
         db = firebase.database();
         sessionRef = db.ref('sessions/' + SESSION_ID);
