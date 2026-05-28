@@ -7,21 +7,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
   <style>
-
-    /* ── 1 · RESET ─────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    /* ── 2 · TOKENS ────────────────────────────────────────────── */
     :root {
       --nav-h     : 4rem;
       --px        : clamp(1.5rem, 6vw, 6rem);
       --py        : clamp(3rem, 5vh, 5rem);
       --crimson   : #A41034;
       --crimson-dk: #7D0C27;
-      --crimson-lt: rgba(164, 16, 52, 0.08);
+      --crimson-lt: rgba(164,16,52,0.08);
       --navy      : #1B2A4A;
-      --navy-lt   : rgba(27, 42, 74, 0.07);
+      --navy-lt   : rgba(27,42,74,0.07);
       --bg        : #F7F5F2;
       --white     : #FFFFFF;
       --ink       : #1C1C1E;
@@ -32,963 +31,231 @@
       --r         : 8px;
       --r-s       : 5px;
     }
-
-    /* ── 3 · BASE ──────────────────────────────────────────────── */
     html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      -webkit-font-smoothing: antialiased;
-    }
-    h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; }
-    @keyframes pop {
-      from { opacity: 0; transform: translateY(-4px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    body { font-family:'Inter',-apple-system,sans-serif; background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; }
+    h1,h2,h3,h4 { font-family:'Playfair Display',Georgia,serif; }
+    @keyframes pop { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:translateY(0)} }
 
-    /* ── 4 · NAV ───────────────────────────────────────────────── */
-    nav {
-      position: fixed;
-      inset: 0 0 auto 0;
-      z-index: 100;
-      height: var(--nav-h);
-      background: var(--white);
-      border-bottom: 3px solid var(--crimson);
-      box-shadow: var(--shadow-s);
-    }
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      height: 100%;
-      padding-inline: var(--px);
-    }
-    nav ul {
-      display: flex;
-      align-items: center;
-      height: 100%;
-      list-style: none;
-      gap: clamp(0.75rem, 2vw, 2rem);
-      overflow-x: auto;
-    }
-    nav a {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.38rem;
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      padding-bottom: 2px;
-      border-bottom: 2px solid transparent;
-      transition: color 0.18s, border-color 0.18s;
-    }
-    nav a:hover  { color: var(--ink); border-bottom-color: var(--border-dk); }
-    nav a.active { color: var(--crimson); border-bottom-color: var(--crimson); }
-    .nav-n { font-size: 0.6rem; opacity: 0.5; font-variant-numeric: tabular-nums; }
+    /* ── NAV ── */
+    nav { position:fixed; inset:0 0 auto 0; z-index:100; height:var(--nav-h); background:var(--white); border-bottom:3px solid var(--crimson); box-shadow:var(--shadow-s); }
+    .nav-inner { display:flex; align-items:center; height:100%; padding-inline:var(--px); gap:1rem; }
+    nav ul { display:flex; align-items:center; height:100%; list-style:none; gap:clamp(.75rem,2vw,2rem); overflow-x:auto; }
+    nav a { display:inline-flex; align-items:center; gap:.38rem; text-decoration:none; color:var(--muted); font-size:.7rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; padding-bottom:2px; border-bottom:2px solid transparent; transition:color .18s,border-color .18s; }
+    nav a:hover { color:var(--ink); border-bottom-color:var(--border-dk); }
+    nav a.active { color:var(--crimson); border-bottom-color:var(--crimson); }
+    .nav-n { font-size:.6rem; opacity:.5; font-variant-numeric:tabular-nums; }
 
-    /* ── 5 · SLIDE SHELL ───────────────────────────────────────── */
-    .slide {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      padding: calc(var(--nav-h) + var(--py)) var(--px) var(--py);
-      overflow: hidden;
-    }
-    .slide-inner {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 1200px;
-      margin-inline: auto;
-    }
-    .ghost-num {
-      position: absolute;
-      bottom: -2rem;
-      right: var(--px);
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(6rem, 18vw, 17rem);
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -0.05em;
-      color: rgba(0,0,0,0.04);
-      pointer-events: none;
-      user-select: none;
-    }
-    .slide-title .ghost-num { color: rgba(255,255,255,0.08); }
+    /* connection status */
+    .nav-sync { display:flex; align-items:center; gap:.4rem; margin-left:auto; flex-shrink:0; padding-left:1rem; }
+    .conn-dot { width:8px; height:8px; border-radius:50%; background:var(--border-dk); flex-shrink:0; transition:background .3s; }
+    .conn-dot.live  { background:#22c55e; box-shadow:0 0 0 2px rgba(34,197,94,.2); }
+    .conn-dot.away  { background:#f59e0b; }
+    .conn-dot.local { background:var(--border-dk); }
+    .conn-label { font-family:'Inter',sans-serif; font-size:.6rem; font-weight:500; color:var(--muted); white-space:nowrap; }
 
-    /* ── Shared type ── */
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--crimson);
-      margin-bottom: 0.75rem;
-    }
-    .eyebrow::before {
-      content: '';
-      display: block;
-      width: 2rem;
-      height: 2px;
-      background: currentColor;
-      flex-shrink: 0;
-    }
-    .subtitle { color: var(--muted); line-height: 1.6; }
-    .chip {
-      display: inline-block;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      padding: 0.26rem 0.7rem;
-      border-radius: 2px;
-      background: var(--crimson-lt);
-      border: 1px solid rgba(164,16,52,0.22);
-      color: var(--crimson);
-      margin-bottom: 0.8rem;
-    }
-    .chip--navy { background: var(--navy-lt); border-color: rgba(27,42,74,0.22); color: var(--navy); }
-    .col-label, .panel-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.63rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--crimson);
-      padding-bottom: 0.7rem;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 1rem;
-    }
-    .placeholder-msg {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.88rem;
-      color: var(--muted);
-      font-style: italic;
-      padding: 1rem 0;
-    }
+    /* ── SLIDE SHELL ── */
+    .slide { position:relative; display:flex; flex-direction:column; padding:calc(var(--nav-h) + var(--py)) var(--px) var(--py); overflow:hidden; }
+    .slide-inner { position:relative; z-index:1; width:100%; max-width:1200px; margin-inline:auto; }
+    .ghost-num { position:absolute; bottom:-2rem; right:var(--px); font-family:'Playfair Display',serif; font-size:clamp(6rem,18vw,17rem); font-weight:900; line-height:1; letter-spacing:-.05em; color:rgba(0,0,0,.04); pointer-events:none; user-select:none; }
+    .slide-title .ghost-num { color:rgba(255,255,255,.08); }
 
-    /* ── 6 · SLIDE 1 — TITLE ───────────────────────────────────── */
-    .slide-title {
-      background: var(--crimson);
-      min-height: 100vh;
-      justify-content: center;
-    }
-    .slide-title::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        45deg, transparent, transparent 70px,
-        rgba(255,255,255,0.018) 70px, rgba(255,255,255,0.018) 140px
-      );
-      pointer-events: none;
-    }
-    .slide-title .slide-inner { display: flex; flex-direction: column; gap: 1.5rem; max-width: 900px; }
-    .slide-title .eyebrow     { color: rgba(255,255,255,0.6); }
-    .slide-title .eyebrow::before { background: rgba(255,255,255,0.4); }
-    .slide-title h1 {
-      font-size: clamp(3.5rem, 9vw, 8rem);
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -0.03em;
-      color: var(--white);
-    }
-    .slide-title .subtitle {
-      font-size: clamp(1rem, 2vw, 1.3rem);
-      color: rgba(255,255,255,0.68);
-      max-width: 44ch;
-    }
+    /* shared type */
+    .eyebrow { display:inline-flex; align-items:center; gap:.6rem; font-family:'Inter',sans-serif; font-size:.68rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--crimson); margin-bottom:.75rem; }
+    .eyebrow::before { content:''; display:block; width:2rem; height:2px; background:currentColor; flex-shrink:0; }
+    .subtitle { color:var(--muted); line-height:1.6; }
+    .chip { display:inline-block; font-family:'Inter',sans-serif; font-size:.62rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; padding:.26rem .7rem; border-radius:2px; background:var(--crimson-lt); border:1px solid rgba(164,16,52,.22); color:var(--crimson); margin-bottom:.8rem; }
+    .chip--navy { background:var(--navy-lt); border-color:rgba(27,42,74,.22); color:var(--navy); }
+    .col-label,.panel-label { font-family:'Inter',sans-serif; font-size:.63rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--crimson); padding-bottom:.7rem; border-bottom:1px solid var(--border); margin-bottom:1rem; }
+    .placeholder-msg { font-family:'Inter',sans-serif; font-size:.88rem; color:var(--muted); font-style:italic; padding:1rem 0; }
 
-    /* ── 7 · SLIDE 2 — CONTENT ─────────────────────────────────── */
-    .slide-content { background: var(--white); }
-    .slide-content .slide-inner { display: flex; flex-direction: column; gap: 2.5rem; }
-    .slide-content h2 {
-      font-size: clamp(2rem, 4.5vw, 3.25rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      color: var(--ink);
-      margin-bottom: 0.35rem;
-    }
-    .slide-content .subtitle { font-size: clamp(0.9rem, 1.4vw, 1rem); }
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-    .dot-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
-    .dot-list li {
-      position: relative;
-      padding-left: 1.1rem;
-      font-size: clamp(0.85rem, 1.1vw, 0.95rem);
-      line-height: 1.65;
-    }
-    .dot-list li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.62em;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--crimson);
-    }
+    /* ── SLIDE 1 ── */
+    .slide-title { background:var(--crimson); min-height:100vh; justify-content:center; }
+    .slide-title::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(45deg,transparent,transparent 70px,rgba(255,255,255,.018) 70px,rgba(255,255,255,.018) 140px); pointer-events:none; }
+    .slide-title .slide-inner { display:flex; flex-direction:column; gap:1.5rem; max-width:900px; }
+    .slide-title .eyebrow { color:rgba(255,255,255,.6); }
+    .slide-title .eyebrow::before { background:rgba(255,255,255,.4); }
+    .slide-title h1 { font-size:clamp(3.5rem,9vw,8rem); font-weight:900; line-height:1; letter-spacing:-.03em; color:var(--white); }
+    .slide-title .subtitle { font-size:clamp(1rem,2vw,1.3rem); color:rgba(255,255,255,.68); max-width:44ch; }
 
-    /* ── 8 · SLIDE 3 — BREAKOUT ────────────────────────────────── */
-    .slide-breakout { background: var(--bg); }
-    .slide-breakout .slide-inner { display: flex; flex-direction: column; gap: 2rem; max-width: 860px; }
-    .slide-breakout h2 {
-      font-size: clamp(2.5rem, 6vw, 4.75rem);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 1;
-      color: var(--ink);
-      margin-bottom: 0.35rem;
-    }
-    .slide-breakout .subtitle { font-size: clamp(1rem, 1.6vw, 1.1rem); max-width: 52ch; }
-    .slide-body { display: flex; flex-direction: column; gap: 1.25rem; }
-    .callout {
-      background: var(--crimson-lt);
-      border-left: 3px solid var(--crimson);
-      padding: 0.85rem 1.2rem;
-      border-radius: 0 var(--r-s) var(--r-s) 0;
-      font-size: clamp(0.88rem, 1.3vw, 1rem);
-      line-height: 1.6;
-    }
-    .task-list { list-style: none; counter-reset: tasks; display: flex; flex-direction: column; gap: 0.9rem; }
-    .task-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      counter-increment: tasks;
-      font-size: clamp(0.88rem, 1.2vw, 1rem);
-      line-height: 1.6;
-    }
-    .task-list li::before {
-      content: counter(tasks, decimal-leading-zero);
-      flex-shrink: 0;
-      width: 2.1rem;
-      height: 2.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 700;
-      color: var(--crimson);
-      background: var(--crimson-lt);
-      border: 1px solid rgba(164,16,52,0.2);
-      border-radius: 50%;
-      margin-top: 0.1em;
-    }
-    .task-list strong { color: var(--crimson); font-weight: 600; }
-    .cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      color: var(--navy);
-    }
-    .cta::before {
-      content: '';
-      display: block;
-      width: 1.5rem;
-      height: 2px;
-      background: currentColor;
-      flex-shrink: 0;
-    }
+    /* ── SLIDE 2 ── */
+    .slide-content { background:var(--white); }
+    .slide-content .slide-inner { display:flex; flex-direction:column; gap:2.5rem; }
+    .slide-content h2 { font-size:clamp(2rem,4.5vw,3.25rem); font-weight:700; letter-spacing:-.02em; line-height:1.1; color:var(--ink); margin-bottom:.35rem; }
+    .slide-content .subtitle { font-size:clamp(.9rem,1.4vw,1rem); }
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
+    .dot-list { list-style:none; display:flex; flex-direction:column; gap:.85rem; }
+    .dot-list li { position:relative; padding-left:1.1rem; font-size:clamp(.85rem,1.1vw,.95rem); line-height:1.65; }
+    .dot-list li::before { content:''; position:absolute; left:0; top:.62em; width:5px; height:5px; border-radius:50%; background:var(--crimson); }
 
-    /* ── 9 · SLIDE 4 — GROUPS ──────────────────────────────────── */
-    .slide-groups { background: var(--white); }
-    .slide-groups .slide-inner { display: flex; flex-direction: column; gap: 2.5rem; }
-    .slide-groups h2 {
-      font-size: clamp(2rem, 4.5vw, 3.25rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      color: var(--ink);
-      margin-bottom: 0.35rem;
-    }
-    .slide-groups .subtitle { font-size: clamp(0.9rem, 1.4vw, 1rem); }
+    /* ── SLIDE 3 ── */
+    .slide-breakout { background:var(--bg); }
+    .slide-breakout .slide-inner { display:flex; flex-direction:column; gap:2rem; max-width:860px; }
+    .slide-breakout h2 { font-size:clamp(2.5rem,6vw,4.75rem); font-weight:900; letter-spacing:-.03em; line-height:1; color:var(--ink); margin-bottom:.35rem; }
+    .slide-breakout .subtitle { font-size:clamp(1rem,1.6vw,1.1rem); max-width:52ch; }
+    .slide-body { display:flex; flex-direction:column; gap:1.25rem; }
+    .callout { background:var(--crimson-lt); border-left:3px solid var(--crimson); padding:.85rem 1.2rem; border-radius:0 var(--r-s) var(--r-s) 0; font-size:clamp(.88rem,1.3vw,1rem); line-height:1.6; }
+    .task-list { list-style:none; counter-reset:tasks; display:flex; flex-direction:column; gap:.9rem; }
+    .task-list li { display:flex; align-items:flex-start; gap:1rem; counter-increment:tasks; font-size:clamp(.88rem,1.2vw,1rem); line-height:1.6; }
+    .task-list li::before { content:counter(tasks,decimal-leading-zero); flex-shrink:0; width:2.1rem; height:2.1rem; display:flex; align-items:center; justify-content:center; font-family:'Inter',sans-serif; font-size:.62rem; font-weight:700; color:var(--crimson); background:var(--crimson-lt); border:1px solid rgba(164,16,52,.2); border-radius:50%; margin-top:.1em; }
+    .task-list strong { color:var(--crimson); font-weight:600; }
+    .cta { display:inline-flex; align-items:center; gap:.75rem; font-family:'Inter',sans-serif; font-size:.75rem; font-weight:700; letter-spacing:.10em; text-transform:uppercase; color:var(--navy); }
+    .cta::before { content:''; display:block; width:1.5rem; height:2px; background:currentColor; flex-shrink:0; }
 
-    /* Timer widget */
-    .timer-widget {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 1.5rem 2rem;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 2.5rem;
-      align-items: center;
-    }
-    .timer-left { display: flex; flex-direction: column; gap: 0.65rem; }
-    .timer-display {
-      font-family: 'Playfair Display', serif;
-      font-size: 4rem;
-      font-weight: 700;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      font-variant-numeric: tabular-nums;
-      transition: color 0.3s;
-    }
-    .timer-display.urgent { color: var(--crimson); }
-    .timer-display.done   { color: var(--border-dk); }
-    .timer-bar-track {
-      height: 4px;
-      background: var(--border);
-      border-radius: 999px;
-      overflow: hidden;
-      min-width: 160px;
-    }
-    .timer-bar-fill {
-      height: 100%;
-      background: var(--navy);
-      border-radius: 999px;
-      width: 100%;
-      transition: width 1s linear, background 0.5s;
-    }
-    .timer-bar-fill.urgent { background: var(--crimson); }
-    .timer-right { display: flex; flex-direction: column; gap: 0.85rem; }
-    .timer-presets { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
-    .timer-presets-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.67rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-right: 0.2rem;
-    }
-    .btn-preset {
-      padding: 0.28rem 0.65rem;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--r-s);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--ink);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .btn-preset:hover,
-    .btn-preset.active {
-      background: var(--crimson-lt);
-      border-color: rgba(164,16,52,0.3);
-      color: var(--crimson);
-    }
-    .timer-custom-row { display: flex; align-items: center; gap: 0.5rem; }
-    .timer-custom-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.67rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-    .timer-custom-input {
-      width: 5rem;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--r-s);
-      padding: 0.33rem 0.6rem;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.88rem;
-      color: var(--ink);
-      outline: none;
-      transition: border-color 0.18s, box-shadow 0.18s;
-    }
-    .timer-custom-input:focus { border-color: var(--crimson); box-shadow: 0 0 0 3px var(--crimson-lt); }
-    .btn-timer-set {
-      padding: 0.33rem 0.75rem;
-      background: var(--crimson-lt);
-      border: 1px solid rgba(164,16,52,0.22);
-      border-radius: var(--r-s);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--crimson);
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .btn-timer-set:hover { background: rgba(164,16,52,0.14); }
-    .timer-actions { display: flex; gap: 0.5rem; }
-    .btn-timer-play {
-      flex: 1;
-      padding: 0.65rem;
-      background: var(--crimson);
-      color: var(--white);
-      border: none;
-      border-radius: var(--r-s);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.18s;
-    }
-    .btn-timer-play:hover { background: var(--crimson-dk); }
-    .btn-timer-reset {
-      padding: 0.65rem 1rem;
-      background: transparent;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      border-radius: var(--r-s);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: color 0.18s, border-color 0.18s;
-    }
-    .btn-timer-reset:hover { color: var(--crimson); border-color: rgba(164,16,52,0.3); }
+    /* ── SLIDE 4 — GROUPS ── */
+    .slide-groups { background:var(--white); }
+    .slide-groups .slide-inner { display:flex; flex-direction:column; gap:2.5rem; }
+    .slide-groups h2 { font-size:clamp(2rem,4.5vw,3.25rem); font-weight:700; letter-spacing:-.02em; line-height:1.1; color:var(--ink); margin-bottom:.35rem; }
+    .slide-groups .subtitle { font-size:clamp(.9rem,1.4vw,1rem); }
 
-    /* Groups builder */
-    .groups-layout { display: grid; grid-template-columns: 290px 1fr; gap: 2rem; align-items: start; }
-    .input-panel {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-    }
-    .name-row { display: flex; gap: 0.5rem; margin-bottom: 0.65rem; }
-    .name-row input {
-      flex: 1;
-      min-width: 0;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--r-s);
-      padding: 0.56rem 0.85rem;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.88rem;
-      color: var(--ink);
-      outline: none;
-      transition: border-color 0.18s, box-shadow 0.18s;
-    }
-    .name-row input:focus { border-color: var(--crimson); box-shadow: 0 0 0 3px var(--crimson-lt); }
-    .name-row input::placeholder { color: var(--muted); }
-    .btn-add {
-      flex-shrink: 0;
-      background: var(--crimson);
-      color: var(--white);
-      border: none;
-      border-radius: var(--r-s);
-      padding: 0.56rem 1rem;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.18s;
-    }
-    .btn-add:hover { background: var(--crimson-dk); }
-    .members-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.28rem;
-      max-height: 200px;
-      overflow-y: auto;
-      margin-bottom: 1rem;
-    }
-    .members-list::-webkit-scrollbar       { width: 3px; }
-    .members-list::-webkit-scrollbar-track { background: transparent; }
-    .members-list::-webkit-scrollbar-thumb { background: var(--border-dk); border-radius: 2px; }
-    .member-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--r-s);
-      padding: 0.38rem 0.42rem 0.38rem 0.72rem;
-      animation: pop 0.18s ease;
-    }
-    .member-item span { font-size: 0.85rem; }
-    .btn-rm {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 1.35rem;
-      height: 1.35rem;
-      background: none;
-      border: none;
-      border-radius: 3px;
-      font-size: 1rem;
-      line-height: 1;
-      color: var(--muted);
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: color 0.15s, background 0.15s;
-    }
-    .btn-rm:hover { color: var(--crimson); background: var(--crimson-lt); }
-    .empty-note {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.82rem;
-      color: var(--muted);
-      font-style: italic;
-      padding: 0.25rem 0;
-    }
-    .group-controls {
-      border-top: 1px solid var(--border);
-      padding-top: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-    .ctrl-row { display: flex; align-items: center; justify-content: space-between; }
-    .ctrl-row label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.67rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .counter { display: flex; align-items: center; gap: 0.75rem; }
-    .counter-btn {
-      width: 1.7rem;
-      height: 1.7rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--r-s);
-      font-size: 1.1rem;
-      font-family: inherit;
-      color: var(--ink);
-      cursor: pointer;
-      line-height: 1;
-      transition: all 0.15s;
-    }
-    .counter-btn:hover:not(:disabled) {
-      background: var(--crimson-lt);
-      border-color: rgba(164,16,52,0.25);
-      color: var(--crimson);
-    }
-    .counter-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-    .counter-val {
-      font-size: 1.1rem;
-      font-weight: 700;
-      min-width: 1.5rem;
-      text-align: center;
-      font-variant-numeric: tabular-nums;
-    }
-    .btn-generate {
-      width: 100%;
-      padding: 0.75rem;
-      background: var(--crimson);
-      color: var(--white);
-      border: none;
-      border-radius: var(--r-s);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.18s;
-    }
-    .btn-generate:hover  { background: var(--crimson-dk); }
-    .btn-generate:active { transform: scale(0.98); }
-    .btn-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-    .btn-secondary {
-      padding: 0.62rem 0.5rem;
-      background: transparent;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      border-radius: var(--r-s);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.66rem;
-      font-weight: 600;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: color 0.18s, border-color 0.18s;
-      white-space: nowrap;
-    }
-    .btn-secondary:hover { color: var(--crimson); border-color: rgba(164,16,52,0.3); }
+    /* timer */
+    .timer-widget { background:var(--bg); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem 2rem; display:grid; grid-template-columns:auto 1fr; gap:2.5rem; align-items:center; }
+    .timer-left { display:flex; flex-direction:column; gap:.65rem; }
+    .timer-display { font-family:'Playfair Display',serif; font-size:4rem; font-weight:700; line-height:1; letter-spacing:-.02em; color:var(--ink); font-variant-numeric:tabular-nums; transition:color .3s; }
+    .timer-display.urgent { color:var(--crimson); }
+    .timer-display.done   { color:var(--border-dk); }
+    .timer-bar-track { height:4px; background:var(--border); border-radius:999px; overflow:hidden; min-width:160px; }
+    .timer-bar-fill { height:100%; background:var(--navy); border-radius:999px; width:100%; transition:width 1s linear,background .5s; }
+    .timer-bar-fill.urgent { background:var(--crimson); }
+    .timer-right { display:flex; flex-direction:column; gap:.85rem; }
+    .timer-presets { display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
+    .timer-presets-label { font-family:'Inter',sans-serif; font-size:.67rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-right:.2rem; }
+    .btn-preset { padding:.28rem .65rem; background:var(--white); border:1px solid var(--border); border-radius:var(--r-s); font-family:'Inter',sans-serif; font-size:.72rem; font-weight:600; color:var(--ink); cursor:pointer; transition:all .15s; }
+    .btn-preset:hover,.btn-preset.active { background:var(--crimson-lt); border-color:rgba(164,16,52,.3); color:var(--crimson); }
+    .timer-custom-row { display:flex; align-items:center; gap:.5rem; }
+    .timer-custom-label { font-family:'Inter',sans-serif; font-size:.67rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+    .timer-custom-input { width:5rem; background:var(--white); border:1px solid var(--border); border-radius:var(--r-s); padding:.33rem .6rem; font-family:'Inter',sans-serif; font-size:.88rem; color:var(--ink); outline:none; transition:border-color .18s,box-shadow .18s; }
+    .timer-custom-input:focus { border-color:var(--crimson); box-shadow:0 0 0 3px var(--crimson-lt); }
+    .btn-timer-set { padding:.33rem .75rem; background:var(--crimson-lt); border:1px solid rgba(164,16,52,.22); border-radius:var(--r-s); font-family:'Inter',sans-serif; font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--crimson); cursor:pointer; transition:background .15s; }
+    .btn-timer-set:hover { background:rgba(164,16,52,.14); }
+    .timer-actions { display:flex; gap:.5rem; }
+    .btn-timer-play { flex:1; padding:.65rem; background:var(--crimson); color:var(--white); border:none; border-radius:var(--r-s); font-family:'Inter',sans-serif; font-size:.72rem; font-weight:700; letter-spacing:.10em; text-transform:uppercase; cursor:pointer; transition:background .18s; }
+    .btn-timer-play:hover { background:var(--crimson-dk); }
+    .btn-timer-reset { padding:.65rem 1rem; background:transparent; color:var(--muted); border:1px solid var(--border); border-radius:var(--r-s); font-family:'Inter',sans-serif; font-size:.72rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; transition:color .18s,border-color .18s; }
+    .btn-timer-reset:hover { color:var(--crimson); border-color:rgba(164,16,52,.3); }
 
-    /* Output panel */
-    .output-panel { display: flex; flex-direction: column; gap: 1rem; }
-    .teams-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-      gap: 1rem;
-    }
-    .team-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-top: 3px solid var(--crimson);
-      border-radius: var(--r);
-      padding: 0.95rem 1.05rem 1.05rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-      box-shadow: var(--shadow-s);
-      animation: pop 0.22s ease;
-    }
-    .team-name-wrap {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding-bottom: 0.55rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .team-name-text {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.67rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--crimson);
-      flex: 1;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      cursor: pointer;
-      border-radius: 3px;
-      padding: 2px 4px;
-      margin: -2px -4px;
-      transition: background 0.15s;
-    }
-    .team-name-text:hover { background: var(--crimson-lt); }
-    .team-name-edit {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.67rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--crimson);
-      flex: 1;
-      min-width: 0;
-      background: var(--crimson-lt);
-      border: 1px solid rgba(164,16,52,0.3);
-      border-radius: 3px;
-      padding: 2px 6px;
-      outline: none;
-    }
-    .btn-name-edit {
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 1.3rem;
-      height: 1.3rem;
-      background: none;
-      border: none;
-      border-radius: 3px;
-      padding: 0;
-      color: var(--muted);
-      cursor: pointer;
-      transition: color 0.15s, background 0.15s;
-    }
-    .btn-name-edit:hover { color: var(--crimson); background: var(--crimson-lt); }
-    .btn-name-edit svg  { width: 11px; height: 11px; }
+    /* groups builder */
+    .groups-layout { display:grid; grid-template-columns:290px 1fr; gap:2rem; align-items:start; }
+    .input-panel { background:var(--bg); border:1px solid var(--border); border-radius:var(--r); padding:1.25rem; display:flex; flex-direction:column; }
+    .name-row { display:flex; gap:.5rem; margin-bottom:.65rem; }
+    .name-row input { flex:1; min-width:0; background:var(--white); border:1px solid var(--border); border-radius:var(--r-s); padding:.56rem .85rem; font-family:'Inter',sans-serif; font-size:.88rem; color:var(--ink); outline:none; transition:border-color .18s,box-shadow .18s; }
+    .name-row input:focus { border-color:var(--crimson); box-shadow:0 0 0 3px var(--crimson-lt); }
+    .name-row input::placeholder { color:var(--muted); }
+    .btn-add { flex-shrink:0; background:var(--crimson); color:var(--white); border:none; border-radius:var(--r-s); padding:.56rem 1rem; font-family:'Inter',sans-serif; font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; transition:background .18s; }
+    .btn-add:hover { background:var(--crimson-dk); }
+    .members-list { list-style:none; display:flex; flex-direction:column; gap:.28rem; max-height:200px; overflow-y:auto; margin-bottom:1rem; }
+    .members-list::-webkit-scrollbar { width:3px; }
+    .members-list::-webkit-scrollbar-track { background:transparent; }
+    .members-list::-webkit-scrollbar-thumb { background:var(--border-dk); border-radius:2px; }
+    .member-item { display:flex; align-items:center; justify-content:space-between; background:var(--white); border:1px solid var(--border); border-radius:var(--r-s); padding:.38rem .42rem .38rem .72rem; animation:pop .18s ease; }
+    .member-item span { font-size:.85rem; }
+    .btn-rm { display:flex; align-items:center; justify-content:center; width:1.35rem; height:1.35rem; background:none; border:none; border-radius:3px; font-size:1rem; line-height:1; color:var(--muted); cursor:pointer; flex-shrink:0; transition:color .15s,background .15s; }
+    .btn-rm:hover { color:var(--crimson); background:var(--crimson-lt); }
+    .empty-note { font-family:'Inter',sans-serif; font-size:.82rem; color:var(--muted); font-style:italic; padding:.25rem 0; }
+    .group-controls { border-top:1px solid var(--border); padding-top:1rem; display:flex; flex-direction:column; gap:.6rem; }
+    .ctrl-row { display:flex; align-items:center; justify-content:space-between; }
+    .ctrl-row label { font-family:'Inter',sans-serif; font-size:.67rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+    .counter { display:flex; align-items:center; gap:.75rem; }
+    .counter-btn { width:1.7rem; height:1.7rem; display:flex; align-items:center; justify-content:center; background:var(--white); border:1px solid var(--border); border-radius:var(--r-s); font-size:1.1rem; font-family:inherit; color:var(--ink); cursor:pointer; line-height:1; transition:all .15s; }
+    .counter-btn:hover:not(:disabled) { background:var(--crimson-lt); border-color:rgba(164,16,52,.25); color:var(--crimson); }
+    .counter-btn:disabled { opacity:.35; cursor:not-allowed; }
+    .counter-val { font-size:1.1rem; font-weight:700; min-width:1.5rem; text-align:center; font-variant-numeric:tabular-nums; }
+    .btn-generate { width:100%; padding:.75rem; background:var(--crimson); color:var(--white); border:none; border-radius:var(--r-s); font-family:'Inter',sans-serif; font-size:.72rem; font-weight:700; letter-spacing:.10em; text-transform:uppercase; cursor:pointer; transition:background .18s; }
+    .btn-generate:hover  { background:var(--crimson-dk); }
+    .btn-generate:active { transform:scale(.98); }
+    .btn-pair { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
+    .btn-secondary { padding:.62rem .5rem; background:transparent; color:var(--muted); border:1px solid var(--border); border-radius:var(--r-s); font-family:'Inter',sans-serif; font-size:.66rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:color .18s,border-color .18s; }
+    .btn-secondary:hover { color:var(--crimson); border-color:rgba(164,16,52,.3); }
+    .output-panel { display:flex; flex-direction:column; gap:1rem; }
+    .teams-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:1rem; }
+    .team-card { background:var(--white); border:1px solid var(--border); border-top:3px solid var(--crimson); border-radius:var(--r); padding:.95rem 1.05rem 1.05rem; display:flex; flex-direction:column; gap:.7rem; box-shadow:var(--shadow-s); animation:pop .22s ease; }
+    .team-name-wrap { display:flex; align-items:center; gap:.35rem; padding-bottom:.55rem; border-bottom:1px solid var(--border); }
+    .team-name-text { font-family:'Inter',sans-serif; font-size:.67rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--crimson); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:pointer; border-radius:3px; padding:2px 4px; margin:-2px -4px; transition:background .15s; }
+    .team-name-text:hover { background:var(--crimson-lt); }
+    .team-name-edit { font-family:'Inter',sans-serif; font-size:.67rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--crimson); flex:1; min-width:0; background:var(--crimson-lt); border:1px solid rgba(164,16,52,.3); border-radius:3px; padding:2px 6px; outline:none; }
+    .btn-name-edit { flex-shrink:0; display:flex; align-items:center; justify-content:center; width:1.3rem; height:1.3rem; background:none; border:none; border-radius:3px; padding:0; color:var(--muted); cursor:pointer; transition:color .15s,background .15s; }
+    .btn-name-edit:hover { color:var(--crimson); background:var(--crimson-lt); }
+    .btn-name-edit svg { width:11px; height:11px; }
+    .team-members-ul { list-style:none; display:flex; flex-direction:column; gap:.42rem; }
+    .team-member-li { display:flex; flex-direction:column; gap:.2rem; }
+    .member-row { display:flex; align-items:center; gap:.35rem; }
+    .member-row-name { flex:1; min-width:0; font-size:.86rem; line-height:1.3; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .team-member-li.leader .member-row-name { font-weight:600; }
+    .leader-star { font-size:.52rem; color:var(--crimson); flex-shrink:0; }
+    .leader-tag { font-family:'Inter',sans-serif; font-size:.52rem; font-weight:700; letter-spacing:.10em; text-transform:uppercase; color:var(--crimson); background:var(--crimson-lt); border:1px solid rgba(164,16,52,.2); border-radius:2px; padding:.1rem .3rem; white-space:nowrap; flex-shrink:0; }
+    .member-action-btns { display:flex; gap:.15rem; flex-shrink:0; margin-left:auto; }
+    .btn-mem-action { display:flex; align-items:center; justify-content:center; width:1.2rem; height:1.2rem; background:none; border:none; border-radius:3px; color:var(--muted); cursor:pointer; padding:0; flex-shrink:0; transition:color .15s,background .15s; }
+    .btn-mem-action:hover { color:var(--crimson); background:var(--crimson-lt); }
+    .btn-mem-action svg { width:9px; height:9px; }
+    .member-name-input { flex:1; min-width:0; background:var(--crimson-lt); border:1px solid rgba(164,16,52,.3); border-radius:3px; padding:1px 6px; font-family:'Inter',sans-serif; font-size:.86rem; color:var(--ink); outline:none; }
+    .move-panel { display:flex; align-items:center; gap:.3rem; flex-wrap:wrap; padding:.35rem .5rem; background:var(--navy-lt); border:1px solid rgba(27,42,74,.15); border-radius:var(--r-s); }
+    .move-panel-label { font-family:'Inter',sans-serif; font-size:.6rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+    .btn-move-to { padding:.16rem .5rem; background:var(--white); border:1px solid var(--border); border-radius:999px; font-family:'Inter',sans-serif; font-size:.65rem; font-weight:600; color:var(--navy); cursor:pointer; transition:all .15s; }
+    .btn-move-to:hover { background:var(--navy-lt); border-color:rgba(27,42,74,.3); }
 
-    /* Team member rows with edit + move */
-    .team-members-ul { list-style: none; display: flex; flex-direction: column; gap: 0.42rem; }
-    .team-member-li  { display: flex; flex-direction: column; gap: 0.2rem; }
-    .member-row      { display: flex; align-items: center; gap: 0.35rem; }
-    .member-row-name {
-      flex: 1;
-      min-width: 0;
-      font-size: 0.86rem;
-      line-height: 1.3;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .team-member-li.leader .member-row-name { font-weight: 600; }
-    .leader-star { font-size: 0.52rem; color: var(--crimson); flex-shrink: 0; }
-    .leader-tag {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.52rem;
-      font-weight: 700;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      color: var(--crimson);
-      background: var(--crimson-lt);
-      border: 1px solid rgba(164,16,52,0.2);
-      border-radius: 2px;
-      padding: 0.1rem 0.3rem;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .member-action-btns { display: flex; gap: 0.15rem; flex-shrink: 0; margin-left: auto; }
-    .btn-mem-action {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 1.2rem;
-      height: 1.2rem;
-      background: none;
-      border: none;
-      border-radius: 3px;
-      color: var(--muted);
-      cursor: pointer;
-      padding: 0;
-      flex-shrink: 0;
-      transition: color 0.15s, background 0.15s;
-    }
-    .btn-mem-action:hover { color: var(--crimson); background: var(--crimson-lt); }
-    .btn-mem-action svg  { width: 9px; height: 9px; }
-    .member-name-input {
-      flex: 1;
-      min-width: 0;
-      background: var(--crimson-lt);
-      border: 1px solid rgba(164,16,52,0.3);
-      border-radius: 3px;
-      padding: 1px 6px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.86rem;
-      color: var(--ink);
-      outline: none;
-    }
-    .move-panel {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      flex-wrap: wrap;
-      padding: 0.35rem 0.5rem;
-      background: var(--navy-lt);
-      border: 1px solid rgba(27,42,74,0.15);
-      border-radius: var(--r-s);
-    }
-    .move-panel-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .btn-move-to {
-      padding: 0.16rem 0.5rem;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 600;
-      color: var(--navy);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .btn-move-to:hover { background: var(--navy-lt); border-color: rgba(27,42,74,0.3); }
+    /* ── SLIDE 5 — WORKSHEET ── */
+    .slide-notes { background:var(--bg); }
+    .slide-notes .slide-inner { display:flex; flex-direction:column; gap:2.5rem; }
+    .slide-notes h2 { font-size:clamp(2rem,4.5vw,3.25rem); font-weight:700; letter-spacing:-.02em; line-height:1.1; color:var(--ink); margin-bottom:.35rem; }
+    .slide-notes .subtitle { font-size:clamp(.9rem,1.4vw,1rem); }
+    .notes-stack { display:flex; flex-direction:column; gap:2.5rem; }
+    .note-card { background:var(--white); border:1px solid var(--border); border-top:4px solid var(--navy); border-radius:var(--r); padding:2rem; display:flex; flex-direction:column; box-shadow:var(--shadow-s); animation:pop .22s ease; }
+    .note-card-head { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; margin-bottom:.65rem; }
+    .note-head-left { display:flex; flex-direction:column; gap:.12rem; }
+    .note-ws-eyebrow { font-family:'Inter',sans-serif; font-size:.62rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); }
+    .note-card-name { font-size:1.7rem; font-weight:700; color:var(--navy); line-height:1.1; }
+    .note-card-count { font-family:'Inter',sans-serif; font-size:.75rem; color:var(--muted); flex-shrink:0; padding-top:.2rem; }
+    .pills { display:flex; flex-wrap:wrap; gap:.32rem; }
+    .note-card .pills { padding-bottom:1.5rem; border-bottom:1px solid var(--border); }
+    .pill { display:inline-flex; align-items:center; gap:.28rem; font-family:'Inter',sans-serif; font-size:.72rem; font-weight:500; padding:.18rem .55rem; border-radius:999px; background:var(--bg); border:1px solid var(--border); color:var(--ink); white-space:nowrap; }
+    .pill.leader { background:var(--crimson-lt); border-color:rgba(164,16,52,.2); color:var(--crimson); font-weight:600; }
+    .pill.leader::before { content:'★'; font-size:.52rem; }
+    .ws-section { padding-top:1.75rem; padding-bottom:1.5rem; display:flex; flex-direction:column; gap:1rem; }
+    .ws-section + .ws-section { border-top:1px solid var(--border); }
+    .ws-section:last-child { padding-bottom:0; }
+    .ws-section-title { font-size:1.2rem; font-weight:700; color:var(--ink); margin-bottom:.25rem; }
+    .ws-section-sub { font-family:'Inter',sans-serif; font-size:.78rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--navy); margin-bottom:.25rem; }
+    .ws-section-intro { font-family:'Inter',sans-serif; font-size:.875rem; color:var(--muted); line-height:1.65; font-style:italic; }
+    .ws-table-wrap { overflow-x:auto; border:1px solid var(--border); border-radius:var(--r); }
+    .ws-table { width:100%; border-collapse:collapse; font-size:.84rem; line-height:1.5; }
+    .ws-table thead tr { background:var(--navy); }
+    .ws-table thead th { padding:.7rem .85rem; text-align:left; font-family:'Inter',sans-serif; font-size:.62rem; font-weight:700; letter-spacing:.10em; text-transform:uppercase; color:rgba(255,255,255,.92); border-right:1px solid rgba(255,255,255,.12); white-space:nowrap; }
+    .ws-table thead th:last-child { border-right:none; }
+    .ws-table tbody tr:nth-child(even) { background:#FAFAF8; }
+    .ws-table tbody tr:nth-child(odd)  { background:var(--white); }
+    .ws-table td { padding:.6rem .85rem; border-right:1px solid var(--border); border-bottom:1px solid var(--border); vertical-align:top; font-family:'Inter',sans-serif; min-width:80px; height:2.6rem; word-break:break-word; }
+    .ws-table tbody tr:last-child td { border-bottom:none; }
+    .ws-table td:last-child { border-right:none; }
+    .ws-table td[contenteditable="true"] { cursor:text; outline:none; }
+    .ws-table td[contenteditable="true"]:hover { background:#FEF5F7 !important; }
+    .ws-table td[contenteditable="true"]:focus { background:#FEF5F7 !important; box-shadow:inset 0 0 0 2px rgba(164,16,52,.2); }
+    .ws-table.has-phase td:first-child { font-weight:500; color:var(--navy); background:rgba(27,42,74,.03); }
+    .ws-table.has-phase td:first-child:hover,
+    .ws-table.has-phase td:first-child:focus { background:#FEF5F7 !important; }
+    .row-del-cell { width:2.4rem; min-width:2.4rem; padding:0 !important; text-align:center; vertical-align:middle !important; border-right:none !important; }
+    .th-del { width:2.4rem; min-width:2.4rem; padding:0 !important; border-right:none !important; }
+    .btn-del-row { display:inline-flex; align-items:center; justify-content:center; width:1.55rem; height:1.55rem; margin:auto; background:none; border:none; border-radius:4px; font-size:1rem; line-height:1; color:var(--border-dk); cursor:pointer; opacity:0; transition:opacity .15s,color .15s,background .15s; }
+    .ws-table tbody tr:hover .btn-del-row { opacity:1; }
+    .btn-del-row:hover { color:var(--crimson); background:var(--crimson-lt); }
+    .btn-add-row { align-self:flex-start; padding:.38rem .9rem; background:transparent; border:1px dashed var(--border-dk); border-radius:var(--r-s); font-family:'Inter',sans-serif; font-size:.72rem; font-weight:600; color:var(--muted); cursor:pointer; transition:all .15s; }
+    .btn-add-row:hover { color:var(--crimson); border-color:var(--crimson); border-style:solid; background:var(--crimson-lt); }
+    .ws-notes-block { display:flex; flex-direction:column; gap:.4rem; }
+    .ws-notes-label { font-family:'Inter',sans-serif; font-size:.8rem; font-weight:600; color:var(--muted); }
+    .ws-notes-label--para { font-style:italic; font-weight:400; font-size:.84rem; color:var(--ink); }
+    .ws-notes-ta { width:100%; resize:vertical; min-height:60px; background:var(--bg); border:1px solid var(--border); border-radius:var(--r-s); padding:.65rem .8rem; font-family:'Inter',sans-serif; font-size:.88rem; line-height:1.65; color:var(--ink); outline:none; transition:border-color .18s,box-shadow .18s,background .18s; }
+    .ws-notes-ta::placeholder { color:var(--muted); }
+    .ws-notes-ta:focus { border-color:var(--navy); box-shadow:0 0 0 3px var(--navy-lt); background:var(--white); }
+    .ws-notes-ta--lg { min-height:120px; }
+    .ws-section--final { border-top:2px solid var(--navy) !important; }
+    .ws-section--final .ws-section-title { color:var(--navy); }
 
-    /* ── 10 · SLIDE 5 — NOTES ──────────────────────────────────── */
-    .slide-notes { background: var(--bg); }
-    .slide-notes .slide-inner { display: flex; flex-direction: column; gap: 2.5rem; }
-    .slide-notes h2 {
-      font-size: clamp(2rem, 4.5vw, 3.25rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      color: var(--ink);
-      margin-bottom: 0.35rem;
-    }
-    .slide-notes .subtitle { font-size: clamp(0.9rem, 1.4vw, 1rem); }
-
-    /* Stacked full-width note cards */
-    .notes-stack { display: flex; flex-direction: column; gap: 1.75rem; }
-    .note-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-top: 3px solid var(--navy);
-      border-radius: var(--r);
-      padding: 1.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      box-shadow: var(--shadow-s);
-      animation: pop 0.22s ease;
-    }
-    .note-card-head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.5rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .note-card-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--navy);
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .note-card-count {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem;
-      color: var(--muted);
-      flex-shrink: 0;
-    }
-    .pills { display: flex; flex-wrap: wrap; gap: 0.32rem; }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.28rem;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 500;
-      padding: 0.18rem 0.55rem;
-      border-radius: 999px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--ink);
-      white-space: nowrap;
-    }
-    .pill.leader {
-      background: var(--crimson-lt);
-      border-color: rgba(164,16,52,0.2);
-      color: var(--crimson);
-      font-weight: 600;
-    }
-    .pill.leader::before { content: '★'; font-size: 0.52rem; }
-    .note-section-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.63rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.5rem;
-    }
-    .note-ta {
-      width: 100%;
-      min-height: 130px;
-      resize: vertical;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--r-s);
-      padding: 0.85rem;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      line-height: 1.65;
-      color: var(--ink);
-      outline: none;
-      transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
-    }
-    .note-ta::placeholder { color: var(--muted); }
-    .note-ta:focus {
-      border-color: var(--navy);
-      box-shadow: 0 0 0 3px var(--navy-lt);
-      background: var(--white);
-    }
-    .note-foot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 0.4rem;
-    }
-    .note-chars { font-family: 'Inter', sans-serif; font-size: 0.67rem; color: var(--muted); }
-    .btn-note-clear {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.67rem;
-      font-weight: 600;
-      color: var(--muted);
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      transition: color 0.18s;
-    }
-    .btn-note-clear:hover { color: var(--crimson); }
-
-    /* Commitments & Next Steps */
-    .commitments-section {
-      border-top: 1px solid var(--border);
-      padding-top: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .commitments-section h4 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--ink);
-    }
-    .commitment-fields {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1.25rem;
-    }
-    .commitment-field { display: flex; flex-direction: column; gap: 0.4rem; }
-    .commitment-field label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .commitment-ta {
-      width: 100%;
-      min-height: 90px;
-      resize: vertical;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--r-s);
-      padding: 0.65rem 0.8rem;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.88rem;
-      line-height: 1.55;
-      color: var(--ink);
-      outline: none;
-      transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
-    }
-    .commitment-ta::placeholder { color: var(--muted); }
-    .commitment-ta:focus {
-      border-color: var(--navy);
-      box-shadow: 0 0 0 3px var(--navy-lt);
-      background: var(--white);
-    }
-
-    /* ── 11 · RESPONSIVE ───────────────────────────────────────── */
-    @media (max-width: 960px) {
-      .groups-layout { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 768px) {
-      .two-col            { grid-template-columns: 1fr; gap: 2rem; }
-      .nav-label          { display: none; }
-      .timer-widget       { grid-template-columns: 1fr; gap: 1.25rem; }
-      .commitment-fields  { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 480px) {
-      :root { --px: 1.25rem; --py: 2.5rem; }
-    }
+    /* ── RESPONSIVE ── */
+    @media (max-width:960px)  { .groups-layout { grid-template-columns:1fr; } }
+    @media (max-width:768px)  { .two-col{grid-template-columns:1fr;gap:2rem} .nav-label{display:none} .timer-widget{grid-template-columns:1fr;gap:1.25rem} }
+    @media (max-width:480px)  { :root{--px:1.25rem;--py:2.5rem} .note-card{padding:1.25rem} }
   </style>
 </head>
 <body>
 
-  <!-- ── NAV ─────────────────────────────────────────────── -->
   <nav aria-label="Slide navigation">
     <div class="nav-inner">
       <ul>
@@ -996,14 +263,17 @@
         <li><a href="#slide2"><span class="nav-n">02</span> <span class="nav-label">Debriefs &amp; Reporting</span></a></li>
         <li><a href="#slide3"><span class="nav-n">03</span> <span class="nav-label">Breakout</span></a></li>
         <li><a href="#slide4"><span class="nav-n">04</span> <span class="nav-label">Groups</span></a></li>
-        <li><a href="#slide5"><span class="nav-n">05</span> <span class="nav-label">Notes</span></a></li>
+        <li><a href="#slide5"><span class="nav-n">05</span> <span class="nav-label">Worksheet</span></a></li>
       </ul>
+      <div class="nav-sync">
+        <span id="conn-dot" class="conn-dot local" title="Firebase not configured — running locally"></span>
+        <span id="conn-label" class="conn-label">Local only</span>
+      </div>
     </div>
   </nav>
 
   <main>
 
-    <!-- 1 · TITLE -->
     <section id="slide1" class="slide slide-title" aria-label="Slide 1 of 5">
       <div class="slide-inner">
         <p class="eyebrow">Discussion Topic</p>
@@ -1013,7 +283,6 @@
       <span class="ghost-num" aria-hidden="true">01</span>
     </section>
 
-    <!-- 2 · CONTENT -->
     <section id="slide2" class="slide slide-content" aria-label="Slide 2 of 5">
       <div class="slide-inner">
         <header>
@@ -1045,7 +314,6 @@
       <span class="ghost-num" aria-hidden="true">02</span>
     </section>
 
-    <!-- 3 · BREAKOUT -->
     <section id="slide3" class="slide slide-breakout" aria-label="Slide 3 of 5">
       <div class="slide-inner">
         <header>
@@ -1066,23 +334,18 @@
       <span class="ghost-num" aria-hidden="true">03</span>
     </section>
 
-    <!-- 4 · GROUPS -->
     <section id="slide4" class="slide slide-groups" aria-label="Slide 4 of 5">
       <div class="slide-inner">
-
         <header>
           <span class="chip">Groups</span>
           <h2>Team Builder</h2>
           <p class="subtitle">Set a discussion timer, add members, and randomly assign teams with leaders.</p>
         </header>
 
-        <!-- Timer -->
         <div class="timer-widget" aria-label="Discussion timer">
           <div class="timer-left">
-            <div id="timer-display" class="timer-display" aria-live="polite" aria-label="Time remaining">15:00</div>
-            <div class="timer-bar-track" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-              <div id="timer-bar" class="timer-bar-fill"></div>
-            </div>
+            <div id="timer-display" class="timer-display" aria-live="polite">15:00</div>
+            <div class="timer-bar-track"><div id="timer-bar" class="timer-bar-fill"></div></div>
           </div>
           <div class="timer-right">
             <div class="timer-presets">
@@ -1094,14 +357,7 @@
             </div>
             <div class="timer-custom-row">
               <span class="timer-custom-label">Custom</span>
-              <input
-                type="number"
-                id="timer-custom"
-                class="timer-custom-input"
-                min="1" max="120"
-                placeholder="min"
-                aria-label="Custom minutes"
-              >
+              <input type="number" id="timer-custom" class="timer-custom-input" min="1" max="120" placeholder="min" aria-label="Custom minutes">
               <button id="btn-timer-set" class="btn-timer-set">Set</button>
             </div>
             <div class="timer-actions">
@@ -1111,19 +367,11 @@
           </div>
         </div>
 
-        <!-- Builder -->
         <div class="groups-layout">
-
           <div class="input-panel">
             <h3 class="panel-label">Team Members</h3>
             <div class="name-row">
-              <input
-                type="text"
-                id="name-input"
-                placeholder="Enter a name…"
-                autocomplete="off"
-                aria-label="Member name"
-              >
+              <input type="text" id="name-input" placeholder="Enter a name…" autocomplete="off" aria-label="Member name">
               <button id="btn-add" class="btn-add">Add</button>
             </div>
             <ul id="members-list" class="members-list" aria-live="polite">
@@ -1145,29 +393,26 @@
               </div>
             </div>
           </div>
-
           <div class="output-panel">
             <h3 class="panel-label">Generated Teams</h3>
             <div id="teams-out" aria-live="polite">
               <p class="placeholder-msg">Teams will appear here once generated.</p>
             </div>
           </div>
-
         </div>
       </div>
       <span class="ghost-num" aria-hidden="true">04</span>
     </section>
 
-    <!-- 5 · NOTES -->
     <section id="slide5" class="slide slide-notes" aria-label="Slide 5 of 5">
       <div class="slide-inner">
         <header>
-          <span class="chip chip--navy">Notes</span>
-          <h2>Team Notes</h2>
-          <p class="subtitle">Capture discussion notes, commitments, and next steps for each group.</p>
+          <span class="chip chip--navy">Worksheet</span>
+          <h2>Debriefs &amp; Reporting</h2>
+          <p class="subtitle">Click any cell to edit · Tab between cells · Hover a row to reveal the × delete button · + Add Row extends any table.</p>
         </header>
         <div id="notes-out" aria-live="polite">
-          <p class="placeholder-msg">Generate teams first to unlock note cards for each group.</p>
+          <p class="placeholder-msg">Generate teams first to unlock a worksheet for each group.</p>
         </div>
       </div>
       <span class="ghost-num" aria-hidden="true">05</span>
@@ -1176,6 +421,46 @@
   </main>
 
   <script>
+    /* ═══════════════════════════════════════════════════════════
+       FIREBASE — REAL-TIME COLLABORATION
+       ═══════════════════════════════════════════════════════════
+       1. Go to https://console.firebase.google.com/
+       2. Create a project → Add a Web App → copy the config
+       3. Build → Realtime Database → Create database (test mode)
+       4. Paste your values below (replace all YOUR_… placeholders)
+       5. Add ?session=any-name to the URL to create isolated
+          sessions for different workshops, e.g.:
+             index.html?session=jan-workshop
+    ══════════════════════════════════════════════════════════════ */
+
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyACXjiJHBKLGDF-VDbjQkg4v_HYh1hW_VE",
+  authDomain: "debriefs-reporting.firebaseapp.com",
+  projectId: "debriefs-reporting",
+  storageBucket: "debriefs-reporting.firebasestorage.app",
+  messagingSenderId: "4438721929",
+  appId: "1:4438721929:web:4f7c2a6822c75afad4cd58"
+};
+
+    /* Session key — each unique URL creates its own isolated room */
+    const SESSION_ID = new URLSearchParams(location.search).get('session') || 'default';
+
+    /* Firebase state */
+    let db = null, sessionRef = null, firebaseReady = false;
+    /* Prevents feedback loops: writes inside listeners are suppressed */
+    let isRemoteApply = false;
+
+    try {
+      if (FIREBASE_CONFIG.apiKey !== 'YOUR_API_KEY') {
+        firebase.initializeApp(FIREBASE_CONFIG);
+        db = firebase.database();
+        sessionRef = db.ref('sessions/' + SESSION_ID);
+        firebaseReady = true;
+      }
+    } catch (e) { console.error('Firebase init failed:', e); }
+
     /* ── UTILITIES ─────────────────────────────────────────────── */
     const esc = s => String(s)
       .replace(/&/g,'&amp;').replace(/</g,'&lt;')
@@ -1190,7 +475,119 @@
       return a;
     };
 
-    /* ── NAV HIGHLIGHT ─────────────────────────────────────────── */
+    /* Convert Firebase object-keyed data back to a JS array */
+    const fbArr = v => {
+      if (!v) return [];
+      if (Array.isArray(v)) return v;
+      return Object.keys(v).sort((a,b) => +a - +b).map(k => v[k]);
+    };
+    const fbArr2d = v => fbArr(v).map(r => fbArr(r));
+
+    /* Per-key debounce */
+    const dTimers = {};
+    const debounce = (key, fn, ms = 600) => {
+      clearTimeout(dTimers[key]);
+      dTimers[key] = setTimeout(fn, ms);
+    };
+
+    /* ── FIREBASE WRITE HELPER ──────────────────────────────────── */
+    function fbSet(path, value) {
+      if (!firebaseReady || isRemoteApply) return;
+      if (value === null || value === undefined) {
+        sessionRef.child(path).remove();
+      } else {
+        sessionRef.child(path).set(value);
+      }
+    }
+
+    /* ── CONNECTION STATUS ──────────────────────────────────────── */
+    const connDot   = document.getElementById('conn-dot');
+    const connLabel = document.getElementById('conn-label');
+    function setConnStatus(cls, label) {
+      if (connDot)   { connDot.className = 'conn-dot ' + cls; connDot.title = label; }
+      if (connLabel) connLabel.textContent = label;
+    }
+    if (!firebaseReady) setConnStatus('local', 'Local only');
+
+    /* ── TABLE HELPERS ──────────────────────────────────────────── */
+    function readTableData(table) {
+      const rows = [];
+      table.querySelectorAll('tbody tr').forEach(tr => {
+        const cells = [];
+        tr.querySelectorAll('td[contenteditable]').forEach(td => {
+          /* Store a zero-width space for empty cells so Firebase doesn't drop the key */
+          cells.push(td.textContent || '');
+        });
+        rows.push(cells);
+      });
+      return rows;
+    }
+
+    function applyTableData(tableId, rows) {
+      const table = document.getElementById(tableId);
+      if (!table) return;
+      /* Never overwrite what the user is actively typing */
+      if (table.contains(document.activeElement) &&
+          document.activeElement.hasAttribute('contenteditable')) return;
+
+      const tbody      = table.querySelector('tbody');
+      const existRows  = [...tbody.querySelectorAll('tr')];
+      const rowsArr    = fbArr2d(rows);
+
+      rowsArr.forEach((rowData, ri) => {
+        if (ri < existRows.length) {
+          const cells = [...existRows[ri].querySelectorAll('td[contenteditable]')];
+          rowData.forEach((text, ci) => {
+            if (ci < cells.length && cells[ci] !== document.activeElement) {
+              const t = String(text || '');
+              if (cells[ci].textContent !== t) cells[ci].textContent = t;
+            }
+          });
+        } else {
+          /* New row from a remote add */
+          const tr = document.createElement('tr');
+          rowData.forEach(text => {
+            const td = document.createElement('td');
+            td.contentEditable = 'true';
+            td.textContent = String(text || '');
+            tr.appendChild(td);
+          });
+          const delTd = document.createElement('td');
+          delTd.className = 'row-del-cell';
+          delTd.innerHTML = '<button class="btn-del-row" aria-label="Delete row">×</button>';
+          tr.appendChild(delTd);
+          tbody.appendChild(tr);
+        }
+      });
+      /* Remove rows that were deleted remotely */
+      for (let ri = rowsArr.length; ri < existRows.length; ri++) {
+        existRows[ri].remove();
+      }
+    }
+
+    /* ── APPLY STORED WORKSHEET DATA ────────────────────────────── */
+    let currentWsData = {};
+
+    function applyStoredWorksheetData() {
+      teams.forEach((t, i) => {
+        const d = currentWsData[i] ?? currentWsData[String(i)];
+        if (!d) return;
+        if (d.ms) applyTableData(`ms-${i}`, d.ms);
+        if (d.rm) applyTableData(`rm-${i}`, d.rm);
+        if (d.da) applyTableData(`da-${i}`, d.da);
+        const applyTA = (id, val) => {
+          if (val === undefined || val === null) return;
+          const ta = document.getElementById(id);
+          if (ta && ta !== document.activeElement) ta.value = String(val);
+        };
+        applyTA(`note-ms-${i}`,  d.noteMs);
+        applyTA(`note-rm-${i}`,  d.noteRm);
+        applyTA(`note-daf-${i}`, d.noteDaFormat);
+        applyTA(`note-wu-${i}`,  d.noteWrap);
+      });
+    }
+
+    /* ── NAV HIGHLIGHT ──────────────────────────────────────────── */
     const navLinks  = document.querySelectorAll('nav a');
     const allSlides = [...document.querySelectorAll('.slide')];
     function updateNav() {
@@ -1202,22 +599,21 @@
     window.addEventListener('scroll', updateNav, { passive: true });
     updateNav();
 
-    /* ── STATE ─────────────────────────────────────────────────── */
+    /* ── STATE ──────────────────────────────────────────────────── */
     let members    = [];
     let teams      = [];
-    let notes      = {};
     let groupCount = 2;
     const MIN = 2, MAX = 10;
 
-    /* ── TIMER STATE ───────────────────────────────────────────── */
+    /* ── TIMER STATE ─────────────────────────────────────────────  */
     let timerDuration  = 15 * 60;
     let timerRemaining = 15 * 60;
     let timerRunning   = false;
     let timerInterval  = null;
     let activePreset   = 15;
 
-    /* ── DOM REFS ──────────────────────────────────────────────── */
-    const $           = id => document.getElementById(id);
+    /* ── DOM REFS ───────────────────────────────────────────────── */
+    const $ = id => document.getElementById(id);
     const nameInput   = $('name-input');
     const btnAdd      = $('btn-add');
     const memberList  = $('members-list');
@@ -1236,7 +632,7 @@
     const btnTimerPly = $('btn-timer-play');
     const btnTimerRst = $('btn-timer-reset');
 
-    /* ── TIMER ─────────────────────────────────────────────────── */
+    /* ── TIMER ──────────────────────────────────────────────────── */
     const fmtTime = s =>
       `${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;
 
@@ -1249,46 +645,41 @@
       timerDisp.classList.toggle('urgent', isUrgent);
       timerDisp.classList.toggle('done',   isDone);
       timerBar.classList.toggle('urgent',  isUrgent);
-      btnTimerPly.textContent = timerRunning ? '⏸ Pause'
-                              : isDone       ? '↺ Restart'
-                              :                '▶ Start';
+      btnTimerPly.textContent = timerRunning ? '⏸ Pause' : isDone ? '↺ Restart' : '▶ Start';
     }
-
     function tick() {
-      if (timerRemaining > 0) {
-        timerRemaining--;
-        renderTimer();
-      } else {
-        clearInterval(timerInterval);
-        timerRunning = false;
-        renderTimer();
-      }
+      if (timerRemaining > 0) { timerRemaining--; renderTimer(); }
+      else { clearInterval(timerInterval); timerRunning = false; renderTimer(); }
     }
 
-    const startTimer = () => {
+    function startTimer() {
       if (timerRunning || timerRemaining === 0) return;
       timerRunning  = true;
       timerInterval = setInterval(tick, 1000);
       renderTimer();
-    };
-    const pauseTimer = () => {
+      fbSet('timer', { duration: timerDuration, startedAt: Date.now(), remainingAtPause: timerRemaining });
+    }
+    function pauseTimer() {
       clearInterval(timerInterval);
       timerRunning = false;
       renderTimer();
-    };
-    const resetTimer = () => {
+      fbSet('timer', { duration: timerDuration, startedAt: null, remainingAtPause: timerRemaining });
+    }
+    function resetTimer() {
       clearInterval(timerInterval);
       timerRunning   = false;
       timerRemaining = timerDuration;
       renderTimer();
-    };
-    const setTimer = mins => {
+      fbSet('timer', { duration: timerDuration, startedAt: null, remainingAtPause: timerDuration });
+    }
+    function setTimer(mins) {
       clearInterval(timerInterval);
       timerRunning   = false;
       timerDuration  = mins * 60;
       timerRemaining = timerDuration;
       renderTimer();
-    };
+      fbSet('timer', { duration: timerDuration, startedAt: null, remainingAtPause: timerDuration });
+    }
     const syncPresets = () => {
       document.querySelectorAll('.btn-preset').forEach(b =>
         b.classList.toggle('active', parseInt(b.dataset.min) === activePreset)
@@ -1302,32 +693,27 @@
     btnTimerRst.onclick = resetTimer;
     btnTimerSet.onclick = () => {
       const v = parseInt(timerCustom.value);
-      if (v > 0 && v <= 120) {
-        activePreset = -1;
-        setTimer(v);
-        syncPresets();
-        timerCustom.value = '';
-      }
+      if (v > 0 && v <= 120) { activePreset = -1; setTimer(v); syncPresets(); timerCustom.value = ''; }
     };
     timerCustom.onkeydown = e => { if (e.key === 'Enter') btnTimerSet.click(); };
     document.querySelectorAll('.btn-preset').forEach(btn => {
-      btn.onclick = () => {
-        activePreset = parseInt(btn.dataset.min);
-        setTimer(activePreset);
-        syncPresets();
-      };
+      btn.onclick = () => { activePreset = parseInt(btn.dataset.min); setTimer(activePreset); syncPresets(); };
     });
 
-    /* ── GROUP COUNTER ─────────────────────────────────────────── */
+    /* ── GROUP COUNTER ──────────────────────────────────────────── */
     function syncCounter() {
       grpCount.textContent = groupCount;
       btnDown.disabled = groupCount <= MIN;
       btnUp.disabled   = groupCount >= MAX;
     }
-    btnDown.onclick = () => { if (groupCount > MIN) { groupCount--; syncCounter(); } };
-    btnUp.onclick   = () => { if (groupCount < MAX) { groupCount++; syncCounter(); } };
+    btnDown.onclick = () => {
+      if (groupCount > MIN) { groupCount--; syncCounter(); fbSet('groupCount', groupCount); }
+    };
+    btnUp.onclick = () => {
+      if (groupCount < MAX) { groupCount++; syncCounter(); fbSet('groupCount', groupCount); }
+    };
 
-    /* ── MEMBER LIST ───────────────────────────────────────────── */
+    /* ── MEMBER LIST ─────────────────────────────────────────────  */
     function renderMembers() {
       if (!members.length) {
         memberList.innerHTML = '<li class="empty-note">No members added yet.</li>';
@@ -1339,34 +725,34 @@
           <button class="btn-rm" data-i="${i}" aria-label="Remove ${esc(n)}">×</button>
         </li>`).join('');
       memberList.querySelectorAll('.btn-rm').forEach(b => {
-        b.onclick = () => { members.splice(+b.dataset.i, 1); renderMembers(); };
+        b.onclick = () => {
+          members.splice(+b.dataset.i, 1);
+          renderMembers();
+          fbSet('members', members.length ? members : null);
+        };
       });
     }
-
     function addMember() {
       const v = nameInput.value.trim();
-      if (!v || members.some(m => m.toLowerCase() === v.toLowerCase())) {
-        nameInput.focus();
-        return;
-      }
+      if (!v || members.some(m => m.toLowerCase() === v.toLowerCase())) { nameInput.focus(); return; }
       members.push(v);
       renderMembers();
+      fbSet('members', members);
       nameInput.value = '';
       nameInput.focus();
     }
     btnAdd.onclick      = addMember;
     nameInput.onkeydown = e => { if (e.key === 'Enter') addMember(); };
 
-    /* ── ICONS ─────────────────────────────────────────────────── */
+    /* ── ICONS ──────────────────────────────────────────────────── */
     const ICON_EDIT  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
     const ICON_CHECK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`;
     const ICON_MOVE  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
 
-    /* ── TEAM NAME EDITING ─────────────────────────────────────── */
+    /* ── TEAM NAME EDITING ──────────────────────────────────────── */
     function enableTeamNameEdit(idx) {
-      const card = teamsOut.querySelector(`[data-ti="${idx}"]`);
-      if (!card) return;
-      const wrap    = card.querySelector('.team-name-wrap');
+      const card = teamsOut.querySelector(`[data-ti="${idx}"]`); if (!card) return;
+      const wrap = card.querySelector('.team-name-wrap');
       const display = wrap.querySelector('.team-name-text');
       const editBtn = wrap.querySelector('.btn-name-edit');
       const input   = document.createElement('input');
@@ -1382,19 +768,18 @@
         const newName = input.value.trim() || teams[idx].name;
         teams[idx].name = newName;
         const span = document.createElement('span');
-        span.className = 'team-name-text';
+        span.className   = 'team-name-text';
         span.textContent = newName;
         span.title = 'Click to rename';
-        span.setAttribute('role', 'button');
-        span.setAttribute('tabindex', '0');
+        span.setAttribute('role','button'); span.setAttribute('tabindex','0');
         span.onclick   = () => enableTeamNameEdit(idx);
         span.onkeydown = e => { if (e.key === 'Enter') enableTeamNameEdit(idx); };
         input.replaceWith(span);
         editBtn.innerHTML = ICON_EDIT;
         editBtn.onclick   = () => enableTeamNameEdit(idx);
-        // Sync note card heading without full re-render
         const nc = notesOut.querySelector(`[data-ni="${idx}"] .note-card-name`);
         if (nc) nc.textContent = newName;
+        fbSet('teams', teams);
       }
       input.onblur    = save;
       input.onkeydown = e => {
@@ -1404,12 +789,10 @@
       editBtn.onclick = () => input.blur();
     }
 
-    /* ── MEMBER NAME EDITING ───────────────────────────────────── */
+    /* ── MEMBER NAME EDITING ────────────────────────────────────── */
     function enableMemberEdit(ti, mi) {
-      const card = teamsOut.querySelector(`[data-ti="${ti}"]`);
-      if (!card) return;
-      const li      = card.querySelector(`[data-mi="${mi}"]`);
-      if (!li) return;
+      const card = teamsOut.querySelector(`[data-ti="${ti}"]`); if (!card) return;
+      const li   = card.querySelector(`[data-mi="${mi}"]`);     if (!li)   return;
       const nameEl  = li.querySelector('.member-row-name');
       const editBtn = li.querySelector('.btn-mem-edit');
       const input   = document.createElement('input');
@@ -1424,12 +807,13 @@
         const newName = input.value.trim() || teams[ti].members[mi];
         teams[ti].members[mi] = newName;
         const span = document.createElement('span');
-        span.className = 'member-row-name';
+        span.className   = 'member-row-name';
         span.textContent = newName;
         input.replaceWith(span);
         editBtn.innerHTML = ICON_EDIT;
         editBtn.onclick   = () => enableMemberEdit(ti, mi);
         updateNotePills();
+        fbSet('teams', teams);
       }
       input.onblur    = save;
       input.onkeydown = e => {
@@ -1439,25 +823,18 @@
       editBtn.onclick = () => input.blur();
     }
 
-    /* ── MOVE MEMBER ───────────────────────────────────────────── */
+    /* ── MOVE MEMBER ─────────────────────────────────────────────  */
     function toggleMovePanel(ti, mi) {
-      const card = teamsOut.querySelector(`[data-ti="${ti}"]`);
-      if (!card) return;
-      const li       = card.querySelector(`[data-mi="${mi}"]`);
-      if (!li) return;
+      const card = teamsOut.querySelector(`[data-ti="${ti}"]`); if (!card) return;
+      const li   = card.querySelector(`[data-mi="${mi}"]`);     if (!li)   return;
       const existing = li.querySelector('.move-panel');
-      // Close all open panels first
       teamsOut.querySelectorAll('.move-panel').forEach(p => p.remove());
-      // If this panel was already open, we're done (toggled off)
       if (existing) return;
-
       const panel = document.createElement('div');
       panel.className = 'move-panel';
       const lbl = document.createElement('span');
-      lbl.className = 'move-panel-label';
-      lbl.textContent = 'Move to:';
+      lbl.className = 'move-panel-label'; lbl.textContent = 'Move to:';
       panel.appendChild(lbl);
-
       teams.forEach((t, ti2) => {
         if (ti2 === ti) return;
         const btn = document.createElement('button');
@@ -1468,28 +845,183 @@
           teams[ti2].members.push(member);
           renderTeams();
           updateNotePills();
+          fbSet('teams', teams);
         };
         panel.appendChild(btn);
       });
       li.appendChild(panel);
     }
 
-    /* Refresh only the pills + count in note cards (preserves note text) */
+    /* ── UPDATE NOTE PILLS (without full re-render) ─────────────── */
     function updateNotePills() {
       teams.forEach((t, i) => {
-        const card = notesOut.querySelector(`[data-ni="${i}"]`);
-        if (!card) return;
+        const card = notesOut.querySelector(`[data-ni="${i}"]`); if (!card) return;
         const pillsEl = card.querySelector('.pills');
         if (pillsEl) pillsEl.innerHTML = t.members.map((m, j) =>
-          `<span class="pill ${j === 0 ? 'leader' : ''}">${esc(m)}</span>`
+          `<span class="pill ${j===0?'leader':''}">${esc(m)}</span>`
         ).join('');
         const countEl = card.querySelector('.note-card-count');
-        if (countEl) countEl.textContent =
-          `${t.members.length} member${t.members.length !== 1 ? 's' : ''}`;
+        if (countEl) countEl.textContent = `${t.members.length} member${t.members.length!==1?'s':''}`;
       });
     }
 
-    /* ── RENDER TEAMS ──────────────────────────────────────────── */
+    /* ── WORKSHEET DATA ─────────────────────────────────────────── */
+    const MS_ROWS = [
+      ['Pre launch','Kick Off'],['',''],
+      ['Launch','Launch Meeting'],['',''],
+      ['Check in 1','Team Check-Ins'],['',''],
+      ['Check in 2','Mid-Cycle Check-In'],['',''],
+      ['Early Deadline','Deadline Update(s)'],['',''],
+      ['End-of-Cycle','Final Update Email'],['',''],
+      ['Debrief','Program Debrief'],['',''],
+    ];
+    const RM_ROWS = [
+      'Leads Generated','Prospective Learner Inquiries',
+      'YOY Traffic #s from Email','YOY Website Traffic #s and Source of Traffic',
+      'Social Media Engagement','# of Applications Started, Submitted, Admitted and Enrolled',
+      'Lead and Application Source Data','Enrollment / Revenue Target',
+    ];
+    const DA_ROWS = [
+      '1. Program Overview and Enrollment Data Year-over-Year',
+      '2. Admissions Snapshot/Overview, Tuition Reductions, Learner Demos',
+      '3. Marketing Efforts, Digital Reach, Target Audience, and Industry Channels',
+      '4. Application and Enrollment Data Source Overview',
+      '5. Marketing Plan Highlights and Priorities',
+      '6. Finance Overview',
+      '7. Education, Curriculum, and Post-Learner Surveys',
+      '8. AES Plan Highlights and Priorities',
+    ];
+    const delCell = () =>
+      `<td class="row-del-cell"><button class="btn-del-row" aria-label="Delete row">×</button></td>`;
+
+    /* ── WORKSHEET CARD BUILDER ─────────────────────────────────── */
+    function worksheetCard(t, i) {
+      const pillsHTML = t.members.map((m,j) =>
+        `<span class="pill ${j===0?'leader':''}">${esc(m)}</span>`
+      ).join('');
+      const msHTML = MS_ROWS.map(([ph,mt]) => `<tr>
+        <td contenteditable="true">${esc(ph)}</td>
+        <td contenteditable="true">${esc(mt)}</td>
+        <td contenteditable="true"></td><td contenteditable="true"></td>
+        <td contenteditable="true"></td><td contenteditable="true"></td>
+        ${delCell()}</tr>`).join('');
+      const rmHTML = RM_ROWS.map(m => `<tr>
+        <td contenteditable="true">${esc(m)}</td>
+        <td contenteditable="true"></td><td contenteditable="true"></td>
+        <td contenteditable="true"></td><td contenteditable="true"></td>
+        <td contenteditable="true"></td>${delCell()}</tr>`).join('');
+      const daHTML = DA_ROWS.map(item => `<tr>
+        <td contenteditable="true">${esc(item)}</td>
+        <td contenteditable="true"></td><td contenteditable="true"></td>
+        ${delCell()}</tr>`).join('');
+
+      return `
+        <div class="note-card" data-ni="${i}">
+          <div class="note-card-head">
+            <div class="note-head-left">
+              <p class="note-ws-eyebrow">Worksheet · Discussion Topic</p>
+              <h3 class="note-card-name">${esc(t.name)}</h3>
+            </div>
+            <span class="note-card-count">${t.members.length} member${t.members.length!==1?'s':''}</span>
+          </div>
+          <div class="pills">${pillsHTML}</div>
+
+          <div class="ws-section">
+            <div>
+              <h4 class="ws-section-title">Milestone &amp; Reporting Overview</h4>
+              <p class="ws-section-intro">Use this table to map meetings/checkpoints. These are just some examples of what we do now to get you started and thinking. They can be kept as is, altered, or removed from your plan.</p>
+            </div>
+            <div class="ws-table-wrap">
+              <table class="ws-table has-phase" id="ms-${i}">
+                <colgroup>
+                  <col style="min-width:110px;width:9%"><col style="min-width:140px;width:14%">
+                  <col style="min-width:160px;width:17%"><col style="min-width:150px;width:16%">
+                  <col style="min-width:110px;width:10%"><col style="min-width:140px;">
+                  <col style="width:2.4rem;min-width:2.4rem;">
+                </colgroup>
+                <thead><tr>
+                  <th>Phase</th><th>Meeting / Update Name</th>
+                  <th>Who Attends or is Included (roles)</th>
+                  <th>Timing &amp; Cadence (relative to deadline)</th>
+                  <th>Owner (role)</th><th>Primary Purpose</th>
+                  <th class="th-del"></th>
+                </tr></thead>
+                <tbody>${msHTML}</tbody>
+              </table>
+            </div>
+            <button class="btn-add-row" data-table-id="ms-${i}" data-cols="6">+ Add Row</button>
+            <div class="ws-notes-block">
+              <span class="ws-notes-label">Notes:</span>
+              <textarea id="note-ms-${i}" class="ws-notes-ta" rows="2" placeholder="Additional notes…" aria-label="Milestone notes"></textarea>
+            </div>
+          </div>
+
+          <div class="ws-section">
+            <div>
+              <h4 class="ws-section-title">Reports and Metrics</h4>
+              <p class="ws-section-intro">Use this table to map the major reports and KPIs. These are just some examples. They can be kept or removed from your plan. 8 is great, but 3–5 will be good.</p>
+            </div>
+            <div class="ws-table-wrap">
+              <table class="ws-table" id="rm-${i}">
+                <colgroup>
+                  <col style="min-width:160px;width:15%"><col style="min-width:100px;width:10%">
+                  <col style="min-width:150px;width:16%"><col style="min-width:160px;width:18%">
+                  <col style="min-width:160px;width:18%"><col style="min-width:110px;">
+                  <col style="width:2.4rem;min-width:2.4rem;">
+                </colgroup>
+                <thead><tr>
+                  <th>Metric Name</th><th>Owner (role)</th><th>Description</th>
+                  <th>What report, dashboard, or platform can it be found in</th>
+                  <th>In Which Meeting(s) or Update(s) Does it Belong?</th>
+                  <th>Target or Benchmark</th><th class="th-del"></th>
+                </tr></thead>
+                <tbody>${rmHTML}</tbody>
+              </table>
+            </div>
+            <button class="btn-add-row" data-table-id="rm-${i}" data-cols="6">+ Add Row</button>
+            <div class="ws-notes-block">
+              <span class="ws-notes-label">Notes:</span>
+              <textarea id="note-rm-${i}" class="ws-notes-ta" rows="2" placeholder="Additional notes…" aria-label="Reports notes"></textarea>
+            </div>
+          </div>
+
+          <div class="ws-section">
+            <div>
+              <h4 class="ws-section-title">Debrief Agenda, Format, Structure and Goals</h4>
+              <p class="ws-section-intro">Outline a simple, repeatable agenda. Below is a trimmed-down agenda from the defunct 360 Program Debriefs. Edit this to make it your own.</p>
+            </div>
+            <div class="ws-table-wrap">
+              <table class="ws-table" id="da-${i}">
+                <colgroup>
+                  <col style="min-width:260px;width:55%"><col style="min-width:150px;width:25%">
+                  <col style="min-width:110px;"><col style="width:2.4rem;min-width:2.4rem;">
+                </colgroup>
+                <thead><tr>
+                  <th>Agenda Item</th><th>Report / Dashboard / Metric Used</th>
+                  <th>Owner (role)</th><th class="th-del"></th>
+                </tr></thead>
+                <tbody>${daHTML}</tbody>
+              </table>
+            </div>
+            <button class="btn-add-row" data-table-id="da-${i}" data-cols="3">+ Add Row</button>
+            <div class="ws-notes-block">
+              <span class="ws-notes-label ws-notes-label--para">What is the format of the debriefs (e.g., slide presentation vs. slides shared in advance and more of a discussion taking place), who is invited, and when and what is the goal of the debrief?</span>
+              <textarea id="note-daf-${i}" class="ws-notes-ta" rows="3" placeholder="Format, attendees, timing, and goals…" aria-label="Debrief format notes"></textarea>
+            </div>
+          </div>
+
+          <div class="ws-section ws-section--final">
+            <div>
+              <h4 class="ws-section-title">Discussion Wrap Up</h4>
+              <h5 class="ws-section-sub">Commitments &amp; Next Steps</h5>
+              <p class="ws-section-intro">What we'll do, who owns it, and when we'll check in.</p>
+            </div>
+            <textarea id="note-wu-${i}" class="ws-notes-ta ws-notes-ta--lg" rows="5" placeholder="Commitments and next steps…" aria-label="Commitments and next steps"></textarea>
+          </div>
+        </div>`;
+    }
+
+    /* ── RENDER TEAMS ─────────────────────────────────────────────  */
     function renderTeams() {
       if (!teams.length) {
         teamsOut.innerHTML = '<p class="placeholder-msg">Teams will appear here once generated.</p>';
@@ -1497,140 +1029,143 @@
       }
       teamsOut.innerHTML = `
         <div class="teams-grid">
-          ${teams.map((t, i) => `
+          ${teams.map((t,i) => `
             <div class="team-card" data-ti="${i}">
               <div class="team-name-wrap">
                 <span class="team-name-text" title="Click to rename" role="button" tabindex="0">${esc(t.name)}</span>
                 <button class="btn-name-edit" aria-label="Edit team name">${ICON_EDIT}</button>
               </div>
               <ul class="team-members-ul">
-                ${t.members.map((m, j) => `
-                  <li class="team-member-li ${j === 0 ? 'leader' : ''}" data-mi="${j}">
+                ${t.members.map((m,j) => `
+                  <li class="team-member-li ${j===0?'leader':''}" data-mi="${j}">
                     <div class="member-row">
-                      ${j === 0 ? '<span class="leader-star">★</span>' : ''}
+                      ${j===0?'<span class="leader-star">★</span>':''}
                       <span class="member-row-name">${esc(m)}</span>
-                      ${j === 0 ? '<span class="leader-tag">Leader</span>' : ''}
+                      ${j===0?'<span class="leader-tag">Leader</span>':''}
                       <div class="member-action-btns">
                         <button class="btn-mem-action btn-mem-edit" title="Edit name">${ICON_EDIT}</button>
-                        ${teams.length > 1
-                          ? `<button class="btn-mem-action btn-mem-move" title="Move to group">${ICON_MOVE}</button>`
-                          : ''}
+                        ${teams.length>1?`<button class="btn-mem-action btn-mem-move" title="Move to group">${ICON_MOVE}</button>`:''}
                       </div>
                     </div>
                   </li>`).join('')}
               </ul>
             </div>`).join('')}
         </div>`;
-
-      teams.forEach((_, i) => {
+      teams.forEach((_,i) => {
         const card = teamsOut.querySelector(`[data-ti="${i}"]`);
         card.querySelector('.team-name-text').onclick   = () => enableTeamNameEdit(i);
-        card.querySelector('.team-name-text').onkeydown = e => {
-          if (e.key === 'Enter') enableTeamNameEdit(i);
-        };
-        card.querySelector('.btn-name-edit').onclick = () => enableTeamNameEdit(i);
-
-        teams[i].members.forEach((_, j) => {
+        card.querySelector('.team-name-text').onkeydown = e => { if(e.key==='Enter') enableTeamNameEdit(i); };
+        card.querySelector('.btn-name-edit').onclick    = () => enableTeamNameEdit(i);
+        teams[i].members.forEach((_,j) => {
           const li = card.querySelector(`[data-mi="${j}"]`);
-          li.querySelector('.btn-mem-edit').onclick = () => enableMemberEdit(i, j);
+          li.querySelector('.btn-mem-edit').onclick = () => enableMemberEdit(i,j);
           const mv = li.querySelector('.btn-mem-move');
-          if (mv) mv.onclick = () => toggleMovePanel(i, j);
+          if (mv) mv.onclick = () => toggleMovePanel(i,j);
         });
       });
     }
 
-    /* ── RENDER NOTES ──────────────────────────────────────────── */
+    /* ── RENDER WORKSHEETS ──────────────────────────────────────── */
     function renderNotes() {
       if (!teams.length) {
-        notesOut.innerHTML = '<p class="placeholder-msg">Generate teams first to unlock note cards for each group.</p>';
+        notesOut.innerHTML = '<p class="placeholder-msg">Generate teams first to unlock a worksheet for each group.</p>';
         return;
       }
-      notesOut.innerHTML = `
-        <div class="notes-stack">
-          ${teams.map((t, i) => {
-            const n = notes[i] || {};
-            return `
-              <div class="note-card" data-ni="${i}">
-                <div class="note-card-head">
-                  <span class="note-card-name">${esc(t.name)}</span>
-                  <span class="note-card-count">${t.members.length} member${t.members.length !== 1 ? 's' : ''}</span>
-                </div>
-                <div class="pills">
-                  ${t.members.map((m, j) =>
-                    `<span class="pill ${j === 0 ? 'leader' : ''}">${esc(m)}</span>`
-                  ).join('')}
-                </div>
-                <div>
-                  <p class="note-section-label">Notes</p>
-                  <textarea
-                    class="note-ta"
-                    id="ta-${i}"
-                    rows="5"
-                    placeholder="Discussion notes for ${esc(t.name)}…"
-                    aria-label="Notes for ${esc(t.name)}"
-                  >${esc(n.text || '')}</textarea>
-                  <div class="note-foot">
-                    <span class="note-chars" id="cc-${i}">${(n.text || '').length} chars</span>
-                    <button class="btn-note-clear" data-ni="${i}">Clear notes</button>
-                  </div>
-                </div>
-                <div class="commitments-section">
-                  <h4>Commitments &amp; Next Steps</h4>
-                  <div class="commitment-fields">
-                    <div class="commitment-field">
-                      <label for="do-${i}">What we'll do</label>
-                      <textarea
-                        id="do-${i}"
-                        class="commitment-ta"
-                        rows="3"
-                        placeholder="Actions and deliverables…"
-                        aria-label="What we'll do — ${esc(t.name)}"
-                      >${esc(n.whatWeDo || '')}</textarea>
-                    </div>
-                    <div class="commitment-field">
-                      <label for="wo-${i}">Who owns it</label>
-                      <textarea
-                        id="wo-${i}"
-                        class="commitment-ta"
-                        rows="3"
-                        placeholder="Owner or lead…"
-                        aria-label="Who owns it — ${esc(t.name)}"
-                      >${esc(n.whoOwns || '')}</textarea>
-                    </div>
-                    <div class="commitment-field">
-                      <label for="wc-${i}">When we'll check in</label>
-                      <textarea
-                        id="wc-${i}"
-                        class="commitment-ta"
-                        rows="3"
-                        placeholder="Date or milestone…"
-                        aria-label="When we'll check in — ${esc(t.name)}"
-                      >${esc(n.whenCheckIn || '')}</textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>`;
-          }).join('')}
-        </div>`;
-
-      teams.forEach((_, i) => {
-        if (!notes[i]) notes[i] = { text:'', whatWeDo:'', whoOwns:'', whenCheckIn:'' };
-        const ta     = $(`ta-${i}`);
-        const cc     = $(`cc-${i}`);
-        const doTA   = $(`do-${i}`);
-        const woTA   = $(`wo-${i}`);
-        const wcTA   = $(`wc-${i}`);
-        const clrBtn = notesOut.querySelector(`.btn-note-clear[data-ni="${i}"]`);
-
-        ta.oninput    = () => { notes[i].text        = ta.value;   cc.textContent = `${ta.value.length} chars`; };
-        doTA.oninput  = () => { notes[i].whatWeDo    = doTA.value; };
-        woTA.oninput  = () => { notes[i].whoOwns     = woTA.value; };
-        wcTA.oninput  = () => { notes[i].whenCheckIn = wcTA.value; };
-        clrBtn.onclick = () => { ta.value = ''; notes[i].text = ''; cc.textContent = '0 chars'; };
-      });
+      notesOut.innerHTML =
+        `<div class="notes-stack">${teams.map((t,i) => worksheetCard(t,i)).join('')}</div>`;
+      /* Apply any data already in Firebase after the DOM settles */
+      setTimeout(() => applyStoredWorksheetData(), 60);
     }
 
-    /* ── GENERATE TEAMS ────────────────────────────────────────── */
+    /* ── WORKSHEET EVENT DELEGATION ─────────────────────────────── */
+
+    /* Tab between editable cells */
+    notesOut.addEventListener('keydown', e => {
+      if (e.target.getAttribute('contenteditable') === 'true' && e.key === 'Tab') {
+        e.preventDefault();
+        const cells = [...notesOut.querySelectorAll('[contenteditable="true"]')];
+        const idx   = cells.indexOf(document.activeElement);
+        if (idx === -1) return;
+        const next  = cells[e.shiftKey ? idx-1 : idx+1];
+        if (next) next.focus();
+      }
+    });
+
+    /* Sync cell on blur → Firebase */
+    notesOut.addEventListener('blur', e => {
+      if (e.target.getAttribute('contenteditable') !== 'true') return;
+      const table = e.target.closest('.ws-table');
+      const card  = e.target.closest('[data-ni]');
+      if (!table || !card) return;
+      const teamIdx  = card.dataset.ni;
+      const tableName = table.id.replace(new RegExp(`-${teamIdx}$`), '');
+      fbSet(`worksheets/${teamIdx}/${tableName}`, readTableData(table));
+    }, true);
+
+    /* Sync textarea on input (debounced) → Firebase */
+    notesOut.addEventListener('input', e => {
+      if (e.target.tagName !== 'TEXTAREA') return;
+      const card = e.target.closest('[data-ni]');
+      if (!card) return;
+      const teamIdx = card.dataset.ni;
+      const keyMap  = {
+        [`note-ms-${teamIdx}`]  : 'noteMs',
+        [`note-rm-${teamIdx}`]  : 'noteRm',
+        [`note-daf-${teamIdx}`] : 'noteDaFormat',
+        [`note-wu-${teamIdx}`]  : 'noteWrap',
+      };
+      const fbKey = keyMap[e.target.id];
+      if (!fbKey) return;
+      const val = e.target.value;
+      debounce(`ta-${e.target.id}`, () => fbSet(`worksheets/${teamIdx}/${fbKey}`, val || null));
+    });
+
+    /* Row delete and add */
+    notesOut.addEventListener('click', e => {
+      const delBtn = e.target.closest('.btn-del-row');
+      if (delBtn) {
+        const tr    = delBtn.closest('tr');
+        const table = tr?.closest('.ws-table');
+        const card  = tr?.closest('[data-ni]');
+        if (tr) {
+          tr.remove();
+          if (table && card) {
+            const teamIdx  = card.dataset.ni;
+            const tableName = table.id.replace(new RegExp(`-${teamIdx}$`), '');
+            fbSet(`worksheets/${teamIdx}/${tableName}`, readTableData(table));
+          }
+        }
+        return;
+      }
+      const addBtn = e.target.closest('.btn-add-row');
+      if (addBtn) {
+        const tableId = addBtn.dataset.tableId;
+        const table   = document.getElementById(tableId);
+        if (!table) return;
+        const cols  = parseInt(addBtn.dataset.cols);
+        const tbody = table.querySelector('tbody');
+        const tr    = document.createElement('tr');
+        for (let c = 0; c < cols; c++) {
+          const td = document.createElement('td');
+          td.contentEditable = 'true';
+          tr.appendChild(td);
+        }
+        const delTd = document.createElement('td');
+        delTd.className = 'row-del-cell';
+        delTd.innerHTML = '<button class="btn-del-row" aria-label="Delete row">×</button>';
+        tr.appendChild(delTd);
+        tbody.appendChild(tr);
+        tr.querySelector('td[contenteditable]')?.focus();
+        const card = addBtn.closest('[data-ni]');
+        if (card) {
+          const teamIdx  = card.dataset.ni;
+          const tableName = tableId.replace(new RegExp(`-${teamIdx}$`), '');
+          fbSet(`worksheets/${teamIdx}/${tableName}`, readTableData(table));
+        }
+      }
+    });
+
+    /* ── GENERATE TEAMS ─────────────────────────────────────────── */
     btnGen.onclick = () => {
       if (members.length < 2) {
         teamsOut.innerHTML = '<p class="placeholder-msg">Add at least 2 members to generate teams.</p>';
@@ -1638,26 +1173,165 @@
       }
       const count    = Math.min(groupCount, members.length);
       const shuffled = shuffle(members);
-      teams = Array.from({ length: count }, (_, i) => ({ name: `Group ${i + 1}`, members: [] }));
-      shuffled.forEach((m, i) => teams[i % count].members.push(m));
-      notes = {};
-      teams.forEach((_, i) => {
-        notes[i] = { text: '', whatWeDo: '', whoOwns: '', whenCheckIn: '' };
-      });
+      teams = Array.from({ length: count }, (_,i) => ({ name:`Group ${i+1}`, members:[] }));
+      shuffled.forEach((m,i) => teams[i % count].members.push(m));
+      currentWsData = {}; // clear local cache
       renderTeams();
       renderNotes();
+      fbSet('teams', teams);
+      fbSet('worksheets', null); // clear any previous worksheet data
     };
 
-    /* ── CLEAR TEAMS — keeps names intact ──────────────────────── */
+    /* ── CLEAR TEAMS (keeps names) ──────────────────────────────── */
     btnClrTeams.onclick = () => {
-      teams = []; notes = {};
-      teamsOut.innerHTML = '<p class="placeholder-msg">Teams will appear here once generated.</p>';
-      notesOut.innerHTML = '<p class="placeholder-msg">Generate teams first to unlock note cards for each group.</p>';
+      teams = []; currentWsData = {};
+      renderTeams();
+      renderNotes();
+      fbSet('teams', null);
+      fbSet('worksheets', null);
     };
 
-    /* ── CLEAR NAMES — keeps teams intact ──────────────────────── */
-    btnClrNames.onclick = () => { members = []; renderMembers(); };
-  </script>
+    /* ── CLEAR NAMES (keeps teams) ──────────────────────────────── */
+    btnClrNames.onclick = () => {
+      members = [];
+      renderMembers();
+      fbSet('members', null);
+    };
 
+    /* ═══════════════════════════════════════════════════════════
+       FIREBASE LISTENERS — set up last so all functions exist
+    ═══════════════════════════════════════════════════════════ */
+    if (firebaseReady) {
+
+      /* Live connection indicator */
+      db.ref('.info/connected').on('value', snap => {
+        setConnStatus(
+          snap.val() ? 'live' : 'away',
+          snap.val() ? `Live · session: ${SESSION_ID}` : 'Reconnecting…'
+        );
+      });
+
+      /* Members */
+      sessionRef.child('members').on('value', snap => {
+        isRemoteApply = true;
+        const newM = fbArr(snap.val()).map(String);
+        if (JSON.stringify(newM) !== JSON.stringify(members)) {
+          members = newM;
+          renderMembers();
+        }
+        isRemoteApply = false;
+      });
+
+      /* Group count */
+      sessionRef.child('groupCount').on('value', snap => {
+        isRemoteApply = true;
+        const v = snap.val();
+        if (v !== null && v !== groupCount) {
+          groupCount = Math.max(MIN, Math.min(MAX, parseInt(v) || MIN));
+          syncCounter();
+        }
+        isRemoteApply = false;
+      });
+
+      /* Teams */
+      sessionRef.child('teams').on('value', snap => {
+        isRemoteApply = true;
+        const raw = snap.val();
+        const newTeams = raw
+          ? fbArr(raw).map(t => ({ name: String(t.name||''), members: fbArr(t.members).map(String) }))
+          : [];
+
+        if (JSON.stringify(newTeams) === JSON.stringify(teams)) {
+          isRemoteApply = false;
+          return; // nothing changed
+        }
+
+        const wasEmpty   = teams.length === 0;
+        const countDiff  = teams.length !== newTeams.length;
+        teams = newTeams;
+        renderTeams();
+
+        if (wasEmpty || countDiff) {
+          /* Structural change — rebuild worksheets then apply stored data */
+          renderNotes(); // renderNotes already calls applyStoredWorksheetData via setTimeout
+        } else {
+          /* Only names / member order changed — update displays without re-rendering worksheets */
+          updateNotePills();
+          teams.forEach((t, i) => {
+            const nc = notesOut.querySelector(`[data-ni="${i}"] .note-card-name`);
+            if (nc && nc.textContent !== t.name) nc.textContent = t.name;
+          });
+        }
+        isRemoteApply = false;
+      });
+
+      /* Timer */
+      sessionRef.child('timer').on('value', snap => {
+        isRemoteApply = true;
+        const data = snap.val();
+        if (data) {
+          const newDur  = data.duration || 15 * 60;
+          const newRem  = data.remainingAtPause !== undefined ? data.remainingAtPause : newDur;
+          const started = data.startedAt || null;
+
+          /* Skip if our local state is already close to what Firebase says */
+          const remoteNow = started
+            ? Math.max(0, newRem - Math.floor((Date.now() - started) / 1000))
+            : newRem;
+          if (Math.abs(remoteNow - timerRemaining) < 3 &&
+              newDur === timerDuration &&
+              !!started === timerRunning) {
+            isRemoteApply = false;
+            return;
+          }
+
+          timerDuration = newDur;
+          clearInterval(timerInterval);
+          timerRunning = false;
+
+          if (started) {
+            const elapsed = Math.floor((Date.now() - started) / 1000);
+            timerRemaining = Math.max(0, newRem - elapsed);
+            if (timerRemaining > 0) {
+              timerRunning  = true;
+              timerInterval = setInterval(tick, 1000);
+            }
+          } else {
+            timerRemaining = newRem;
+          }
+
+          renderTimer();
+          activePreset = Math.round(newDur / 60);
+          syncPresets();
+        }
+        isRemoteApply = false;
+      });
+
+      /* Worksheets */
+      sessionRef.child('worksheets').on('value', snap => {
+        isRemoteApply = true;
+        const raw = snap.val();
+        if (!raw) {
+          currentWsData = {};
+        } else {
+          currentWsData = {};
+          Object.entries(raw).forEach(([idx, d]) => {
+            if (!d) return;
+            currentWsData[idx] = {
+              ms          : d.ms ? fbArr2d(d.ms) : undefined,
+              rm          : d.rm ? fbArr2d(d.rm) : undefined,
+              da          : d.da ? fbArr2d(d.da) : undefined,
+              noteMs      : d.noteMs,
+              noteRm      : d.noteRm,
+              noteDaFormat: d.noteDaFormat,
+              noteWrap    : d.noteWrap,
+            };
+          });
+          applyStoredWorksheetData();
+        }
+        isRemoteApply = false;
+      });
+    }
+  </script>
 </body>
 </html>
