@@ -65,7 +65,7 @@
     .col-label, .panel-label { font-family:'Inter',sans-serif; font-size:.63rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--crimson); padding-bottom:.7rem; border-bottom:1px solid var(--border); margin-bottom:1rem; }
     .placeholder-msg { font-family:'Inter',sans-serif; font-size:.88rem; color:var(--muted); font-style:italic; padding:1rem 0; }
 
-    /* SLIDE 1 */
+    /* SLIDE 1 — TITLE */
     .slide-title { background:var(--crimson); min-height:100vh; justify-content:center; }
     .slide-title::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(45deg,transparent,transparent 70px,rgba(255,255,255,.018) 70px,rgba(255,255,255,.018) 140px); pointer-events:none; }
     .slide-title .slide-inner { display:flex; flex-direction:column; gap:1.5rem; max-width:900px; }
@@ -74,31 +74,7 @@
     .slide-title h1 { font-size:clamp(3.5rem,9vw,8rem); font-weight:900; line-height:1; letter-spacing:-.03em; color:var(--white); }
     .slide-title .subtitle { font-size:clamp(1rem,2vw,1.3rem); color:rgba(255,255,255,.68); max-width:44ch; }
 
-    /* SLIDE 2 */
-    .slide-content { background:var(--white); }
-    .slide-content .slide-inner { display:flex; flex-direction:column; gap:2.5rem; }
-    .slide-content h2 { font-size:clamp(2rem,4.5vw,3.25rem); font-weight:700; letter-spacing:-.02em; line-height:1.1; color:var(--ink); margin-bottom:.35rem; }
-    .slide-content .subtitle { font-size:clamp(.9rem,1.4vw,1rem); }
-    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
-    .dot-list { list-style:none; display:flex; flex-direction:column; gap:.85rem; }
-    .dot-list li { position:relative; padding-left:1.1rem; font-size:clamp(.85rem,1.1vw,.95rem); line-height:1.65; }
-    .dot-list li::before { content:''; position:absolute; left:0; top:.62em; width:5px; height:5px; border-radius:50%; background:var(--crimson); }
-
-    /* SLIDE 3 */
-    .slide-breakout { background:var(--bg); }
-    .slide-breakout .slide-inner { display:flex; flex-direction:column; gap:2rem; max-width:860px; }
-    .slide-breakout h2 { font-size:clamp(2.5rem,6vw,4.75rem); font-weight:900; letter-spacing:-.03em; line-height:1; color:var(--ink); margin-bottom:.35rem; }
-    .slide-breakout .subtitle { font-size:clamp(1rem,1.6vw,1.1rem); max-width:52ch; }
-    .slide-body { display:flex; flex-direction:column; gap:1.25rem; }
-    .callout { background:var(--crimson-lt); border-left:3px solid var(--crimson); padding:.85rem 1.2rem; border-radius:0 var(--r-s) var(--r-s) 0; font-size:clamp(.88rem,1.3vw,1rem); line-height:1.6; }
-    .task-list { list-style:none; counter-reset:tasks; display:flex; flex-direction:column; gap:.9rem; }
-    .task-list li { display:flex; align-items:flex-start; gap:1rem; counter-increment:tasks; font-size:clamp(.88rem,1.2vw,1rem); line-height:1.6; }
-    .task-list li::before { content:counter(tasks,decimal-leading-zero); flex-shrink:0; width:2.1rem; height:2.1rem; display:flex; align-items:center; justify-content:center; font-family:'Inter',sans-serif; font-size:.62rem; font-weight:700; color:var(--crimson); background:var(--crimson-lt); border:1px solid rgba(164,16,52,.2); border-radius:50%; margin-top:.1em; }
-    .task-list strong { color:var(--crimson); font-weight:600; }
-    .cta { display:inline-flex; align-items:center; gap:.75rem; font-family:'Inter',sans-serif; font-size:.75rem; font-weight:700; letter-spacing:.10em; text-transform:uppercase; color:var(--navy); }
-    .cta::before { content:''; display:block; width:1.5rem; height:2px; background:currentColor; flex-shrink:0; }
-
-    /* SLIDE 4 */
+    /* SLIDE 2 — GROUPS */
     .slide-groups { background:var(--white); }
     .slide-groups .slide-inner { display:flex; flex-direction:column; gap:2.5rem; }
     .slide-groups h2 { font-size:clamp(2rem,4.5vw,3.25rem); font-weight:700; letter-spacing:-.02em; line-height:1.1; color:var(--ink); margin-bottom:.35rem; }
@@ -189,7 +165,7 @@
     .btn-move-to { padding:.16rem .5rem; background:var(--white); border:1px solid var(--border); border-radius:999px; font-family:'Inter',sans-serif; font-size:.65rem; font-weight:600; color:var(--navy); cursor:pointer; transition:all .15s; }
     .btn-move-to:hover { background:var(--navy-lt); border-color:rgba(27,42,74,.3); }
 
-    /* SLIDE 5 */
+    /* SLIDE 3 — WORKSHEET */
     .slide-notes { background:var(--bg); }
     .slide-notes .slide-inner { display:flex; flex-direction:column; gap:2.5rem; }
     .slide-notes h2 { font-size:clamp(2rem,4.5vw,3.25rem); font-weight:700; letter-spacing:-.02em; line-height:1.1; color:var(--ink); margin-bottom:.35rem; }
@@ -236,18 +212,11 @@
       background: rgba(164,16,52,0.07);
       border: 1px solid rgba(164,16,52,0.18);
       border-radius:4px; font-size:.8rem; line-height:1;
-      color: var(--crimson);
-      cursor:pointer;
-      opacity: 0.55;
+      color: var(--crimson); cursor:pointer; opacity: 0.55;
       transition: opacity .15s, color .15s, background .15s, border-color .15s;
     }
     .ws-table tbody tr:hover .btn-del-row { opacity:1; }
-    .btn-del-row:hover {
-      opacity:1;
-      background: var(--crimson);
-      color: var(--white);
-      border-color: var(--crimson);
-    }
+    .btn-del-row:hover { opacity:1; background: var(--crimson); color: var(--white); border-color: var(--crimson); }
     .btn-add-row { align-self:flex-start; padding:.38rem .9rem; background:transparent; border:1px dashed var(--border-dk); border-radius:var(--r-s); font-family:'Inter',sans-serif; font-size:.72rem; font-weight:600; color:var(--muted); cursor:pointer; transition:all .15s; }
     .btn-add-row:hover { color:var(--crimson); border-color:var(--crimson); border-style:solid; background:var(--crimson-lt); }
     .ws-notes-block { display:flex; flex-direction:column; gap:.4rem; }
@@ -261,7 +230,7 @@
     .ws-section--final .ws-section-title { color:var(--navy); }
 
     @media (max-width:960px) { .groups-layout { grid-template-columns:1fr; } }
-    @media (max-width:768px) { .two-col { grid-template-columns:1fr; gap:2rem; } .nav-label { display:none; } .timer-widget { grid-template-columns:1fr; gap:1.25rem; } }
+    @media (max-width:768px) { .nav-label { display:none; } .timer-widget { grid-template-columns:1fr; gap:1.25rem; } }
     @media (max-width:480px) { :root { --px:1.25rem; --py:2.5rem; } .note-card { padding:1.25rem; } }
   </style>
 </head>
@@ -271,10 +240,8 @@
     <div class="nav-inner">
       <ul>
         <li><a href="#slide1"><span class="nav-n">01</span> <span class="nav-label">Discussion Topic</span></a></li>
-        <li><a href="#slide2"><span class="nav-n">02</span> <span class="nav-label">Debriefs &amp; Reporting</span></a></li>
-        <li><a href="#slide3"><span class="nav-n">03</span> <span class="nav-label">Breakout</span></a></li>
-        <li><a href="#slide4"><span class="nav-n">04</span> <span class="nav-label">Groups</span></a></li>
-        <li><a href="#slide5"><span class="nav-n">05</span> <span class="nav-label">Worksheet</span></a></li>
+        <li><a href="#slide2"><span class="nav-n">02</span> <span class="nav-label">Groups</span></a></li>
+        <li><a href="#slide3"><span class="nav-n">03</span> <span class="nav-label">Worksheet</span></a></li>
       </ul>
       <div class="nav-sync">
         <span id="conn-dot" class="conn-dot local" title="Connecting..."></span>
@@ -285,7 +252,8 @@
 
   <main>
 
-    <section id="slide1" class="slide slide-title" aria-label="Slide 1 of 5">
+    <!-- SLIDE 1 · TITLE -->
+    <section id="slide1" class="slide slide-title" aria-label="Slide 1 of 3">
       <div class="slide-inner">
         <p class="eyebrow">Discussion Topic</p>
         <h1>Debriefs &amp;<br>Reporting</h1>
@@ -294,58 +262,8 @@
       <span class="ghost-num" aria-hidden="true">01</span>
     </section>
 
-    <section id="slide2" class="slide slide-content" aria-label="Slide 2 of 5">
-      <div class="slide-inner">
-        <header>
-          <span class="chip">03</span>
-          <h2>Debriefs &amp; Reporting</h2>
-          <p class="subtitle">Where are we, where are we going?</p>
-        </header>
-        <div class="two-col">
-          <div>
-            <h3 class="col-label">Where We Are</h3>
-            <ul class="dot-list">
-              <li>Detailed post-program debriefs used to happen for PGME certificate programs and HMX.</li>
-              <li>Learnings from campaigns, recruitment, and creative aren't reliably feeding the next cycle.</li>
-              <li>Reporting is fragmented across program portfolios, the funnel, and creative — each group sees a different slice.</li>
-              <li>We have data — the gap is shared definitions, cadence, and what we actually act on together.</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="col-label">Discussion Prompts</h3>
-            <ul class="dot-list">
-              <li>What 3–5 metrics matter across our team — and which are unique to Program Marketing, AES, and Marketing Services?</li>
-              <li>What should debriefs look like moving forward — campaign, funnel, and creative in the same room — and who owns it?</li>
-              <li>How do we make reporting drive the next decision, not just describe the last cycle?</li>
-              <li>What should our reporting cadence look like a year from now?</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <span class="ghost-num" aria-hidden="true">02</span>
-    </section>
-
-    <section id="slide3" class="slide slide-breakout" aria-label="Slide 3 of 5">
-      <div class="slide-inner">
-        <header>
-          <span class="chip chip--navy">15 Min</span>
-          <h2>Breakout</h2>
-          <p class="subtitle">Design a reporting and debrief cadence — end to end</p>
-        </header>
-        <div class="slide-body">
-          <p class="callout">In small groups, pick one program or course you know well.</p>
-          <ol class="task-list">
-            <li>Sketch a <strong>launch, check-in, reporting, and debrief cadence</strong> — who meets, when, and what gets reviewed.</li>
-            <li>List the <strong>3–5 metrics</strong> you'd report on, spanning campaign, funnel, and creative.</li>
-            <li>Name the <strong>one decision</strong> each debrief should drive.</li>
-          </ol>
-          <p class="cta">Be ready to walk the room through your cadence, metrics, and decisions.</p>
-        </div>
-      </div>
-      <span class="ghost-num" aria-hidden="true">03</span>
-    </section>
-
-    <section id="slide4" class="slide slide-groups" aria-label="Slide 4 of 5">
+    <!-- SLIDE 2 · GROUPS -->
+    <section id="slide2" class="slide slide-groups" aria-label="Slide 2 of 3">
       <div class="slide-inner">
         <header>
           <span class="chip">Groups</span>
@@ -412,10 +330,11 @@
           </div>
         </div>
       </div>
-      <span class="ghost-num" aria-hidden="true">04</span>
+      <span class="ghost-num" aria-hidden="true">02</span>
     </section>
 
-    <section id="slide5" class="slide slide-notes" aria-label="Slide 5 of 5">
+    <!-- SLIDE 3 · WORKSHEET -->
+    <section id="slide3" class="slide slide-notes" aria-label="Slide 3 of 3">
       <div class="slide-inner">
         <header>
           <span class="chip chip--navy">Worksheet</span>
@@ -426,7 +345,7 @@
           <p class="placeholder-msg">Generate teams first to unlock a worksheet for each group.</p>
         </div>
       </div>
-      <span class="ghost-num" aria-hidden="true">05</span>
+      <span class="ghost-num" aria-hidden="true">03</span>
     </section>
 
   </main>
@@ -434,8 +353,6 @@
   <script>
     /* ================================================================
        FIREBASE CONFIG
-       Replace the values below with your own from the Firebase console
-       Project Settings > Your Apps > SDK setup and configuration
     ================================================================ */
     var FIREBASE_CONFIG = {
       apiKey:            "AIzaSyACXjiJHBKLGDF-VDbjQkg4v_HYh1hW_VE",
@@ -447,7 +364,6 @@
       appId:             "1:4438721929:web:4f7c2a6822c75afad4cd58"
     };
 
-    /* Session — add ?session=name to URL to isolate workshops */
     var SESSION_ID = new URLSearchParams(location.search).get('session') || 'default';
 
     var db = null;
@@ -611,13 +527,13 @@
 
     /* ── DOM REFS ───────────────────────────────────────────── */
     function _(id) { return document.getElementById(id); }
-    var nameInput   = _('name-input'),   btnAdd      = _('btn-add'),
-        memberList  = _('members-list'), btnDown     = _('btn-down'),
-        btnUp       = _('btn-up'),       grpCount    = _('grp-count'),
-        btnGen      = _('btn-generate'), btnClrTeams = _('btn-clear-teams'),
-        btnClrNames = _('btn-clear-names'), teamsOut = _('teams-out'),
-        notesOut    = _('notes-out'),    timerDisp   = _('timer-display'),
-        timerBar    = _('timer-bar'),    timerCustom = _('timer-custom'),
+    var nameInput   = _('name-input'),    btnAdd      = _('btn-add'),
+        memberList  = _('members-list'),  btnDown     = _('btn-down'),
+        btnUp       = _('btn-up'),        grpCount    = _('grp-count'),
+        btnGen      = _('btn-generate'),  btnClrTeams = _('btn-clear-teams'),
+        btnClrNames = _('btn-clear-names'), teamsOut  = _('teams-out'),
+        notesOut    = _('notes-out'),     timerDisp   = _('timer-display'),
+        timerBar    = _('timer-bar'),     timerCustom = _('timer-custom'),
         btnTimerSet = _('btn-timer-set'), btnTimerPly = _('btn-timer-play'),
         btnTimerRst = _('btn-timer-reset');
 
