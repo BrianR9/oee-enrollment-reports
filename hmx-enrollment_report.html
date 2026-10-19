@@ -1,440 +1,415 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enrollment Funnel Analysis - Week 6</title>
+    <title>HMX Performance Analysis - January FY2027</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
-
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f8f9fa;
-        }
-
-        .header {
-            background-color: #A51C30;
-            color: white;
-            padding: 2rem 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .header h1 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.5px;
-        }
-
-        .header .subtitle {
-            font-size: 1.1rem;
-            font-weight: 300;
-            opacity: 0.95;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .section {
-            background: white;
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 3px solid #A51C30;
-        }
-
-        .comparison-intro {
-            background: #f8f9fa;
-            border-left: 4px solid #A51C30;
-            padding: 1rem 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 4px;
-        }
-
-        .comparison-intro p {
-            margin: 0;
-            font-size: 1rem;
-            color: #555;
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            font-size: 0.95rem;
-        }
-
-        .comparison-table thead {
-            background-color: #2c3e50;
-            color: white;
-        }
-
-        .comparison-table th {
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-        }
-
-        .comparison-table td {
-            padding: 0.875rem 1rem;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        .comparison-table tbody tr:hover {
-            background-color: #f8f9fa;
-            transition: background-color 0.2s ease;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 0.375rem 0.75rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .status-green {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .status-yellow {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-
-        .status-orange {
-            background-color: #ffe5cc;
-            color: #8b4513;
-        }
-
-        .status-red {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
-        .metric-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-            margin: 1.5rem 0;
-        }
-
-        .metric-box .label {
-            font-size: 0.9rem;
-            font-weight: 400;
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .metric-box .value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-top: 0.5rem;
-        }
-
-        .chart-container {
-            background: white;
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .chart-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 1rem;
-        }
-
-        .footer {
-            background-color: #2c3e50;
-            color: white;
-            padding: 2rem 0;
-            margin-top: 3rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .footer p {
-            margin: 0.5rem 0;
-            opacity: 0.8;
-        }
-
-        .footer a {
-            color: #A51C30;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.5rem;
-            }
-
-            .container {
-                padding: 1rem;
-            }
-
-            .section {
-                padding: 1.5rem;
-            }
-
-            .comparison-table {
-                font-size: 0.85rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.5rem;
-            }
-        }
-
-        /* Performance indicators */
-        .perf-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-
-        .perf-green { background-color: #28a745; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
+                line-height: 1.6; color: #333; background-color: #f8f9fa; }
+        .header { background-color: #A51C30; color: white; padding: 2rem 0;
+                   box-shadow: 0 2px 4px rgba(0,0,0,.1); }
+        .header-content { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+        .header h1 { font-size: 2rem; font-weight: 600; margin-bottom: .5rem; letter-spacing: -.5px; }
+        .header .subtitle { font-size: 1.1rem; font-weight: 300; opacity: .95; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+                     gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-card { background: white; border-radius: 8px; padding: 1.5rem;
+                     box-shadow: 0 2px 8px rgba(0,0,0,.1); border-top: 4px solid #A51C30;
+                     transition: transform .2s ease, box-shadow .2s ease; }
+        .kpi-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+        .kpi-card .kpi-label { font-size: .85rem; text-transform: uppercase; letter-spacing: 1px;
+                                 color: #666; font-weight: 600; margin-bottom: .5rem; }
+        .kpi-card .kpi-value { font-size: 2.25rem; font-weight: 700; color: #2c3e50;
+                                 margin-bottom: .5rem; font-variant-numeric: tabular-nums; }
+        .kpi-card .kpi-subtext { font-size: .9rem; color: #666; }
+        .kpi-card .kpi-change { display: inline-block; padding: .25rem .75rem; border-radius: 20px;
+                                  font-weight: 600; font-size: .85rem; margin-top: .5rem; }
+        .kpi-change.positive { background-color: #d4edda; color: #155724; }
+        .kpi-change.negative { background-color: #f8d7da; color: #721c24; }
+        .kpi-change.neutral  { background-color: #e9ecef; color: #495057; }
+        .kpi-card.projection-card { border-top-color: #FF6B35; }
+        .kpi-card.projection-card .kpi-value { color: #FF6B35; }
+        .section { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem;
+                    box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+        .section-title { font-size: 1.5rem; font-weight: 600; color: #2c3e50; margin-bottom: 1.5rem;
+                           padding-bottom: .75rem; border-bottom: 3px solid #A51C30; }
+        .comparison-intro { background: #f8f9fa; border-left: 4px solid #A51C30;
+                              padding: 1rem 1.5rem; margin-bottom: 1.5rem; border-radius: 4px; }
+        .comparison-intro p { margin: 0; font-size: 1rem; color: #555; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: .95rem; }
+        .comparison-table thead { background-color: #2c3e50; color: white; }
+        .comparison-table th { padding: 1rem; text-align: left; font-weight: 600;
+                                 text-transform: uppercase; font-size: .85rem; letter-spacing: .5px; }
+        .comparison-table td { padding: .875rem 1rem; border-bottom: 1px solid #e9ecef; }
+        .comparison-table tbody tr:hover { background-color: #f8f9fa; }
+        .comparison-table tbody tr:nth-child(even) { background-color: #fdfdfd; }
+        .status-badge { display: inline-block; padding: .375rem .75rem; border-radius: 20px;
+                          font-weight: 600; font-size: .85rem; text-transform: uppercase; letter-spacing: .5px; }
+        .status-green  { background-color: #d4edda; color: #155724; }
+        .status-yellow { background-color: #fff3cd; color: #856404; }
+        .status-orange { background-color: #ffe5cc; color: #8b4513; }
+        .status-red    { background-color: #f8d7da; color: #721c24; }
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+                          gap: 1.5rem; margin: 1.5rem 0; }
+        .metric-box { background: linear-gradient(135deg,#667eea 0%,#764ba2 100%); color: white;
+                        padding: 1.5rem; border-radius: 8px; text-align: center; }
+        .metric-box.revenue { background: linear-gradient(135deg,#2ECC40 0%,#0d8a29 100%); }
+        .metric-box .label { font-size: .9rem; opacity: .9; text-transform: uppercase; letter-spacing: 1px; }
+        .metric-box .value { font-size: 2rem; font-weight: 700; margin-top: .5rem; }
+        .chart-container { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem;
+                             box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+        .chart-title { font-size: 1.25rem; font-weight: 600; color: #2c3e50; margin-bottom: .5rem; }
+        .chart-legend-note { font-size: .85rem; color: #666; margin-bottom: 1rem;
+                               padding: .5rem .75rem; background: #f8f9fa;
+                               border-radius: 4px; border-left: 3px solid #dee2e6; }
+        .goal-progress-wrap { margin: 1rem 0; }
+        .goal-progress-label { display: flex; justify-content: space-between;
+                                  font-size: .85rem; color: #555; margin-bottom: .35rem; }
+        .goal-bar-track { background: #e9ecef; border-radius: 8px; height: 18px; overflow: hidden; }
+        .goal-bar-fill { height: 100%; border-radius: 8px; transition: width .6s ease;
+                           display: flex; align-items: center; justify-content: flex-end;
+                           padding-right: 8px; font-size: .75rem; font-weight: 700; color: white; }
+        .divider { border-top: 3px solid #A51C30; margin: 3rem 0; }
+        .footer { background-color: #2c3e50; color: white; padding: 2rem 0;
+                   margin-top: 3rem; text-align: center; }
+        .footer-content { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+        .footer p { margin: .5rem 0; opacity: .8; }
+        .perf-indicator { display: inline-block; width: 12px; height: 12px;
+                            border-radius: 50%; margin-right: 8px; }
+        .perf-green  { background-color: #28a745; }
         .perf-yellow { background-color: #ffc107; }
         .perf-orange { background-color: #ff8c00; }
-        .perf-red { background-color: #dc3545; }
-
-        /* Number formatting */
-        .number {
-            font-variant-numeric: tabular-nums;
-            font-weight: 600;
-        }
-
-        .percentage {
-            font-weight: 700;
+        .perf-red    { background-color: #dc3545; }
+        .number     { font-variant-numeric: tabular-nums; font-weight: 600; }
+        .percentage { font-weight: 700; }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.5rem; }
+            .container  { padding: 1rem; }
+            .section    { padding: 1.5rem; }
+            .kpi-grid   { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-content">
-            <h1>Enrollment Funnel Analysis</h1>
-            <p class="subtitle">Performance Analysis: December 2026–December 2026 | Report Date: October 19, 2026</p>
+
+<div class="header">
+    <div class="header-content">
+        <h1>HMX Course Performance Analysis</h1>
+        <p class="subtitle">January FY2027 Offering | Report Date: October 19, 2026</p>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- ── TOP KPI DASHBOARD ──────────────────────────────────────────── -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-label">Current Year-to-Date</div>
+            <div class="kpi-value">$907,298</div>
+            <div class="kpi-subtext">FY2027 through January</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">vs Annual Goal</div>
+            <div class="kpi-value">47.8%</div>
+            <div class="kpi-subtext">Goal: $1,900,000</div>
+            <span class="kpi-change neutral">
+                $-992,702 remaining
+            </span>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">vs Last Year</div>
+            <div class="kpi-value">↓56.9%</div>
+            <div class="kpi-subtext">LY: $2,106,476</div>
+            <span class="kpi-change negative">
+                $-1,199,178 below
+            </span>
+        </div>
+        <!-- ── Projected Year-End KPI card: hidden per request ── -->
+        <div class="kpi-card" style="display:none;">
+            <div class="kpi-label">Projected Year-End</div>
+            <div class="kpi-value">$907,298</div>
+            <div class="kpi-subtext">Based on FY26 pattern (100.0% complete at this point)</div>
+            <span class="kpi-change negative">
+                Below goal
+            </span>
         </div>
     </div>
 
-    <div class="container">
-        <div class="section">
-            <h2 class="section-title">Performance Summary: Week 6</h2>
+    <!-- ── GAUGE ─────────────────────────────────────────────────────── -->
+    <div class="chart-container">
+        <h3 class="chart-title">FY2027 Revenue Progress to Goal</h3>
+        <div id="gauge-chart" style="height:400px; width:100%;"></div>
+    </div>
 
-            <div class="comparison-intro">
-                <p><strong>December 2026 Performance at 6 Weeks Out</strong> compared to historical average (all previous periods)</p>
-            </div>
+    <!-- ── MONTHLY BAR CHART ──────────────────────────────────────────── -->
+    <div class="chart-container">
+        <h3 class="chart-title">Monthly Revenue Comparison Across Fiscal Years</h3>
+        <div id="bar-chart" style="height:500px; width:100%;"></div>
+    </div>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Stage</th>
-                        <th style="text-align: center;">December 2026 Value</th>
-                        <th style="text-align: center;">Historical Avg</th>
-                        <th style="text-align: center;">Performance</th>
-                        <th style="text-align: center;">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
+    <div class="divider"></div>
 
-                    <tr>
-                        <td><span class="perf-indicator perf-orange"></span><strong>Interests</strong></td>
-                        <td style="text-align: center;"><span class="number">288</span></td>
-                        <td style="text-align: center;"><span class="number">483.0</span></td>
-                        <td style="text-align: center;"><span class="percentage">59.6%</span></td>
-                        <td style="text-align: center;"><span class="status-badge status-orange">Orange</span></td>
-                    </tr>
+    <!-- ── COURSE PERFORMANCE ─────────────────────────────────────────── -->
+    <div class="section">
+        <h2 class="section-title">Course Performance Summary: Week 12</h2>
+        <div class="comparison-intro">
+            <p><strong>January FY2027 at 12 Weeks Out</strong>
+               compared to historical average of all other offerings</p>
+        </div>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th style="text-align:center;">Current Value</th>
+                    <th style="text-align:center;">Historical Avg</th>
+                    <th style="text-align:center;">Performance</th>
+                    <th style="text-align:center;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
 
-                    <tr>
-                        <td><span class="perf-indicator perf-red"></span><strong>Abandons</strong></td>
-                        <td style="text-align: center;"><span class="number">209</span></td>
-                        <td style="text-align: center;"><span class="number">1,376.3</span></td>
-                        <td style="text-align: center;"><span class="percentage">15.2%</span></td>
-                        <td style="text-align: center;"><span class="status-badge status-red">Red</span></td>
-                    </tr>
-
-                    <tr>
-                        <td><span class="perf-indicator perf-red"></span><strong>Submits</strong></td>
-                        <td style="text-align: center;"><span class="number">45</span></td>
-                        <td style="text-align: center;"><span class="number">117.0</span></td>
-                        <td style="text-align: center;"><span class="percentage">38.5%</span></td>
-                        <td style="text-align: center;"><span class="status-badge status-red">Red</span></td>
-                    </tr>
-
-                    <tr>
-                        <td><span class="perf-indicator perf-red"></span><strong>Expect</strong></td>
-                        <td style="text-align: center;"><span class="number">44</span></td>
-                        <td style="text-align: center;"><span class="number">126.0</span></td>
-                        <td style="text-align: center;"><span class="percentage">34.9%</span></td>
-                        <td style="text-align: center;"><span class="status-badge status-red">Red</span></td>
-                    </tr>
-
-                </tbody>
-            </table>
-
+                <tr>
+                    <td><span class="perf-indicator perf-green"></span><strong>Enrollments</strong></td>
+                    <td style="text-align:center;"><span class="number">87</span></td>
+                    <td style="text-align:center;"><span class="number">22</span></td>
+                    <td style="text-align:center;"><span class="percentage">402.8%</span></td>
+                    <td style="text-align:center;"><span class="status-badge status-green">Green</span></td>
+                </tr>
+                <tr>
+                    <td><span class="perf-indicator perf-green"></span><strong>Revenue</strong></td>
+                    <td style="text-align:center;"><span class="number">$64,882.00</span></td>
+                    <td style="text-align:center;"><span class="number">$17,963.60</span></td>
+                    <td style="text-align:center;"><span class="percentage">361.2%</span></td>
+                    <td style="text-align:center;"><span class="status-badge status-green">Green</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="metrics-grid">
             <div class="metric-box">
-                <div class="label">Historical Average Final Expected Enrollment</div>
-                <div class="value">180</div>
+                <div class="label">Historical Avg Final Enrollment</div>
+                <div class="value">396</div>
+            </div>
+            <div class="metric-box revenue">
+                <div class="label">Historical Avg Final Revenue</div>
+                <div class="value">$332,853</div>
             </div>
         </div>
-
-        <div class="chart-container">
-            <h3 class="chart-title">Submits & Expected Enrollment Trends</h3>
-            <div id="chart1" style="height:600px; width:100%;"></div>
-        </div>
-
-        <div class="chart-container">
-            <h3 class="chart-title">Interests & Abandons Trends</h3>
-            <div id="chart2" style="height:600px; width:100%;"></div>
-        </div>
-
     </div>
 
-    <div class="footer">
-        <div class="footer-content">
-            <p><strong>Enrollment Funnel Analysis Report</strong></p>
-            <p>Generated on October 19, 2026 at 01:11 PM</p>
+    <!-- ── ENROLLMENT TRENDS ──────────────────────────────────────────── -->
+    <div class="chart-container">
+        <h3 class="chart-title">Enrollment Trends by Course Offering</h3>
+        <div id="chart1" style="height:600px; width:100%;"></div>
+    </div>
+
+    <!-- ── REVENUE TRENDS ────────────────────────────────────────────── -->
+    <div class="chart-container">
+        <h3 class="chart-title">Revenue Trends by Course Offering</h3>
+        <div id="chart2" style="height:600px; width:100%;"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ── FISCAL YEAR TRENDS ─────────────────────────────────────────── -->
+    <div class="section">
+        <h2 class="section-title">Fiscal Year Revenue Trends</h2>
+        <div class="comparison-intro">
+            <p><strong>Year-over-Year Revenue Trends</strong> – cumulative fiscal year totals</p>
+        </div>
+    </div>
+    <div class="chart-container">
+        <h3 class="chart-title">Cumulative Fiscal Year Revenue</h3>
+        <div id="chart3" style="height:600px; width:100%;"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <!--  FY2027 SHORT COURSE PERFORMANCE                     -->
+    <!--  (Uses its own fiscal year — sc_fiscal_year — which should      -->
+    <!--   match current_fiscal_year unless intentionally decoupled.)    -->
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <h2 class="section-title">FY2027 Short Course Performance</h2>
+        <div class="comparison-intro">
+            <p>
+                Running cumulative totals updated at each snapshot date.
+                The original FY2027 revenue goal of
+                <strong>$300,000</strong> is in progress;
+                the reforecast target is <strong>$350,000</strong>.
+                The revenue chart includes an <strong>OLS linear trend projection</strong>
+                extending to <strong>June 30, 2027</strong> (fiscal year end).
+                Data current as of <strong>October 19, 2026</strong>.
+            </p>
+        </div>
+
+        <!-- Progress bars -->
+        <div style="max-width:700px; margin:1.5rem 0;">
+            <div class="goal-progress-wrap">
+                <div class="goal-progress-label">
+                    <span>Original Goal — $300,000</span>
+                    <span style="color:#856404; font-weight:700;">43.0% Complete</span>
+                </div>
+                <div class="goal-bar-track">
+                    <div class="goal-bar-fill" style="width:43.0%; background:#FF851B;">
+                        43.0%
+                    </div>
+                </div>
+            </div>
+            <div class="goal-progress-wrap" style="margin-top:1rem;">
+                <div class="goal-progress-label">
+                    <span>Reforecast Goal — $350,000</span>
+                    <span>36.9%</span>
+                </div>
+                <div class="goal-bar-track">
+                    <div class="goal-bar-fill"
+                         style="width:36.9%;
+                                background:#FF851B;">
+                        36.9%
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script src="https://cdn.plot.ly/plotly-2.4.1.min.js"></script>
-    <script>
+    <!-- SC KPI Cards -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-label">Cumulative Enrollments</div>
+            <div class="kpi-value">300</div>
+            <div class="kpi-subtext">As of October 19, 2026</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Cumulative Revenue</div>
+            <div class="kpi-value">$129,021</div>
+            <div class="kpi-subtext">As of October 19, 2026</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Original Goal — $300,000</div>
+            <div class="kpi-value" style="color:#856404;">43.0%</div>
+            <div class="kpi-subtext">$170,979 remaining</div>
+            <span class="kpi-change negative">$170,979 below original</span>
+        </div>
+        <!-- ── Short Course Reforecast Goal KPI card: hidden per request ── -->
+        <div class="kpi-card" style="display:none;">
+            <div class="kpi-label">Reforecast Goal — $350,000</div>
+            <div class="kpi-value">36.9%</div>
+            <div class="kpi-subtext">Progress to reforecast target</div>
+            <span class="kpi-change neutral">$220,979 remaining</span>
+        </div>
+        <div class="kpi-card projection-card">
+            <div class="kpi-label">&#9733; Projected June 30 Revenue</div>
+            <div class="kpi-value">$480,946</div>
+            <div class="kpi-subtext">OLS linear trend to Jun 30, 2027</div>
+            <span class="kpi-change positive">$130,946 above reforecast</span>
+        </div>
+    </div>
 
-        Plotly.newPlot("chart1", [{"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN], "mode": "lines+markers+text", "name": "Submits June 2025", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "June 2025 Submits"], "textposition": "top right", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [NaN, NaN, NaN, NaN, NaN, 86.0, 113.0, 117.0, 132.0, 140.0, 156.0, 164.0, 167.0, 167.0], "mode": "lines+markers+text", "name": "Submits June 2026", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "June 2026 Submits"], "textposition": "bottom right", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN], "mode": "lines+markers+text", "name": "Submits November 2024", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "November 2024 Submits"], "textposition": "middle right", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [9, 8, 7, 6], "y": [4.0, 10.0, 29.0, 45.0], "mode": "lines+markers+text", "name": "Submits December 2026", "line": {"color": "#0074D9", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "December 2026 Submits"], "textposition": "bottom center", "textfont": {"color": "#0074D9", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [26, 29, 34, 48, 55, 65, 85, 127, 136, 147, 159, 168, 194, 225], "mode": "lines+markers+text", "name": "Expect June 2025", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "June 2025 Expect"], "textposition": "top right", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [33, 36, 38, 43, 52, 78, 102, 106, 121, 128, 143, 151, 154, 154], "mode": "lines+markers+text", "name": "Expect June 2026", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "June 2026 Expect"], "textposition": "bottom right", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [62, 64, 68, 80, 107, 131, 135, 145, 158, 161, 168, 177, 192, 225], "mode": "lines+markers+text", "name": "Expect November 2024", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "November 2024 Expect"], "textposition": "middle right", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [9, 8, 7, 6], "y": [3, 10, 28, 44], "mode": "lines+markers+text", "name": "Expect December 2026", "line": {"color": "#FF851B", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "December 2026 Expect"], "textposition": "bottom center", "textfont": {"color": "#FF851B", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}], {
-            "title": {"text": ""},
-            "xaxis": {
-                "autorange": "reversed",
-                "title": {"text": "Weeks Out (Countdown to 1)", "font": {"size": 14}},
-                "gridcolor": "#e9ecef"
-            },
-            "yaxis": {
-                "gridcolor": "#e9ecef",
-                "title": {"text": "Count", "font": {"size": 14}}
-            },
-            "hovermode": "x unified",
-            "plot_bgcolor": "#f8f9fa",
-            "paper_bgcolor": "white",
-            "legend": {
-                "title": {"text": "Stage & Period", "font": {"size": 12}},
-                "font": {"size": 11}
-            },
-            "shapes": [{
-                "line": {"color": "#A51C30", "dash": "dash", "width": 2},
-                "type": "line",
-                "x0": 6,
-                "x1": 6,
-                "xref": "x",
-                "y0": 0,
-                "y1": 1,
-                "yref": "y domain"
-            }],
-            "annotations": [{
-                "showarrow": false,
-                "text": "6 Weeks Out",
-                "x": 6,
-                "xanchor": "right",
-                "xref": "x",
-                "y": 1,
-                "yanchor": "top",
-                "yref": "y domain",
-                "font": {"color": "#A51C30", "size": 12, "weight": "bold"}
-            }]
-        }, {"responsive": true});
+    <!-- SC Revenue Chart -->
+    <div class="chart-container">
+        <h3 class="chart-title">Cumulative Short Course Revenue — FY2027</h3>
+        <p class="chart-legend-note">
+            &#9135;&#9135; Green dotted = original goal ($300,000)
+            &nbsp;&bull;&nbsp;
+            &#9135;&#9135; Orange dashed = reforecast goal ($350,000)
+            &nbsp;&bull;&nbsp;
+            &#9135;&#9135; Gray dashed = OLS trend fit over actual data
+            &nbsp;&bull;&nbsp;
+            &#8901;&#8901;&#8901; Orange dotted + &#9733; = linear projection to June 30, 2027
+        </p>
+        <div id="sc-revenue-chart" style="height:520px; width:100%;"></div>
+    </div>
 
-        Plotly.newPlot("chart2", [{"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN], "mode": "lines+markers+text", "name": "Interests June 2025", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "June 2025 Interests"], "textposition": "top right", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [NaN, NaN, NaN, 441.0, 462.0, 470.0, 476.0, 483.0, 494.0, 506.0, 519.0, 528.0, 541.0, 552.0], "mode": "lines+markers+text", "name": "Interests June 2026", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "June 2026 Interests"], "textposition": "bottom right", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN], "mode": "lines+markers+text", "name": "Interests November 2024", "line": {"color": "#8e44ad", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "November 2024 Interests"], "textposition": "middle right", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [9, 8, 7, 6], "y": [50.0, 148.0, 234.0, 288.0], "mode": "lines+markers+text", "name": "Interests December 2026", "line": {"color": "#8e44ad", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "December 2026 Interests"], "textposition": "bottom center", "textfont": {"color": "#8e44ad", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [300, 347, 474, 781, 1196, 1553, 1981, 2405, 2719, 3347, 3904, 4424, 4843, 4843], "mode": "lines+markers+text", "name": "Abandons June 2025", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "June 2025 Abandons"], "textposition": "top right", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [108, 122, 136, 163, 206, 253, 318, 333, 390, 418, 496, 517, 622, 733], "mode": "lines+markers+text", "name": "Abandons June 2026", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "June 2026 Abandons"], "textposition": "bottom right", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [703, 703, 703, 703, 703, 1219, 1318, 1391, 1447, 1522, 1643, 1744, 1845, 1845], "mode": "lines+markers+text", "name": "Abandons November 2024", "line": {"color": "#e74c3c", "width": 2}, "marker": {"size": 8, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "November 2024 Abandons"], "textposition": "middle right", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}, {"x": [9, 8, 7, 6], "y": [33, 98, 159, 209], "mode": "lines+markers+text", "name": "Abandons December 2026", "line": {"color": "#e74c3c", "width": 4}, "marker": {"size": 12, "symbol": "star"}, "text": ["", "", "", "December 2026 Abandons"], "textposition": "bottom center", "textfont": {"color": "#e74c3c", "size": 12}, "hovertemplate": "<b>%{text}</b><br>Weeks Out: %{x}<br>Value: %{y}<extra></extra>"}], {
-            "title": {"text": ""},
-            "xaxis": {
-                "autorange": "reversed",
-                "title": {"text": "Weeks Out (Countdown to 1)", "font": {"size": 14}},
-                "gridcolor": "#e9ecef"
-            },
-            "yaxis": {
-                "gridcolor": "#e9ecef",
-                "title": {"text": "Count", "font": {"size": 14}}
-            },
-            "hovermode": "x unified",
-            "plot_bgcolor": "#f8f9fa",
-            "paper_bgcolor": "white",
-            "legend": {
-                "title": {"text": "Stage & Period", "font": {"size": 12}},
-                "font": {"size": 11}
-            },
-            "shapes": [{
-                "line": {"color": "#A51C30", "dash": "dash", "width": 2},
-                "type": "line",
-                "x0": 6,
-                "x1": 6,
-                "xref": "x",
-                "y0": 0,
-                "y1": 1,
-                "yref": "y domain"
-            }],
-            "annotations": [{
-                "showarrow": false,
-                "text": "6 Weeks Out",
-                "x": 6,
-                "xanchor": "right",
-                "xref": "x",
-                "y": 1,
-                "yanchor": "top",
-                "yref": "y domain",
-                "font": {"color": "#A51C30", "size": 12, "weight": "bold"}
-            }]
-        }, {"responsive": true});
+    <!-- SC Enrollment Chart -->
+    <div class="chart-container">
+        <h3 class="chart-title">Cumulative Short Course Enrollments — FY2027</h3>
+        <div id="sc-enroll-chart" style="height:450px; width:100%;"></div>
+    </div>
 
-    </script>
+</div><!-- /.container -->
+
+<div class="footer">
+    <div class="footer-content">
+        <p><strong>HMX Course Performance &amp; Fiscal Year Analysis Report</strong></p>
+        <p>Generated on October 19, 2026 at 01:12 PM</p>
+    </div>
+</div>
+
+<script src="https://cdn.plot.ly/plotly-2.4.1.min.js"></script>
+<script>
+
+    // ── Gauge ──────────────────────────────────────────────────────────────
+    Plotly.newPlot("gauge-chart", [{"type": "indicator", "mode": "gauge+number+delta", "value": 907298.0, "title": {"text": "FY2027 Revenue Progress", "font": {"size": 24}}, "delta": {"reference": 1900000, "increasing": {"color": "#2ECC40"}}, "gauge": {"axis": {"range": [null, 1900000], "tickformat": "$,.0f"}, "bar": {"color": "#A51C30"}, "steps": [{"range": [0, 950000.0], "color": "#f8d7da"}, {"range": [950000.0, 1425000.0], "color": "#fff3cd"}, {"range": [1425000.0, 1900000], "color": "#d4edda"}], "threshold": {"line": {"color": "#2c3e50", "width": 4}, "thickness": 0.75, "value": 1900000}}}], {
+        "height": 400, "margin": {"t": 50, "r": 50, "l": 50, "b": 50}
+    }, {"responsive": true});
+
+    // ── Monthly Revenue Bar Chart ──────────────────────────────────────────
+    Plotly.newPlot("bar-chart", [{"x": ["July", "August", "September", "January", "March", "April", "June"], "y": [0.0, 0.0, 821834.0, 806826.0, 0.0, 679217.0, 512051.0], "name": "FY24", "type": "bar", "marker": {"color": "#0074D9"}, "hovertemplate": "<b>FY24</b><br>Month: %{x}<br>Revenue: $%{y:,.0f}<extra></extra>"}, {"x": ["July", "August", "September", "January", "March", "April", "June"], "y": [0.0, 0.0, 791364.0, 868848.0, 0.0, 657275.0, 508068.0], "name": "FY25", "type": "bar", "marker": {"color": "#2ECC40"}, "hovertemplate": "<b>FY25</b><br>Month: %{x}<br>Revenue: $%{y:,.0f}<extra></extra>"}, {"x": ["July", "August", "September", "January", "March", "April", "June"], "y": [0.0, 0.0, 618622.0, 593702.0, 249124.0, 300170.0, 316460.0], "name": "FY26", "type": "bar", "marker": {"color": "#FF851B"}, "hovertemplate": "<b>FY26</b><br>Month: %{x}<br>Revenue: $%{y:,.0f}<extra></extra>"}, {"x": ["July", "August", "September", "January", "March", "April", "June"], "y": [249511.0, 0.0, 294186.0, 64882.0, 0.0, 4100.0, 0.0], "name": "FY27", "type": "bar", "marker": {"color": "#B10DC9"}, "hovertemplate": "<b>FY27</b><br>Month: %{x}<br>Revenue: $%{y:,.0f}<extra></extra>"}], {
+        "xaxis": {"title": {"text": "Month",        "font": {"size": 14}}, "gridcolor": "#e9ecef"},
+        "yaxis": {"title": {"text": "Revenue ($)",  "font": {"size": 14}}, "gridcolor": "#e9ecef",
+                   "tickformat": "$,.0f"},
+        "barmode": "group", "hovermode": "closest",
+        "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "white",
+        "legend": {"title": {"text": "Fiscal Year", "font": {"size": 12}}, "font": {"size": 11}}
+    }, {"responsive": true});
+
+    // ── Enrollment Trends (each offering = unique color) ───────────────────
+    Plotly.newPlot("chart1", [{"x": [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [7, 9, 11, 15, 19, 41, 53, 65, 83, 115, 159, 307, 369], "mode": "lines+markers+text", "name": "April 2026", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 6, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "April 2026"], "textposition": "top right", "textfont": {"color": "#0074D9", "size": 10}, "hovertemplate": "<b>April 2026</b><br>Weeks Out: %{x}<br>Enrollments: %{y:,.0f}<extra></extra>"}, {"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [54, 70, 94, 150, 158, 181, 196, 216, 257, 300, 342, 400, 611, 684], "mode": "lines+markers+text", "name": "January 2026", "line": {"color": "#2ECC40", "width": 2}, "marker": {"size": 6, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "January 2026"], "textposition": "bottom right", "textfont": {"color": "#2ECC40", "size": 10}, "hovertemplate": "<b>January 2026</b><br>Weeks Out: %{x}<br>Enrollments: %{y:,.0f}<extra></extra>"}, {"x": [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [6, 10, 17, 31, 46, 50, 63, 76, 95, 119, 176, 303, 368], "mode": "lines+markers+text", "name": "June 2026", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 6, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "June 2026"], "textposition": "middle right", "textfont": {"color": "#FF851B", "size": 10}, "hovertemplate": "<b>June 2026</b><br>Weeks Out: %{x}<br>Enrollments: %{y:,.0f}<extra></extra>"}, {"x": [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [4, 20, 36, 50, 56, 66, 79, 106, 134, 158, 263, 298], "mode": "lines+markers+text", "name": "March 2026", "line": {"color": "#B10DC9", "width": 2}, "marker": {"size": 6, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "March 2026"], "textposition": "top center", "textfont": {"color": "#B10DC9", "size": 10}, "hovertemplate": "<b>March 2026</b><br>Weeks Out: %{x}<br>Enrollments: %{y:,.0f}<extra></extra>"}, {"x": [23, 22, 21, 20, 19, 18, 17], "y": [1, 1, 1, 3, 4, 4, 5], "mode": "lines+markers+text", "name": "April 2027", "line": {"color": "#FF4136", "width": 2}, "marker": {"size": 6, "symbol": "circle"}, "text": ["", "", "", "", "", "", "April 2027"], "textposition": "top right", "textfont": {"color": "#FF4136", "size": 10}, "hovertemplate": "<b>April 2027</b><br>Weeks Out: %{x}<br>Enrollments: %{y:,.0f}<extra></extra>"}, {"x": [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [14, 19, 20, 24, 32, 34, 41, 58, 68, 81, 95, 121, 164, 253, 299], "mode": "lines+markers+text", "name": "July 2027", "line": {"color": "#FFDC00", "width": 2}, "marker": {"size": 6, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "July 2027"], "textposition": "bottom right", "textfont": {"color": "#FFDC00", "size": 10}, "hovertemplate": "<b>July 2027</b><br>Weeks Out: %{x}<br>Enrollments: %{y:,.0f}<extra></extra>"}, {"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [2, 5, 8, 14, 22, 32, 44, 57, 70, 82, 106, 147, 287, 358], "mode": "lines+markers+text", "name": "September 2027", "line": {"color": "#F012BE", "width": 2}, "marker": {"size": 6, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "September 2027"], "textposition": "middle right", "textfont": {"color": "#F012BE", "size": 10}, "hovertemplate": "<b>September 2027</b><br>Weeks Out: %{x}<br>Enrollments: %{y:,.0f}<extra></extra>"}, {"x": [25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12], "y": [3, 3, 4, 7, 7, 10, 28, 32, 40, 44, 57, 67, 80, 87], "mode": "lines+markers+text", "name": "January 2027", "line": {"color": "#39CCCC", "width": 4}, "marker": {"size": 10, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "January 2027"], "textposition": "bottom center", "textfont": {"color": "#39CCCC", "size": 12}, "hovertemplate": "<b>January 2027</b><br>Weeks Out: %{x}<br>Enrollments: %{y:,.0f}<extra></extra>"}], {
+        "xaxis": {"autorange": "reversed",
+                   "title": {"text": "Weeks Out (Countdown to 0)", "font": {"size": 14}},
+                   "gridcolor": "#e9ecef"},
+        "yaxis": {"gridcolor": "#e9ecef", "title": {"text": "Enrollments", "font": {"size": 14}}},
+        "hovermode": "x unified", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "white",
+        "legend": {"title": {"text": "Course Offering", "font": {"size": 12}}, "font": {"size": 10}},
+        "shapes": [{"type":"line","line":{"color":"#A51C30","dash":"dash","width":2},
+                     "x0":12,"x1":12,"xref":"x","y0":0,"y1":1,"yref":"y domain"}],
+        "annotations": [{"showarrow":false,"text":"12 Weeks Out",
+                           "x":12,"xanchor":"right","xref":"x",
+                           "y":1,"yanchor":"top","yref":"y domain",
+                           "font":{"color":"#A51C30","size":12}}]
+    }, {"responsive": true});
+
+    // ── Revenue Trends (each offering = unique color) ──────────────────────
+    Plotly.newPlot("chart2", [{"x": [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [4689, 5381, 6996, 10224, 12787, 28777, 39283, 49276, 65318, 92505, 128380, 247772, 301069], "mode": "lines+markers+text", "name": "April 2026", "line": {"color": "#0074D9", "width": 2}, "marker": {"size": 6, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "April 2026"], "textposition": "top right", "textfont": {"color": "#0074D9", "size": 10}, "hovertemplate": "<b>April 2026</b><br>Weeks Out: %{x}<br>Revenue: %{y:,.0f}<extra></extra>"}, {"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [47821, 61059, 80985, 125496, 133461, 153807, 172462, 189682, 224583, 262574, 302754, 308720, 530454, 581710], "mode": "lines+markers+text", "name": "January 2026", "line": {"color": "#2ECC40", "width": 2}, "marker": {"size": 6, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "January 2026"], "textposition": "bottom right", "textfont": {"color": "#2ECC40", "size": 10}, "hovertemplate": "<b>January 2026</b><br>Weeks Out: %{x}<br>Revenue: %{y:,.0f}<extra></extra>"}, {"x": [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [6621, 9901, 14094, 24703, 35773, 40716, 54776, 63529, 81541, 101884, 148166, 259430, 316460], "mode": "lines+markers+text", "name": "June 2026", "line": {"color": "#FF851B", "width": 2}, "marker": {"size": 6, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "June 2026"], "textposition": "middle right", "textfont": {"color": "#FF851B", "size": 10}, "hovertemplate": "<b>June 2026</b><br>Weeks Out: %{x}<br>Revenue: %{y:,.0f}<extra></extra>"}, {"x": [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [3087, 15436, 27785, 36516, 41026, 49687, 61244, 84076, 111238, 131096, 223421, 254182], "mode": "lines+markers+text", "name": "March 2026", "line": {"color": "#B10DC9", "width": 2}, "marker": {"size": 6, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "March 2026"], "textposition": "top center", "textfont": {"color": "#B10DC9", "size": 10}, "hovertemplate": "<b>March 2026</b><br>Weeks Out: %{x}<br>Revenue: %{y:,.0f}<extra></extra>"}, {"x": [23, 22, 21, 20, 19, 18, 17], "y": [769, 769, 769, 2204, 3075, 3075, 4100], "mode": "lines+markers+text", "name": "April 2027", "line": {"color": "#FF4136", "width": 2}, "marker": {"size": 6, "symbol": "circle"}, "text": ["", "", "", "", "", "", "April 2027"], "textposition": "top right", "textfont": {"color": "#FF4136", "size": 10}, "hovertemplate": "<b>April 2027</b><br>Weeks Out: %{x}<br>Revenue: %{y:,.0f}<extra></extra>"}, {"x": [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [9686, 12966, 13991, 16913, 22345, 24139, 31006, 43638, 55193, 65699, 77825, 96736, 134553, 214712, 249511], "mode": "lines+markers+text", "name": "July 2027", "line": {"color": "#FFDC00", "width": 2}, "marker": {"size": 6, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "July 2027"], "textposition": "bottom right", "textfont": {"color": "#FFDC00", "size": 10}, "hovertemplate": "<b>July 2027</b><br>Weeks Out: %{x}<br>Revenue: %{y:,.0f}<extra></extra>"}, {"x": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "y": [1613, 3458, 5919, 10347, 17194, 24523, 34107, 44049, 55786, 67057, 86946, 116281, 237355, 294186], "mode": "lines+markers+text", "name": "September 2027", "line": {"color": "#F012BE", "width": 2}, "marker": {"size": 6, "symbol": "circle"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "September 2027"], "textposition": "middle right", "textfont": {"color": "#F012BE", "size": 10}, "hovertemplate": "<b>September 2027</b><br>Weeks Out: %{x}<br>Revenue: %{y:,.0f}<extra></extra>"}, {"x": [25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12], "y": [2255, 2973, 3741, 6048, 6048, 8303, 19142, 23394, 28672, 33541, 42356, 51427, 58015, 64882], "mode": "lines+markers+text", "name": "January 2027", "line": {"color": "#39CCCC", "width": 4}, "marker": {"size": 10, "symbol": "star"}, "text": ["", "", "", "", "", "", "", "", "", "", "", "", "", "January 2027"], "textposition": "bottom center", "textfont": {"color": "#39CCCC", "size": 12}, "hovertemplate": "<b>January 2027</b><br>Weeks Out: %{x}<br>Revenue: %{y:,.0f}<extra></extra>"}], {
+        "xaxis": {"autorange": "reversed",
+                   "title": {"text": "Weeks Out (Countdown to 0)", "font": {"size": 14}},
+                   "gridcolor": "#e9ecef"},
+        "yaxis": {"gridcolor": "#e9ecef",
+                   "title": {"text": "Revenue ($)", "font": {"size": 14}}, "tickformat":"$,.0f"},
+        "hovermode": "x unified", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "white",
+        "legend": {"title": {"text": "Course Offering", "font": {"size": 12}}, "font": {"size": 10}},
+        "shapes": [{"type":"line","line":{"color":"#A51C30","dash":"dash","width":2},
+                     "x0":12,"x1":12,"xref":"x","y0":0,"y1":1,"yref":"y domain"}],
+        "annotations": [{"showarrow":false,"text":"12 Weeks Out",
+                           "x":12,"xanchor":"right","xref":"x",
+                           "y":1,"yanchor":"top","yref":"y domain",
+                           "font":{"color":"#A51C30","size":12}}]
+    }, {"responsive": true});
+
+    // ── Cumulative FY Revenue ──────────────────────────────────────────────
+    Plotly.newPlot("chart3", [{"x": ["July", "September", "January", "April", "June"], "y": [0, 821834, 1628660, 2307877, 2886209], "mode": "lines+markers", "name": "FY24", "line": {"color": "#0074D9", "width": 3}, "marker": {"size": 8}, "hovertemplate": "<b>FY24</b><br>Through %{x}<br>YTD: $%{y:,.0f}<extra></extra>"}, {"x": ["July", "September", "January", "April", "June"], "y": [0, 791364, 1660212, 2317487, 2827547], "mode": "lines+markers", "name": "FY25", "line": {"color": "#2ECC40", "width": 3}, "marker": {"size": 8}, "hovertemplate": "<b>FY25</b><br>Through %{x}<br>YTD: $%{y:,.0f}<extra></extra>"}, {"x": ["July", "September", "January", "March", "April", "June"], "y": [0, 618622, 1212324, 1461448, 1761618, 2106476], "mode": "lines+markers", "name": "FY26", "line": {"color": "#FF851B", "width": 3}, "marker": {"size": 8}, "hovertemplate": "<b>FY26</b><br>Through %{x}<br>YTD: $%{y:,.0f}<extra></extra>"}, {"x": ["July", "August", "September", "January", "April", "June"], "y": [475147, 907298, 834215, 903198, 907298, 907298], "mode": "lines+markers", "name": "FY27", "line": {"color": "#B10DC9", "width": 3}, "marker": {"size": 8}, "hovertemplate": "<b>FY27</b><br>Through %{x}<br>YTD: $%{y:,.0f}<extra></extra>"}], {
+        "xaxis": {"title": {"text": "Month", "font": {"size": 14}},
+                   "categoryorder": "array", "categoryarray": ["July", "August", "September", "October", "November", "December", "January", "February", "March", "April", "May", "June"],
+                   "gridcolor": "#e9ecef"},
+        "yaxis": {"gridcolor": "#e9ecef",
+                   "title": {"text": "Fiscal Year to Date Revenue ($)", "font": {"size": 14}},
+                   "tickformat": "$,.0f"},
+        "hovermode": "x unified", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "white",
+        "legend": {"title": {"text": "Fiscal Year", "font": {"size": 12}}, "font": {"size": 11}}
+    }, {"responsive": true});
+
+    // ── Short Course Revenue (goal lines + OLS trend projection) ──────────
+    Plotly.newPlot("sc-revenue-chart", [{"x": ["2026-07-15", "2026-07-20", "2026-07-27", "2026-08-03", "2026-08-17", "2026-08-25", "2026-08-31", "2026-09-07", "2026-09-14", "2026-09-21", "2026-09-28", "2026-10-05", "2026-10-12", "2026-10-19"], "y": [6559.0, 8960.0, 14751.0, 17721.0, 55267.0, 64994.0, 71676.0, 84527.0, 91680.0, 92787.0, 108436.0, 116423.0, 120383.0, 129021.0], "mode": "lines+markers", "name": "FY27", "line": {"color": "#A51C30", "width": 3}, "marker": {"size": 8}, "hovertemplate": "<b>FY27</b><br>Date: %{x}<br>Cumulative Revenue: $%{y:,.0f}<extra></extra>"}, {"x": ["2026-07-15", "2026-10-19"], "y": [3819.2694185972214, 134688.27513980865], "mode": "lines", "name": "Trend (linear fit)", "line": {"color": "#888888", "width": 2, "dash": "dash"}, "showlegend": true, "hovertemplate": "Trend fit: $%{y:,.0f}<extra></extra>"}, {"x": ["2026-10-19", "2027-06-30"], "y": [134688.27513980865, 480945.85277724266], "mode": "lines", "name": "Projected to Jun 30, 2027", "line": {"color": "#FF6B35", "width": 2.5, "dash": "dot"}, "showlegend": true, "hovertemplate": "Projection: $%{y:,.0f}<extra></extra>"}, {"x": ["2027-06-30"], "y": [480945.85277724266], "mode": "markers", "name": "Jun 30 Est: $480,946", "marker": {"size": 18, "symbol": "star", "color": "#FF6B35", "line": {"color": "#cc4400", "width": 2}}, "showlegend": true, "hovertemplate": "<b>June 30, 2027 \u2014 Projected Year-End</b><br>Revenue: $%{y:,.0f}<extra></extra>"}], {"xaxis": {"title": {"text": "Date", "font": {"size": 14}}, "gridcolor": "#e9ecef", "type": "date"}, "yaxis": {"gridcolor": "#e9ecef", "title": {"text": "Cumulative Revenue ($)", "font": {"size": 14}}, "tickformat": "$,.0f"}, "shapes": [{"type": "line", "xref": "paper", "x0": 0, "x1": 1, "yref": "y", "y0": 300000, "y1": 300000, "line": {"color": "#28a745", "width": 2, "dash": "dot"}}, {"type": "line", "xref": "paper", "x0": 0, "x1": 1, "yref": "y", "y0": 350000, "y1": 350000, "line": {"color": "#FF851B", "width": 2.5, "dash": "dash"}}], "annotations": [{"x": 0.01, "xref": "paper", "y": 300000, "yref": "y", "text": "  Original Goal $300,000", "showarrow": false, "xanchor": "left", "yanchor": "bottom", "bgcolor": "rgba(255,255,255,0.85)", "font": {"color": "#856404", "size": 11}}, {"x": 0.01, "xref": "paper", "y": 350000, "yref": "y", "text": "  Reforecast Goal $350,000", "showarrow": false, "xanchor": "left", "yanchor": "bottom", "bgcolor": "rgba(255,255,255,0.85)", "font": {"color": "#FF851B", "size": 11}}, {"x": "2027-06-30", "xref": "x", "y": 480945.85277724266, "yref": "y", "text": "<b>June 30, 2027</b><br><b>$480,946</b><br><i>projected year-end</i>", "showarrow": true, "arrowhead": 2, "arrowcolor": "#FF6B35", "ax": -130, "ay": -65, "bgcolor": "rgba(255, 255, 255, 0.93)", "bordercolor": "#FF6B35", "borderwidth": 1.5, "borderpad": 7, "font": {"color": "#FF6B35", "size": 12}}], "hovermode": "closest", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "white", "legend": {"title": {"text": "Series", "font": {"size": 12}}, "font": {"size": 11}}}, {"responsive": true});
+
+    // ── Short Course Enrollments ───────────────────────────────────────────
+    Plotly.newPlot("sc-enroll-chart", [{"x": ["2026-07-15", "2026-07-20", "2026-07-27", "2026-08-03", "2026-08-17", "2026-08-25", "2026-08-31", "2026-09-07", "2026-09-14", "2026-09-21", "2026-09-28", "2026-10-05", "2026-10-12", "2026-10-19"], "y": [32.0, 45.0, 64.0, 90.0, 122.0, 149.0, 175.0, 207.0, 216.0, 230.0, 251.0, 272.0, 280.0, 300.0], "mode": "lines+markers", "name": "FY27", "line": {"color": "#A51C30", "width": 3}, "marker": {"size": 8}, "hovertemplate": "<b>FY27</b><br>Date: %{x}<br>Cumulative Enrollments: %{y:,.0f}<extra></extra>"}], {"xaxis": {"title": {"text": "Date", "font": {"size": 14}}, "gridcolor": "#e9ecef", "type": "date"}, "yaxis": {"gridcolor": "#e9ecef", "title": {"text": "Cumulative Enrollments", "font": {"size": 14}}, "tickformat": ",.0f"}, "hovermode": "closest", "plot_bgcolor": "#f8f9fa", "paper_bgcolor": "white", "legend": {"title": {"text": "Fiscal Year", "font": {"size": 12}}, "font": {"size": 11}}}, {"responsive": true});
+
+</script>
 </body>
 </html>
